@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -83,31 +83,31 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: 'documentation', icon: 'documentation', affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/guide',
+  //   component: Layout,
+  //   redirect: '/guide/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/guide/index'),
+  //       name: 'Guide',
+  //       meta: { title: 'guide', icon: 'guide', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/profile',
     component: Layout,
@@ -124,72 +124,71 @@ export const constantRoutes = [
   }
 ]
 
+const premissionRouter = {
+  path: '/permission',
+  component: Layout,
+  redirect: '/permission/page',
+  alwaysShow: true, // will always show the root menu
+  name: 'Permission',
+  meta: {
+    title: 'permission',
+    icon: 'lock',
+    roles: ['admin', 'editor'] // you can set roles in root nav
+  },
+  children: [
+    {
+      path: 'page',
+      component: () => import('@/views/permission/page'),
+      name: 'PagePermission',
+      meta: {
+        title: 'pagePermission',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    },
+    {
+      path: 'directive',
+      component: () => import('@/views/permission/directive'),
+      name: 'DirectivePermission',
+      meta: {
+        title: 'directivePermission'
+        // if do not set roles, means: this page does not require permission
+      }
+    }
+    // {
+    //   path: 'role',
+    //   component: () => import('@/views/permission/role'),
+    //   name: 'RolePermission',
+    //   meta: {
+    //     title: 'rolePermission',
+    //     roles: ['admin']
+    //   }
+    // }
+  ]
+}
+
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      title: 'permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: 'pagePermission',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'directivePermission'
-          // if do not set roles, means: this page does not require permission
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: 'rolePermission',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/icon',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/icons/index'),
+  //       name: 'Icons',
+  //       meta: { title: 'icons', icon: 'icon', noCache: true }
+  //     }
+  //   ]
+  // },
 
   /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
-  nestedRouter,
+  // componentsRouter,
+  // chartsRouter,
+  // nestedRouter,
   tableRouter,
-
   {
     path: '/example',
     component: Layout,
@@ -239,6 +238,7 @@ export const asyncRoutes = [
     path: '/error',
     component: Layout,
     redirect: 'noRedirect',
+    hidden: true,
     name: 'ErrorPages',
     meta: {
       title: 'errorPages',
@@ -248,6 +248,7 @@ export const asyncRoutes = [
       {
         path: '401',
         component: () => import('@/views/error-page/401'),
+        hidden: true,
         name: 'Page401',
         meta: { title: 'page401', noCache: true }
       },
@@ -255,6 +256,7 @@ export const asyncRoutes = [
         path: '404',
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
+        hidden: true,
         meta: { title: 'page404', noCache: true }
       }
     ]
@@ -310,7 +312,7 @@ export const asyncRoutes = [
     ]
   },
 
-  {
+  /* {
     path: '/zip',
     component: Layout,
     redirect: '/zip/download',
@@ -326,8 +328,7 @@ export const asyncRoutes = [
       }
     ]
   },
-
-  {
+   {
     path: '/pdf',
     component: Layout,
     redirect: '/pdf/index',
@@ -394,7 +395,8 @@ export const asyncRoutes = [
         meta: { title: 'externalLink', icon: 'link' }
       }
     ]
-  },
+  }, */
+  premissionRouter,
 
   { path: '*', redirect: '/404', hidden: true }
 ]
