@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { Message } from 'element-ui'
+// import store from '@/store'
+import qs from 'qs'
+// import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -13,17 +14,13 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
-    if (store.getters.token) {
-      // let each request carry token --['X-Token'] as a custom key.
-      // please modify it according to the actual situation.
-      config.headers['X-Token'] = getToken()
+    if (!config.headers['Content-Type'] || config.headers['Content-Type'].includes('form-urlencoded')) {
+      config.data = qs.stringify(config.data)
     }
     return config
   },
   error => {
-    // do something with request error
+    // Do something with request error
     console.log(error) // for debug
     return Promise.reject(error)
   }
@@ -32,46 +29,31 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   /**
-   * If you want to get information such as headers or status
-   * Please return  response => response
-  */
-
+ * If you want to get information such as headers or status
+ * Please return  response => response
+ */
   /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code.
+   * 下面的注释为通过在response里，自定义code来标示请求状态
+   * 当code返回如下情况则说明权限有问题，登出并返回到登录页
+   * 如想通过 XMLHttpRequest 来状态码标识 逻辑可写在下面error中
+   * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
   response => {
+    debugger
     const res = response.data
-
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (res.status !== 0) {
       Message({
-        message: res.message || 'error',
+        message: res.message,
         type: 'error',
         duration: 5 * 1000
       })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
-      return Promise.reject(res.message || 'error')
+      return Promise.reject('error')
     } else {
-      return res
+      return res.data
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log(error) // for debug
     Message({
       message: error.message,
       type: 'error',
