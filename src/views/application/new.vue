@@ -238,10 +238,10 @@
             </el-form-item>
           </el-form>
         </div>
-        <div>
-          class="row layout"
+        <div
           v-show="active == 2"
-          >
+          class="row layout"
+        >
           <el-button @click="submitApply">提交</el-button>
         </div>
         <!-- card body -->
