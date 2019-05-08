@@ -10,6 +10,7 @@ import Layout from '@/layout'
 const applicationRouter = {
   path: '/application',
   component: Layout,
+  redirect: 'noRedirect',
   alwaysShow: true, // will always show the root menu
   name: 'application',
   meta: {
@@ -109,6 +110,7 @@ export const constantRoutes = [
   {
     path: '/dashboard',
     component: Layout,
+    redirect: '/dashboard/',
     children: [
       {
         path: '',
