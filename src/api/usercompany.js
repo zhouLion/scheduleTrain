@@ -6,7 +6,7 @@ import {
   getUserSocial
 } from '../api/userinfo'
 export function getOnMyManage() {
-  return request.get('user/onMyManage')
+  return request.get('users/onMyManage')
 }
 
 /**
@@ -21,7 +21,7 @@ export function getOnMyManage() {
  * } } params 新增参数
  */
 export function addMyManage(params) {
-  return request.post('user/onMyManage', params)
+  return request.post('users/onMyManage', params)
 }
 
 /**
@@ -36,19 +36,19 @@ export function addMyManage(params) {
  * } } params 新增参数
  */
 export function removeMyManage(params) {
-  return request.delete('user/onMyMange', params)
+  return request.delete('users/onMyMange', params)
 }
 
 /**
  * 一次性获取user所有的信息
  */
-export function getUserInfo() {
+export function getUserInfo(id) {
   return new Promise((resolve, reject) => {
     Promise.all([
-      getUserBase(),
-      getUserCompany(),
-      getUserDuties(),
-      getUserSocial()
+      getUserBase(id),
+      getUserCompany(id),
+      getUserDuties(id),
+      getUserSocial(id)
     ]).then(([base, company, duties, social]) => {
       const UserInfoes = {
         base,

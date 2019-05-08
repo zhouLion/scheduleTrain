@@ -10,12 +10,16 @@ import request from '../utils/request'
   }
   ```
  */
-export function getUserBase() {
-  return request.get('user/base')
+export function getUserBase(id) {
+  return request.get('users/base', {
+    params: {
+      id
+    }
+  })
 }
 
 /**
- * 社会关系 Get /User/social
+ * 社会关系 Get /Users/social
  * @description
  ```
  {
@@ -28,12 +32,16 @@ export function getUserBase() {
 }
 ```
  */
-export function getUserSocial() {
-  return request.get('user/duties')
+export function getUserSocial(id) {
+  return request.get('users/social', {
+    params: {
+      id
+    }
+  })
 }
 
 /**
- * 职务信息 Get /User/duties
+ * 职务信息 Get /Users/duties
  * @description
  ```
  {
@@ -42,12 +50,16 @@ export function getUserSocial() {
  }
 ```
  */
-export function getUserDuties() {
-  return request.get('user/duties')
+export function getUserDuties(id) {
+  return request.get('users/duties', {
+    params: {
+      id
+    }
+  })
 }
 
 /**
- * 单位信息 Get /User/company
+ * 单位信息 Get /Users/company
  * @description
  ```
   {
@@ -60,6 +72,10 @@ export function getUserDuties() {
   }
  ```
  */
-export function getUserCompany() {
-  return request.get('user/company')
+export function getUserCompany(id) {
+  return request.get('users/company', {
+    params: {
+      id
+    }
+  })
 }
