@@ -38,7 +38,6 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(res)
     if (res.status !== 0) {
       Message({
         message: res.message,
@@ -47,7 +46,7 @@ service.interceptors.response.use(
       })
       return Promise.reject('error')
     } else {
-      return res.data
+      return res
     }
   },
   error => {

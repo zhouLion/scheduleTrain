@@ -61,9 +61,7 @@ const actions = {
         const {
           data
         } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
