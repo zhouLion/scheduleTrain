@@ -105,8 +105,10 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '1000000',
+        password: '11111111',
+        RememberMe: false,
+        verify: 201700816
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -169,7 +171,6 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })
             .catch(() => {

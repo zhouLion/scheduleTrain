@@ -1,20 +1,18 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-// import store from '@/store'
 import qs from 'qs'
-// import { getToken } from '@/utils/auth'
-
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  withCredentials: true, // send cookies when cross-domain requests
+  baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
+  withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if (!config.headers['Content-Type'] || config.headers['Content-Type'].includes('form-urlencoded')) {
+    console.log(config.headers['Content-Type'])
+    if (config.headers['Content-Type'] === 'application/urlencoded') {
       config.data = qs.stringify(config.data)
     }
     return config
@@ -29,9 +27,9 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   /**
- * If you want to get information such as headers or status
- * Please return  response => response
- */
+   * If you want to get information such as headers or status
+   * Please return  response => response
+   */
   /**
    * 下面的注释为通过在response里，自定义code来标示请求状态
    * 当code返回如下情况则说明权限有问题，登出并返回到登录页
@@ -39,8 +37,8 @@ service.interceptors.response.use(
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
   response => {
-    debugger
     const res = response.data
+    console.log(res)
     if (res.status !== 0) {
       Message({
         message: res.message,
