@@ -6,10 +6,6 @@
         class="layout row justify-space-between"
       >
         <span>新建申请</span>
-        <span>
-          <el-button>1</el-button>
-          <el-button>2</el-button>
-        </span>
       </div>
       <el-card class="elevation-0">
         <div class="pa-2">
@@ -19,7 +15,7 @@
             simple
             style="margin-top: 20px"
           >
-            <el-step title="填写基本信息" />
+            <el-step title="填写基础信息" />
             <el-step title="填写休假请求" />
             <el-step title="提交请求" />
           </el-steps>
@@ -130,7 +126,7 @@
               <el-button
                 type="primary"
                 @click="submitBaseInfo"
-              >提交基本信息</el-button>
+              >提交基础信息</el-button>
               <el-button
                 :disabled="!formFinal.baseInfoId"
                 @click="active = 1"
@@ -206,25 +202,14 @@
                 />
               </el-col>
             </el-form-item>
+
             <el-form-item label="休假目的地">
-              <el-select
-                v-model="formApply.vocationPlace"
-                placeholder="必填"
-              >
-                <el-option
-                  label="正休"
-                  value="zhengxiu"
-                />
-                <el-option
-                  label="年休"
-                  value="nianxiu"
-                />
-                <el-option
-                  label="探亲"
-                  value="tanqin"
-                />
-              </el-select>
+              <el-cascader
+                :options="locationOptions"
+                @active-item-change="handleItemChange"
+              />
             </el-form-item>
+
             <el-form-item size="large">
               <el-button
                 type="primary"
@@ -232,7 +217,7 @@
               >提交请求信息</el-button>
               <el-button @click="active = 0">上一步</el-button>
               <el-button
-                type="primary"
+                :disabled="!formFinal.RequestId"
                 @click="active = 2"
               >下一步</el-button>
             </el-form-item>
@@ -242,8 +227,34 @@
           v-show="active == 2"
           class="row layout"
         >
-          <el-button @click="submitApply">提交</el-button>
+          <el-form
+            ref="formFinal"
+            :model="formFinal"
+            class="full-width"
+            label-width="180px"
+          >
+            <el-form-item label="基础信息回执编号">
+              <el-input
+                :value="formFinal.baseInfoId"
+                disabled
+              />
+            </el-form-item>
+            <el-form-item label="休假请求回执">
+              <el-input
+                :value="formFinal.RequestId"
+                disabled
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="submitApply">提交</el-button>
+              <el-button @click="active = 1">上一步</el-button>
+            </el-form-item>
+          </el-form>
         </div>
+        <div
+          v-show="active == 3"
+          class="row layout"
+        >asdfasdfsdfasdf</div>
         <!-- card body -->
       </el-card>
     </el-card>
@@ -253,6 +264,7 @@
 <script>
 import { getUserInfo } from '../../api/usercompany'
 import { postBaseInfo, postRequestInfo, submitApply } from '../../api/apply'
+import { locationChildren } from '../../api/static'
 export default {
   name: 'NewApply',
   data() {
@@ -277,16 +289,38 @@ export default {
         VocationLength: 0,
         OnTripLength: 0,
         VocationType: '',
-        vocationPlace: 0,
+        vocationPlace: '',
         reason: ''
       },
       formFinal: {
         baseInfoId: '',
         RequestId: ''
-      }
+      },
+      locationOptions: [
+        {
+          label: '中国',
+          value: 0,
+          children: []
+        }
+      ]
     }
   },
   methods: {
+    handleItemChange(val) {
+      if (val) {
+        // let deep = val.length
+        const id = val[0]
+        locationChildren(id).then(data => {
+          const children = data.list.map(d => ({
+            label: d.name,
+            value: d.code
+          }))
+          this.locationOptions[0].children = children
+        })
+      } else {
+        this.$message.error('错误')
+      }
+    },
     fetchUserInfoes() {
       const id = this.form.id
       if (this.OnloadingUserInfoes === true) {
@@ -306,6 +340,7 @@ export default {
             this.form.duties = duties.name
             this.form.HomeDetailAddress = social.addressDetail
             this.form.HomeAddress = social.address.code
+            this.form.Phone = social.phone
             return this.$message.success('获取成功，已自动填充到表单')
           })
           .catch(_err => {
@@ -318,7 +353,7 @@ export default {
         })
       }
     },
-    // 提交基本信息
+    // 提交基础信息
     submitBaseInfo() {
       const {
         id,
@@ -351,7 +386,7 @@ export default {
         .catch(() => {
           this.onLoadingInfoId = false
           this.formFinal.baseInfoId = ''
-          this.$message.error('基本信息提交失败，请检查填写信息')
+          this.$message.error('基础信息提交失败，请检查填写信息')
         })
     },
 
@@ -389,6 +424,7 @@ export default {
         }
       })
         .then(data => {
+          this.active = 3
           return this.$message.success('保存成功')
         })
         .catch(() => {

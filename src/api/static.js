@@ -26,7 +26,7 @@ export function locationChildren(id) {
   return request({
     url: '/static/locationChildren',
     method: 'get',
-    id
+    params: { id }
   })
 }
 

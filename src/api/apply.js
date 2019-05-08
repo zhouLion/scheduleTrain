@@ -12,10 +12,10 @@ export function getApplyToUser(userid) {
  * @returns
  */
 export function fromUser(userid) {
-  return request({
-    url: '/apply/fromUser',
-    method: 'get',
-    userid
+  return request.get('/apply/fromUser', {
+    params: {
+      id: userid
+    }
   })
 }
 
@@ -60,26 +60,27 @@ export function submitApply(data) {
  * @returns
  */
 export function toUser(data) {
-  return request({
-    url: '/apply/toUser',
-    method: 'get',
-    data
+  return request.get('/apply/toUser', {
+    params: data
   })
 }
 
 /**
  *查询指定单位的申请
- *
- * @export
  * @param {*} companyCode
- * @returns
  */
 export function fromCompany(companyCode) {
-  return request({
-    url: '/apply/fromUser',
-    method: 'get',
-    companyCode
+  return request.get('/apply/fromCompany', {
+    params: companyCode
   })
+}
+
+/**
+ *查询指定单位的申请
+ * @returns
+ */
+export function getAllStatus() {
+  return request.get('/apply/allStatus')
 }
 
 /**
@@ -105,9 +106,9 @@ export function toCompany(companyCode) {
  * @returns
  */
 export function detail(id) {
-  return request({
-    url: '/apply/detail',
-    method: 'get',
-    id
+  return request('/apply/detail', {
+    params: {
+      id
+    }
   })
 }
