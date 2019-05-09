@@ -5,6 +5,10 @@ import {
   getUserDuties,
   getUserSocial
 } from '../api/userinfo'
+
+/**
+ * 获取我的管辖单位
+ */
 export function getOnMyManage() {
   return request.get('users/onMyManage')
 }

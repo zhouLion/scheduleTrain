@@ -94,7 +94,9 @@ export function toCompany(companyCode) {
   return request({
     url: '/apply/toCompany',
     method: 'get',
-    companyCode
+    params: {
+      code: companyCode
+    }
   })
 }
 

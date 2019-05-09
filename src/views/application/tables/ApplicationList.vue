@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="application-list">
     <el-card>
       <div
         slot="header"
@@ -9,8 +9,8 @@
           v-waves
           icon="el-icon-search"
           type="primary"
-          @click="handleFilter"
-        >搜索</el-button>
+          @click="emitRefresh"
+        >刷新</el-button>
         <div>
           <slot name="headeraction" />
           <el-button
@@ -27,8 +27,8 @@
 
     <el-table
       :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
+      v-loading="onLoading"
+      :data="dataList"
       border
       fit
       highlight-current-row
@@ -95,7 +95,7 @@
         class-name="small-padding fixed-width"
         fixed="right"
         label="操作"
-        width="530"
+        width="330"
       >
         <template slot-scope="{row}">
           <slot
@@ -120,17 +120,25 @@
 </template>
 
 <script>
-import {
-  fromUser,
-  /* fromCompany, */ getAllStatus,
-  detail
-} from '../../../api/apply'
+import { getAllStatus, detail } from '../../../api/apply'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '../../../utils'
 
 export default {
   name: 'ApplicationList',
   directives: { waves },
+  props: {
+    dataList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    onLoading: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       tableKey: 0,
@@ -155,7 +163,6 @@ export default {
   },
   async created() {
     await this.getAllStatus()
-    this.getList()
   },
   methods: {
     getAllStatus() {
@@ -165,23 +172,10 @@ export default {
         }
       })
     },
-    getList() {
-      this.listLoading = true
-      fromUser()
-        .then(data => {
-          const list = data.list
-          if (list) {
-            this.list = this.list.concat(list)
-          }
-        })
-        .finally(() => {
-          return (this.listLoading = false)
-        })
-    },
-    handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
-    },
+
+    /**
+     * 查询详情
+     */
     handleDetail(id) {
       detail(id).then(data => {
         if (data) {
@@ -190,6 +184,10 @@ export default {
         }
       })
     },
+
+    /**
+     * 执行导出
+     */
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
@@ -204,6 +202,10 @@ export default {
         this.downloadLoading = false
       })
     },
+
+    /**
+     * 格式json数据
+     */
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
         filterVal.map(j => {
@@ -214,6 +216,13 @@ export default {
           }
         })
       )
+    },
+
+    /**
+     * 请求刷新
+     */
+    emitRefresh() {
+      this.$emit('refresh')
     }
   }
 }
