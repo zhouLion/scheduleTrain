@@ -131,14 +131,15 @@ export default {
         return this.$message.warning('查询中，请等候')
       }
       const { tab, user, company } = this.form
-      let fn = fromCompany
-      let params = {
+      let fn = {}
+      const params = {
         code: company,
         id: user
       }
       if (tab === '按人员') {
         fn = fromUser
-        params = user
+      } else {
+        fn = fromCompany
       }
       this.onLoading = true
       fn(params)
