@@ -15,15 +15,16 @@ const applicationRouter = {
   name: 'application',
   meta: {
     title: 'application.title',
-    icon: 'lock'
+    icon: 'clipboard'
   },
   children: [
     {
       path: 'new',
       component: () => import('@/views/application/new'),
-      name: 'application.new',
+      name: 'newApplication',
       meta: {
-        title: 'application.new'
+        title: 'application.new',
+        icon: '测试申请'
       }
     },
     {
@@ -31,7 +32,8 @@ const applicationRouter = {
       component: () => import('@/views/application/examine'),
       name: 'examineApplication',
       meta: {
-        title: 'application.examine'
+        title: 'application.examine',
+        icon: '提案审批'
       }
     },
     {
@@ -39,7 +41,8 @@ const applicationRouter = {
       component: () => import('@/views/application/list'),
       name: 'applicationList',
       meta: {
-        title: 'application.query'
+        title: 'application.query',
+        icon: '无序排列'
       }
     }
   ]
