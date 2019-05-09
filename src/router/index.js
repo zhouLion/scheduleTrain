@@ -14,16 +14,16 @@ const applicationRouter = {
   alwaysShow: true, // will always show the root menu
   name: 'application',
   meta: {
-    title: 'application',
+    title: 'application.title',
     icon: 'lock'
   },
   children: [
     {
       path: 'new',
       component: () => import('@/views/application/new'),
-      name: 'newApplication',
+      name: 'application.new',
       meta: {
-        title: 'newApplication'
+        title: 'application.new'
       }
     },
     {
@@ -31,7 +31,7 @@ const applicationRouter = {
       component: () => import('@/views/application/examine'),
       name: 'examineApplication',
       meta: {
-        title: 'examineApplication'
+        title: 'application.examine'
       }
     },
     {
@@ -39,7 +39,7 @@ const applicationRouter = {
       component: () => import('@/views/application/list'),
       name: 'applicationList',
       meta: {
-        title: 'applicationList'
+        title: 'application.query'
       }
     }
   ]

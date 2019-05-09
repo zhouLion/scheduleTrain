@@ -63,8 +63,15 @@ export default {
     theme: '换肤',
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
-    externalLink: '外链'
+    externalLink: '外链',
+    application: {
+      title: '休假申请',
+      query: '查询申请',
+      examine: '审核申请',
+      new: '新建申请'
+    }
   },
+
   lang: {
     switchsuccess: '切换语言成功'
   },
@@ -73,7 +80,8 @@ export default {
     dashboard: '首页',
     github: '项目地址',
     theme: '换肤',
-    size: '布局大小'
+    size: '布局大小',
+    profile: '个人信息'
   },
   login: {
     validate: {
