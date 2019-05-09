@@ -92,6 +92,7 @@ import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './components/SocialSignin'
 import { Message } from 'element-ui'
+import { getUserBase } from '../../api/userinfo'
 export default {
   name: 'Login',
   components: { LangSelect, SocialSign },
@@ -149,6 +150,17 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    getUserBase()
+      .then(data => {
+        if (data) this.$router.push('/application/examine')
+      })
+      .catch(() => {
+        Message({
+          message: '注意，请务必不要泄露密码',
+          type: 'warning',
+          duration: 5000
+        })
+      })
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
