@@ -1,16 +1,8 @@
 <template>
   <div class="application-list">
     <el-card>
-      <div
-        slot="header"
-        class="layout row justify-space-between"
-      >
-        <el-button
-          v-waves
-          icon="el-icon-search"
-          type="primary"
-          @click="emitRefresh"
-        >刷新</el-button>
+      <div slot="header" class="layout row justify-space-between">
+        <el-button v-waves icon="el-icon-search" type="primary" @click="emitRefresh">刷新</el-button>
         <div>
           <slot name="headeraction" />
           <el-button
@@ -34,58 +26,34 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column
-        align="center"
-        label="详情"
-        width="50px"
-      >
+      <el-table-column label="申请人" min-width="150px">
         <template slot-scope="{row}">
-          <i
-            class="el-icon-info blue--text"
-            @click="handleDetail(row.id)"
-          />
+          <i class="el-icon-info blue--text" @click="handleDetail(row.id)" />
+          <span>{{ row.base.realName }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        label="创建时间"
-        width="150px"
-      >
+      <!-- <el-table-column align="center" label="详情" width="50px">
+        <template slot-scope="{row}">
+          <i @click="handleDetail(row.id)" class="el-icon-info blue--text"/>
+        </template>
+      </el-table-column> -->
+      <el-table-column align="center" label="创建时间" width="150px">
         <template slot-scope="scope">
           <span>{{ scope.row.create | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="申请人"
-        min-width="150px"
-      >
-        <template slot-scope="{row}">
-          <span>{{ row.base.realName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        label="申请离队时间"
-        width="210px"
-      >
+
+      <el-table-column align="center" label="申请离队时间" width="210px">
         <template slot-scope="scope">
           <span>{{ scope.row.stampLeave }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        label="预计归队时间"
-        width="210px"
-      >
+      <el-table-column align="center" label="预计归队时间" width="210px">
         <template slot-scope="scope">
           <span>{{ scope.row.stampReturn }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        label="条目状态"
-        width="110px"
-      >
+      <el-table-column align="center" label="条目状态" width="110px">
         <template slot-scope="scope">
           <span style="color:red;">{{ scope.row.status }}</span>
         </template>
@@ -98,19 +66,12 @@
         width="330"
       >
         <template slot-scope="{row}">
-          <slot
-            :row="row"
-            name="action"
-          />
+          <slot :row="row" name="action" />
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog
-      :visible.sync="detailDrawer.show"
-      title="详情"
-      width="30%"
-    >
+    <el-dialog :visible.sync="detailDrawer.show" title="详情" width="30%">
       {{ detailDrawer.data }}
       <span slot="footer">
         <el-button @click="detailDrawer.show = false">关闭</el-button>
