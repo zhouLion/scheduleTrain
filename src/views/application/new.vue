@@ -126,6 +126,7 @@
               <el-cascader
                 v-model="formApply.vocationPlaceArr"
                 :options="locationOptions"
+                :show-all-levels="false"
                 @active-item-change="handleItemChange"
               />
             </el-form-item>
@@ -253,10 +254,11 @@ export default {
       }
       return 0
     },
-    handleItemChange(val, nowSelect) {
+    handleItemChange(val) {
       if (val) {
         const deep = val.length - 1
         const id = val[deep]
+        this.formApply.vocationPlaceArr = val
         locationChildren(id).then(data => {
           const children = data.list.map(d => ({
             label: d.name,
@@ -270,6 +272,12 @@ export default {
             item = item.children[nextIndex]
           }
           item.children = children
+          if (item.children.length === 0) {
+            item.children[0] = {
+              label: '无下一层级',
+              disabled: true
+            }
+          }
         })
       } else {
         this.$message.error('错误')
