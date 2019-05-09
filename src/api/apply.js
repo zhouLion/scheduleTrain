@@ -91,11 +91,12 @@ export function getAllStatus() {
  * @returns
  */
 export function toCompany(companyCode) {
+  const { code } = companyCode
   return request({
     url: '/apply/toCompany',
     method: 'get',
     params: {
-      code: companyCode
+      code
     }
   })
 }
