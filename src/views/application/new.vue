@@ -165,12 +165,12 @@
                   value="zhengxiu"
                 />
                 <el-option
-                  label="年休"
-                  value="nianxiu"
+                  label="事假"
+                  value="shijia"
                 />
                 <el-option
-                  label="探亲"
-                  value="tanqin"
+                  label="病休"
+                  value="bingxiu"
                 />
               </el-select>
             </el-form-item>
@@ -404,6 +404,7 @@ export default {
     },
     fetchUserInfoes() {
       const id = this.form.id
+      this.formFinal.RequestId
       if (this.OnloadingUserInfoes === true) {
         return this.$message.info({
           message: '用户信息获取中，请稍等'
