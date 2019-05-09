@@ -11,6 +11,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    console.log(config.headers['Content-Type'])
     if (config.headers['Content-Type'] === 'application/urlencoded') {
       config.data = qs.stringify(config.data)
     }
@@ -18,6 +19,7 @@ service.interceptors.request.use(
   },
   error => {
     // Do something with request error
+    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -48,6 +50,7 @@ service.interceptors.response.use(
     }
   },
   error => {
+    console.log(error) // for debug
     Message({
       message: error.message,
       type: 'error',

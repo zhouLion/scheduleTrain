@@ -63,10 +63,10 @@
           </template>
           <template
             slot="action"
-            slot-scope="{ row }"
+            slot-scope="{row}"
           >
             <el-button
-              v-if="row.status != 'draft'"
+              v-if="row.status!='draft'"
               size="mini"
             >保存</el-button>
             <el-button
@@ -74,12 +74,12 @@
               type="warning"
             >撤回</el-button>
             <el-button
-              v-if="row.status != 'publish'"
+              v-if="row.status!='publish'"
               size="mini"
               type="success"
             >发布</el-button>
             <el-button
-              v-if="row.status != 'deleted'"
+              v-if="row.status!='deleted'"
               size="mini"
               type="danger"
             >删除</el-button>
@@ -130,21 +130,15 @@ export default {
       if (this.onLoading === true) {
         return this.$message.warning('查询中，请等候')
       }
-      const { tab, user, company } = this.form
-      let fn = fromCompany
-      let params = {
-        code: company,
-        id: user
-      }
-      if (tab === '按人员') {
-        fn = fromUser
-        params = user
-      }
+      const fn = this.form.tab === '按人员' ? fromUser : fromCompany
       this.onLoading = true
-      fn(params)
+      fn()
         .then(data => {
           const list = data.list
-          this.dataList = list || []
+          if (list) {
+            // this.dataList = this.dataList.concat(list)
+            this.dataList = list
+          }
         })
         .finally(() => {
           return (this.onLoading = false)

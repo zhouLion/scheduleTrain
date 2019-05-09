@@ -57,8 +57,10 @@ const actions = {
         verify: {
           code: verify
         }
-      }).then(data => {
-        debugger
+      }).then(response => {
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)

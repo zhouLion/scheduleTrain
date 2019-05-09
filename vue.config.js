@@ -52,7 +52,6 @@ module.exports = {
         args[0].cdn = cdn
         return args
       })
-
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
