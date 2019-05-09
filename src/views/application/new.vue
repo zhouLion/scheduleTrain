@@ -229,6 +229,10 @@ export default {
           label: '选择休假地',
           value: 0,
           children: []
+        },
+        {
+          label: '不选择',
+          value: -1
         }
       ],
       isAfterSubmit: false
