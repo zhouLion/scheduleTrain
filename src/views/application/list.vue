@@ -130,9 +130,19 @@ export default {
       if (this.onLoading === true) {
         return this.$message.warning('查询中，请等候')
       }
-      const fn = this.form.tab === '按人员' ? fromUser : fromCompany
+      var queryData = {}
+      var fn = {}
+      if (this.form.tab === '按人员') {
+        fn = fromUser
+        queryData.code = this.form.company
+        queryData.id = this.form.user
+      } else {
+        fn = fromCompany
+        queryData.code = this.form.company
+      }
+
       this.onLoading = true
-      fn()
+      fn(queryData)
         .then(data => {
           const list = data.list
           if (list) {
