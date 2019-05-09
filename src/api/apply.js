@@ -12,10 +12,9 @@ export function getApplyToUser(userid) {
  * @returns
  */
 export function fromUser(userid) {
-  const { id } = userid
   return request.get('/apply/fromUser', {
     params: {
-      id
+      id: userid
     }
   })
 }
@@ -71,11 +70,8 @@ export function toUser(data) {
  * @param {*} companyCode
  */
 export function fromCompany(companyCode) {
-  const { code } = companyCode
   return request.get('/apply/fromCompany', {
-    params: {
-      code
-    }
+    params: companyCode
   })
 }
 
@@ -95,12 +91,11 @@ export function getAllStatus() {
  * @returns
  */
 export function toCompany(companyCode) {
-  const { code } = companyCode
   return request({
     url: '/apply/toCompany',
     method: 'get',
     params: {
-      code
+      code: companyCode
     }
   })
 }
