@@ -15,18 +15,18 @@ export function verify() {
  * 获取指定行政区划子层级
  *
  * @export
- * @param {string} id 行政区划id
+ * @param {string} code 行政区划code
  * @returns
  * {array} list:
  *  {json} list[i]:
  *      {string} list[i].name:"东城区"
  *      {int} list[i].code:110101
  */
-export function locationChildren(id) {
+export function locationChildren(code) {
   return request({
     url: '/static/locationChildren',
     method: 'get',
-    params: { id }
+    params: { code }
   })
 }
 
@@ -34,15 +34,15 @@ export function locationChildren(id) {
  *行政区划详情
  *
  * @export
- * @param {string} id
+ * @param {string} code
  * @returns
  *    {string} list[i].name:"东城区"
  *    {int} list[i].code:110101
  */
-export function location(id) {
+export function location(code) {
   return request({
     url: '/static/location',
     method: 'get',
-    id
+    code
   })
 }

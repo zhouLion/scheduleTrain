@@ -262,7 +262,7 @@ export default {
           var item = this.locationOptions[0]
           var nextIndex = 0
           for (var i = 0; i < deep; i++) {
-            nextIndex = this.getLocationChildrenIndexByValue(item, id)
+            nextIndex = this.getLocationChildrenIndexByValue(item, val[i + 1])
             item = item.children[nextIndex]
           }
           item.children = children
