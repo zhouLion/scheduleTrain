@@ -37,23 +37,28 @@
           <i @click="handleDetail(row.id)" class="el-icon-info blue--text"/>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" label="创建时间" width="150px">
+      <el-table-column align="center" label="单位" min-width="350px">
+        <template slot-scope="scope">
+          <span>{{ scope.row.base.companyName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="创建时间" min-width="100px">
         <template slot-scope="scope">
           <span>{{ scope.row.create | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="申请离队时间" width="210px">
+      <el-table-column align="center" label="申请离队时间" min-width="150px">
         <template slot-scope="scope">
           <span>{{ scope.row.stampLeave }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="预计归队时间" width="210px">
+      <el-table-column align="center" label="预计归队时间" min-width="150px">
         <template slot-scope="scope">
           <span>{{ scope.row.stampReturn }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="条目状态" width="110px">
+      <el-table-column align="center" label="条目状态" min-width="80px">
         <template slot-scope="scope">
           <span style="color:red;">{{ scope.row.status }}</span>
         </template>
@@ -63,7 +68,7 @@
         class-name="small-padding fixed-width"
         fixed="right"
         label="操作"
-        width="330"
+        width="270"
       >
         <template slot-scope="{row}">
           <slot :row="row" name="action" />
