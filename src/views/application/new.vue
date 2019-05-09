@@ -415,18 +415,22 @@ export default {
           .then(data => {
             this.OnloadingUserInfoes = false
             const { base, company, duties, social } = data
-            this.form.realName = base.realName
-            this.form.company = company.company.code
-            this.form.companyName = company.company.name
-            this.form.duties = duties.name
-            this.form.HomeDetailAddress = social.addressDetail
-            this.form.HomeAddress = social.address.code
-            this.form.Phone = social.phone
+            try {
+              this.form.realName = base.realName
+              this.form.company = company.company.code
+              this.form.companyName = company.company.name
+              this.form.duties = duties.name
+              this.form.HomeDetailAddress = social.addressDetail
+              this.form.HomeAddress = social.address.code
+              this.form.Phone = social.phone
+            } catch (error) {
+              console.warn(error)
+            }
             return this.$message.success('获取成功，已自动填充到表单')
           })
-          .catch(_err => {
+          .catch(() => {
             this.OnloadingUserInfoes = false
-            return this.$message.error('查询时错误')
+            return this.$message.warning('查询时错误')
           })
       } else {
         this.$message.warning({
@@ -563,7 +567,12 @@ export default {
       }
       this.onLoading = false
       this.isAfterSubmit = false
-    }
+    },
+
+    /**
+     * TODO 后期可能用户计算预期归队日期
+     */
+    handleChange() {}
   }
 }
 </script>
