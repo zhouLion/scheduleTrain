@@ -36,9 +36,9 @@
           <el-input
             :key="passwordType"
             ref="password"
+            v-model="loginForm.password"
             :placeholder="$t('login.password')"
             :type="passwordType"
-            v-model="loginForm.password"
             auto-complete="on"
             name="password"
             tabindex="2"
@@ -58,23 +58,12 @@
         type="primary"
         @click.native.prevent="handleLogin"
       >{{ $t('login.logIn') }}</el-button>
-
-      <div style="position:relative">
-        <div class="tips">
-          <span>{{ $t('login.username') }} : admin</span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">{{ $t('login.username') }} : editor</span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div>
-
-        <el-button
-          class="thirdparty-button"
-          type="primary"
-          @click="showDialog=true"
-        >{{ $t('login.thirdparty') }}</el-button>
-      </div>
+      <el-button
+        :disabled="true"
+        style="width:100%;margin-bottom:5px;margin-left:0px"
+        type="primary"
+        @click.native.prevent="handleReg"
+      >{{ $t('register.title') }}</el-button>
     </el-form>
 
     <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
@@ -191,6 +180,9 @@ export default {
         this.$refs.password.focus()
       })
     },
+    handleReg() {
+      this.$router.push({ path: '/register' })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -200,7 +192,7 @@ export default {
             .then(() => {
               this.loading = false
               Message({
-                message: '登录成功',
+                message: this.$t('login.success'),
                 type: 'success',
                 duration: 5 * 1000
               })
