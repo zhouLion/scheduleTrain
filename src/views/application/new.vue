@@ -91,13 +91,11 @@
             >
               <el-input
                 v-model="form.HomeAddress"
-                disabled
               />
             </el-form-item>
             <el-form-item label="手机号码">
               <el-input
                 v-model="form.Phone"
-                disabled
               />
             </el-form-item>
             <hr class="divider">
@@ -193,7 +191,6 @@
                   :max="100"
                   :min="1"
                   label="休假时长（天）"
-                  @change="handleChange"
                 />
               </el-col>
               <el-col
@@ -206,7 +203,6 @@
                   :max="100"
                   :min="1"
                   label="路途时间"
-                  @change="handleChange"
                 />
               </el-col>
             </el-form-item>
@@ -351,7 +347,7 @@ export default {
         duties: '',
         HomeAddress: 0,
         HomeDetailAddress: '',
-        Phone: 0,
+        Phone: '',
         Settle: 0
       },
       formApply: {
@@ -405,6 +401,7 @@ export default {
     fetchUserInfoes() {
       const id = this.form.id
       this.formFinal.RequestId = ''
+      this.formFinal.baseInfoId = ''
       if (this.OnloadingUserInfoes === true) {
         return this.$message.info({
           message: '用户信息获取中，请稍等'
