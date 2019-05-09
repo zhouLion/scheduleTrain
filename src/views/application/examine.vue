@@ -24,7 +24,6 @@
                   type="primary"
                   @click="searchData"
                 >查询</el-button>
-
                 <!-- card body -->
               </el-card>
             </el-tab-pane>
@@ -119,15 +118,21 @@ export default {
       if (this.onLoading === true) {
         return this.$message.warning('查询中，请等候')
       }
-      const fn = this.form.tab === '按人员' ? toUser : toCompany
+      const { tab, user, company } = this.form
+      let fn = toCompany
+      let params = {
+        code: company,
+        id: user
+      }
+      if (tab === '按人员') {
+        fn = toUser
+        params = user
+      }
       this.onLoading = true
-      fn()
+      fn(params)
         .then(data => {
           const list = data.list
-          if (list) {
-            // this.dataList = this.dataList.concat(list)
-            this.dataList = list
-          }
+          this.dataList = list || []
         })
         .finally(() => {
           return (this.onLoading = false)

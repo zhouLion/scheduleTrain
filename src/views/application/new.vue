@@ -1,6 +1,9 @@
 <template>
   <div class="application-new">
-    <el-card shadow="hover">
+    <el-card
+      :body-style="{padding: 0}"
+      shadow="hover"
+    >
       <div
         :style="{'backgroundColor': theme}"
         class="layout pa-3 row justify-space-between"
@@ -8,7 +11,7 @@
         <span>新建申请</span>
       </div>
       <el-card class="elevation-0">
-        <div class="pa-2">
+        <div class="px-2 pb-2 pt-0">
           <el-steps
             :active="active"
             finish-status="success"

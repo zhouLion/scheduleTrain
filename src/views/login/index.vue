@@ -4,8 +4,8 @@
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
-      class="login-form"
       auto-complete="on"
+      class="login-form"
       label-position="left"
     >
       <div class="title-container">
@@ -21,14 +21,19 @@
           ref="username"
           v-model="loginForm.username"
           :placeholder="$t('login.username')"
-          name="username"
-          type="text"
-          tabindex="1"
           auto-complete="on"
+          name="username"
+          tabindex="1"
+          type="text"
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock is On"
+        manual
+        placement="right"
+      >
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -36,17 +41,20 @@
           <el-input
             :key="passwordType"
             ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
             :placeholder="$t('login.password')"
+            :type="passwordType"
+            v-model="loginForm.password"
+            auto-complete="on"
             name="password"
             tabindex="2"
-            auto-complete="on"
-            @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
+            @keyup.native="checkCapslock"
           />
-          <span class="show-pwd" @click="showPwd">
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
@@ -54,8 +62,8 @@
 
       <el-button
         :loading="loading"
-        type="primary"
         style="width:100%;margin-bottom:30px;"
+        type="primary"
         @click.native.prevent="handleLogin"
       >{{ $t('login.logIn') }}</el-button>
 
@@ -77,7 +85,10 @@
       </div>
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
+    <el-dialog
+      :title="$t('login.thirdparty')"
+      :visible.sync="showDialog"
+    >
       {{ $t('login.thirdpartyTips') }}
       <br>
       <br>
@@ -185,13 +196,14 @@ export default {
           this.loading = true
           this.$store
             .dispatch('user/login', this.loginForm)
-            .then(() => {
+            .then(data => {
               this.loading = false
               Message({
                 message: '登录成功',
                 type: 'success',
                 duration: 5 * 1000
               })
+              this.$router.push({ path: this.redirect || '/' })
             })
             .catch(() => {
               this.loading = false
