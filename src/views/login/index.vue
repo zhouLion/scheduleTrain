@@ -58,23 +58,12 @@
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >{{ $t('login.logIn') }}</el-button>
-
-      <div style="position:relative">
-        <div class="tips">
-          <span>{{ $t('login.username') }} : admin</span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">{{ $t('login.username') }} : editor</span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div>
-
-        <el-button
-          class="thirdparty-button"
-          type="primary"
-          @click="showDialog=true"
-        >{{ $t('login.thirdparty') }}</el-button>
-      </div>
+      <el-button
+        :disabled="true"
+        style="width:100%;margin-bottom:5px;margin-left:0px"
+        type="primary"
+        @click.native.prevent="handleReg"
+      >{{ $t('register.title') }}</el-button>
     </el-form>
 
     <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
@@ -92,6 +81,7 @@ import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './components/SocialSignin'
 import { Message } from 'element-ui'
+import { getUserBase } from '../../api/userinfo'
 export default {
   name: 'Login',
   components: { LangSelect, SocialSign },
@@ -149,6 +139,17 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    getUserBase()
+      .then(data => {
+        if (data) this.$router.push('/application/examine')
+      })
+      .catch(() => {
+        Message({
+          message: '注意，请务必不要泄露密码',
+          type: 'warning',
+          duration: 5000
+        })
+      })
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
@@ -179,6 +180,9 @@ export default {
         this.$refs.password.focus()
       })
     },
+    handleReg() {
+      this.$router.push({ path: '/register' })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -188,16 +192,25 @@ export default {
             .then(() => {
               this.loading = false
               Message({
-                message: '登录成功',
+                message: this.$t('login.success'),
                 type: 'success',
                 duration: 5 * 1000
               })
             })
             .catch(() => {
+              Message({
+                message: '无效的登录请求',
+                type: 'error',
+                duration: 5 * 1000
+              })
               this.loading = false
             })
         } else {
-          console.log('error submit!!')
+          Message({
+            message: '无效的登录请求',
+            type: 'error',
+            duration: 5 * 1000
+          })
           return false
         }
       })
