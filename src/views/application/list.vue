@@ -136,7 +136,8 @@ export default {
         .then(data => {
           const list = data.list
           if (list) {
-            this.dataList = this.dataList.concat(list)
+            // this.dataList = this.dataList.concat(list)
+            this.dataList = list
           }
         })
         .finally(() => {
