@@ -404,7 +404,7 @@ export default {
     },
     fetchUserInfoes() {
       const id = this.form.id
-      this.formFinal.RequestId
+      this.formFinal.RequestId = ''
       if (this.OnloadingUserInfoes === true) {
         return this.$message.info({
           message: '用户信息获取中，请稍等'
