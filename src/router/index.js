@@ -14,8 +14,8 @@ const applicationRouter = {
   alwaysShow: true, // will always show the root menu
   name: 'application',
   meta: {
-    title: 'application',
-    icon: 'lock'
+    title: 'application.title',
+    icon: 'clipboard'
   },
   children: [
     {
@@ -23,7 +23,8 @@ const applicationRouter = {
       component: () => import('@/views/application/new'),
       name: 'newApplication',
       meta: {
-        title: 'newApplication'
+        title: 'application.new',
+        icon: '测试申请'
       }
     },
     {
@@ -31,7 +32,8 @@ const applicationRouter = {
       component: () => import('@/views/application/examine'),
       name: 'examineApplication',
       meta: {
-        title: 'examineApplication'
+        title: 'application.examine',
+        icon: '提案审批'
       }
     },
     {
@@ -39,7 +41,8 @@ const applicationRouter = {
       component: () => import('@/views/application/list'),
       name: 'applicationList',
       meta: {
-        title: 'applicationList'
+        title: 'application.query',
+        icon: '无序排列'
       }
     }
   ]
@@ -85,6 +88,11 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register/index'),
     hidden: true
   },
   {
