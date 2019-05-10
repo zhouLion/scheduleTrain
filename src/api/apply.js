@@ -106,6 +106,29 @@ export function toCompany(companyCode) {
 }
 
 /**
+ *批量审批
+ *
+ * @export
+ * @param {Arr[json]} data
+ *      data:{
+ *        List:{
+ *          id:
+ *          action:
+ *          remark:
+ *        },
+ *        ...
+ *      }
+ * @returns
+ */
+export function audit(data) {
+  return request('/apply/audit', {
+    params: {
+      data
+    }
+  })
+}
+
+/**
  *查询申请详情
  *
  * @export
