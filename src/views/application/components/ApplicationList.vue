@@ -36,7 +36,7 @@
           <template slot-scope="{row}">
             <i
               class="el-icon-info blue--text"
-              @click="handleDetail(row.id)"
+              @click="handleDetail(row, row.id)"
             />
           </template>
         </el-table-column>
@@ -93,6 +93,7 @@
         >
           <template slot-scope="{row}">
             <slot
+              :applyid="row.id"
               :row="row"
               name="action"
             />
@@ -104,25 +105,40 @@
 
     <el-dialog
       :visible.sync="detailDrawer.show"
+      custom-class="p-fixed f-right apply-detail"
       title="详情"
-      width="30%"
+      top="0"
+      width="408px"
     >
-      {{ detailDrawer.data }}
-      <span slot="footer">
-        <el-button @click="detailDrawer.show = false">关闭</el-button>
-      </span>
+      <ApplicationDetail
+        :apply-detail="detailDrawer.data"
+        :apply-id="detailDrawer.id"
+        :basic="detailDrawer.basic"
+      >
+        <slot
+          slot="action"
+          slot-scope="{applyid, row}"
+          :applyid="applyid"
+          :row="row"
+          name="action"
+        />
+      </ApplicationDetail>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { getAllStatus, detail } from '../../../api/apply'
+import ApplicationDetail from './ApplicationDetail'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '../../../utils'
 
 export default {
   name: 'ApplicationList',
   directives: { waves },
+  components: {
+    ApplicationDetail
+  },
   props: {
     dataList: {
       type: Array,
@@ -140,7 +156,9 @@ export default {
       tableKey: 0,
       detailDrawer: {
         show: false,
-        data: null
+        data: null,
+        basic: null,
+        id: null
       },
       list: [],
       listLoading: true,
@@ -172,11 +190,13 @@ export default {
     /**
      * 查询详情
      */
-    handleDetail(id) {
+    handleDetail(row, id) {
       detail(id).then(data => {
         if (data) {
           this.detailDrawer.show = true
           this.detailDrawer.data = data
+          this.detailDrawer.basic = row
+          this.detailDrawer.id = id
         }
       })
     },
@@ -226,10 +246,20 @@ export default {
 
 <style lang="scss">
 .p-fixed {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   bottom: 0;
   background: white;
+}
+.f-right {
+  right: 0 !important;
+}
+.el-dialog.apply-detail {
+  margin-right: 0;
+  z-index: 10000;
+}
+.el-dialog.apply-detail .el-dialog__body {
+  padding: 0;
 }
 </style>
 

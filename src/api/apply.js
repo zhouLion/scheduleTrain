@@ -51,6 +51,49 @@ export function submitApply(data) {
 }
 
 /**
+ *  删除申请
+ * @param {Object} params
+ */
+export function deleteApply({
+  id, Auth
+}) {
+  return request.delete('/apply/Submit', {
+    id,
+    Auth
+  })
+}
+
+/**
+ * 保存申请
+ * @param {String} id 申请的id
+ */
+export function save(id) {
+  return request.put('/apply/Save', {
+    id
+  })
+}
+
+/**
+ * 发布申请
+ * @param {String} id 申请的id required
+ */
+export function publish(id) {
+  return request.put('/apply/Publish', {
+    id
+  })
+}
+
+/**
+ * 撤回申请
+ * @param {String} id 申请的id required
+ */
+export function withdrew(id) {
+  return request.put('/apply/Withdrew', {
+    id
+  })
+}
+
+/**
  *查询用户管辖单位下需要审核的申请
  *
  * @export
