@@ -51,6 +51,12 @@
         :sm="24"
         :span="20"
       >
+        <!-- <div
+          @click
+          :class=""
+          type="primary"
+        >12</div>-->
+
         <ApplicationList
           :data-list="dataList"
           :on-loading="onLoading"
@@ -81,7 +87,7 @@
 </template>
 
 <script>
-import ApplicationList from './tables/ApplicationList'
+import ApplicationList from './components/ApplicationList'
 import { toCompany, toUser } from '../../api/apply'
 import { getOnMyManage } from '../../api/usercompany'
 
