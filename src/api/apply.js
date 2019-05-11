@@ -55,8 +55,10 @@ export function deleteApply({
   id, Auth
 }) {
   return request.delete('/apply/Submit', {
-    id,
-    Auth
+    params: {
+      id,
+      Auth
+    }
   })
 }
 

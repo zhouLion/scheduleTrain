@@ -49,19 +49,19 @@
               天
             </span>
           </div>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
+          <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
             <div class="applyinfo-list-title">理由</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.reson }}</div>
+            <div class="applyinfo-list-subtitle">{{ requestInfo.reason }}</div>
           </el-row>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
+          <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
             <div class="applyinfo-list-title">休假目的地</div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.vocationPlace.name }}</div>
           </el-row>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
+          <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
             <div class="applyinfo-list-title">申请离队时间</div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.stampLeave }}</div>
           </el-row>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
+          <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
             <div class="applyinfo-list-title">预计归队时间</div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.stampReturn }}</div>
           </el-row>
@@ -99,7 +99,7 @@
               </div>
             </el-step>
           </el-steps>
-          <div class="applyinfo-list-subtitle">展开</div>
+          <!-- <div class="applyinfo-list-subtitle">展开</div> -->
         </el-row>
       </div>
     </div>

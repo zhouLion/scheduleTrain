@@ -37,9 +37,10 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.status !== 0) {
+      const type = res.status === 12120 ? 'warn' : 'error'
       Message({
         message: res.message,
-        type: 'error',
+        type,
         duration: 5 * 1000
       })
       return Promise.reject(res)

@@ -115,9 +115,7 @@ export default {
     getOnMyManage() {
       getOnMyManage()
         .then(data => {
-          if (data.list) {
-            this.myManages = this.list
-          }
+          this.myManages = data.list || []
         })
         .catch(err => {
           console.warn(err)

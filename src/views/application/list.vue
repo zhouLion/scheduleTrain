@@ -122,13 +122,14 @@ export default {
       getOnMyManage()
         .then(data => {
           if (data.list) {
-            this.myManages = this.list
+            this.myManages = data.list || []
           }
         })
         .catch(err => {
           console.warn(err)
         })
     },
+
     hendleExecute(method, row, id) {
       if (this.onLoading === true) {
         return false
@@ -139,10 +140,27 @@ export default {
         发布: publish,
         删除: deleteApply
       }
+      let params = id
       const fn = methodsDic[method]
+      if (method === '删除') {
+        params = {
+          id,
+          Auth: {
+            Code: 201700816,
+            AuthByUserID: 'Root'
+          }
+        }
+      }
       this.onLoading = true
-      fn(id)
+      fn(params)
         .then(data => {
+          const { status } = data
+          debugger
+          const curItem = this.dataList.find(d => d.id === id)
+          if (curItem) {
+            curItem.status = status
+            this.dataList = [...this.dataList]
+          }
           this.$message.success(method + '成功，请求状态已改变')
         })
         .catch(err => {
