@@ -46,3 +46,50 @@ export function location(code) {
     code
   })
 }
+
+const exportPath = '/static/xlsExport'
+const exportXSL = (params) => request.get(exportPath, {
+  params
+})
+
+/**
+ * 导出休假登记模版
+ * @param {Object} params
+ * {
+    "Templete":"休假人员统计表.xlsx",
+    "Model":{
+      "company":"ADJC1AH121"
+    }
+  }
+ */
+export function exportRegisterTemplate(params) {
+  return exportXSL(params)
+}
+
+/**
+ * 导出休假请求列表
+ * @param {Object} params
+ * {
+    "Templete":"休假人员统计表.xlsx",
+    "Model":{
+      "company":"ADJC1AH121"
+    }
+  }
+ */
+export function exportApplyList(params) {
+  return exportXSL(params)
+}
+
+/**
+ * 导出汇总状态
+ * @param {Object} params
+ * {
+    "Templete":"休假人员统计表.xlsx",
+    "Model":{
+      "company":"ADJC1AH121"
+    }
+  }
+ */
+export function exportTotalAuditList(params) {
+  return exportXSL(params)
+}

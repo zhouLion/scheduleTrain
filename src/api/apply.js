@@ -69,9 +69,7 @@ export function deleteApply({
  * @param {String} id 申请的id
  */
 export function save(id) {
-  return request.put('/apply/Save', {
-    id
-  })
+  return request.put('/apply/Save?id=' + id)
 }
 
 /**
@@ -79,9 +77,7 @@ export function save(id) {
  * @param {String} id 申请的id required
  */
 export function publish(id) {
-  return request.put('/apply/Publish', {
-    id
-  })
+  return request.put('/apply/Publish?id=' + id)
 }
 
 /**
@@ -89,9 +85,7 @@ export function publish(id) {
  * @param {String} id 申请的id required
  */
 export function withdrew(id) {
-  return request.put('/apply/Withdrew', {
-    id
-  })
+  return request.put('/apply/Withdrew?id=' + id)
 }
 
 /**
