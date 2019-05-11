@@ -1,7 +1,7 @@
 import {
   login,
   logout,
-  getUserInfo
+  getInfo
 } from '../../api/account'
 import {
   getToken,
@@ -71,8 +71,11 @@ const actions = {
     state
   }) {
     return new Promise((resolve, reject) => {
-      getUserInfo().then(data => {
-        console.log(data)
+      getInfo(state.token).then(response => {
+        const {
+          data
+        } = response
+
         if (!data) {
           reject('Verification failed, please Login again.')
         }

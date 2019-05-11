@@ -2,12 +2,12 @@
   <div class="application-examine ma-4">
     <el-row :gutter="20">
       <el-col
-        :lg="4"
-        :md="4"
+        :md="6"
         :sm="24"
+        :span="4"
       >
         <el-card
-          class="elevation-0"
+          class="elevation-1"
           shadow="hover"
         >
           <el-tabs v-model="form.tab">
@@ -15,7 +15,7 @@
               label="按管辖单位"
               name="按管辖单位"
             >
-              <div>
+              <el-card>
                 <el-input
                   v-model="form.company"
                   label="部门"
@@ -25,13 +25,13 @@
                   @click="searchData"
                 >查询</el-button>
                 <!-- card body -->
-              </div>
+              </el-card>
             </el-tab-pane>
             <el-tab-pane
               label="按人员"
               name="按人员"
             >
-              <div>
+              <el-card>
                 <el-input
                   v-model="form.user"
                   label="人员"
@@ -41,15 +41,15 @@
                   @click="searchData"
                 >查询</el-button>
                 <!-- card body -->
-              </div>
+              </el-card>
             </el-tab-pane>
           </el-tabs>
         </el-card>
       </el-col>
       <el-col
-        :lg="20"
-        :md="20"
+        :md="18"
         :sm="24"
+        :span="20"
       >
         <!-- <div
           @click
@@ -113,15 +113,11 @@ export default {
   },
   methods: {
     getOnMyManage() {
-      getOnMyManage()
-        .then(data => {
-          if (data.list) {
-            this.myManages = this.list
-          }
-        })
-        .catch(err => {
-          console.warn(err)
-        })
+      getOnMyManage().then(data => {
+        if (data.list) {
+          this.myManages = this.list
+        }
+      })
     },
     // 查询数据
     searchData() {

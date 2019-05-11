@@ -37,36 +37,30 @@
     <div class="apply-detail-list">
       <div class="h-88 dark" />
       <div class="padding-top-80">
-        <div v-if="requestInfo">
-          <el-row class="py-2 px-3 white">
-            <div class="applyinfo-list-title">休假类型</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.type }}</div>
-          </el-row>
-          <div class="row layout justify-space-between applyinfo-duration">
-            <span class>休假时长</span>
-            <span class="caption">
-              <span class="title">{{ requestInfo.onTripLength }}</span>
-              天
-            </span>
-          </div>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
-            <div class="applyinfo-list-title">理由</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.reson }}</div>
-          </el-row>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
-            <div class="applyinfo-list-title">休假目的地</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.vocationPlace.name }}</div>
-          </el-row>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
-            <div class="applyinfo-list-title">申请离队时间</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.stampLeave }}</div>
-          </el-row>
-          <el-row class="py-2 mx-2 mb-2 white el-row">
-            <div class="applyinfo-list-title">预计归队时间</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.stampReturn }}</div>
-          </el-row>
+        <el-row class="py-2 px-3 white">
+          <div class="applyinfo-list-title">休假类型</div>
+          <div class="applyinfo-list-subtitle">{{ basic.type }}</div>
+        </el-row>
+        <div class="row layout justify-space-between applyinfo-duration">
+          <span class>请假时长</span>
+          <span class="caption">5天</span>
         </div>
-
+        <el-row class="py-2 mx-2 mb-2 white el-row">
+          <div class="applyinfo-list-title">理由</div>
+          <div class="applyinfo-list-subtitle">wuliyou</div>
+        </el-row>
+        <el-row class="py-2 mx-2 mb-2 white el-row">
+          <div class="applyinfo-list-title">休假目的地</div>
+          <div class="applyinfo-list-subtitle">hunan</div>
+        </el-row>
+        <el-row class="py-2 mx-2 mb-2 white el-row">
+          <div class="applyinfo-list-title">申请离队时间</div>
+          <div class="applyinfo-list-subtitle">{{ basic.stampLeave }}</div>
+        </el-row>
+        <el-row class="py-2 mx-2 mb-2 white el-row">
+          <div class="applyinfo-list-title">预计归队时间</div>
+          <div class="applyinfo-list-subtitle">{{ basic.stampReturn }}</div>
+        </el-row>
         <el-row class="py-2 px-3 my-2">
           <div class="applyinfo-list-title">审核流程</div>
           <el-steps
@@ -119,7 +113,7 @@
 
 <script>
 export default {
-  name: 'ApplicationDetail',
+  name: '',
   props: {
     basic: {
       type: Object,
@@ -144,9 +138,6 @@ export default {
   computed: {
     response() {
       return this.detail.response
-    },
-    requestInfo() {
-      return this.detail.requestInfo
     },
     activedProcess() {
       const { nowAuditCompany } = this.basic

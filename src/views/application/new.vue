@@ -352,7 +352,7 @@ export default {
       },
       formApply: {
         // id: '',
-        StampLeave: '',
+        StampLeave: '2019-5-7',
         VocationLength: 0,
         OnTripLength: 0,
         VocationType: '',
