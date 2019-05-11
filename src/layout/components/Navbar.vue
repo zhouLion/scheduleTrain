@@ -7,40 +7,72 @@
       @toggleClick="toggleSideBar"
     />
 
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+    <breadcrumb
+      id="breadcrumb-container"
+      class="breadcrumb-container"
+    />
 
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
-        <search id="header-search" class="right-menu-item" />
+        <search
+          id="header-search"
+          class="right-menu-item"
+        />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <screenfull
+          id="screenfull"
+          class="right-menu-item hover-effect"
+        />
       </template>
 
+      <el-tooltip
+        v-if="!hasLogin"
+        content="未登录状态，点击登录可获取更多权限"
+        effect="dark"
+        placement="left"
+      >
+        <div
+          class="orange right-menu-item hover-effect"
+          @click="login"
+        >
+          <i class="el-icon-user" />未登录
+        </div>
+        <!-- content to trigger tooltip here -->
+      </el-tooltip>
       <el-dropdown
+        v-else
         class="avatar-container right-menu-item hover-effect"
         trigger="click"
       >
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img
+            :src="avatar"
+            class="user-avatar"
+          >
+          <span class="caption">{{ name }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
-            <el-dropdown-item>
-              {{ $t("navbar.profile") }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t("navbar.profile") }}</el-dropdown-item>
+          </router-link>
+          <router-link to="dashboard">
+            <el-dropdown-item>{{ $t("navbar.dashboard") }}</el-dropdown-item>
           </router-link>
           <router-link to="/">
-            <el-dropdown-item>
-              {{ $t("navbar.dashboard") }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t("welcome") }}</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">{{
-              $t("navbar.logOut")
-            }}</span>
+            <span
+              style="display:block;"
+              @click="logout"
+            >
+              {{
+                $t("navbar.logOut")
+              }}
+            </span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -65,7 +97,13 @@ export default {
     Search
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'device'])
+    ...mapGetters(['sidebar', 'avatar', 'device']),
+    hasLogin() {
+      return this.$store.state.user.userid
+    },
+    name() {
+      return this.$store.state.user.name
+    }
   },
   methods: {
     toggleSideBar() {
@@ -74,6 +112,9 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    login() {
+      return this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }
@@ -137,7 +178,7 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
+      margin-right: 12px;
 
       .avatar-wrapper {
         margin-top: 5px;
@@ -150,13 +191,13 @@ export default {
           border-radius: 10px;
         }
 
-        .el-icon-caret-bottom {
+        /* .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
           right: -20px;
           top: 25px;
           font-size: 12px;
-        }
+        } */
       }
     }
   }

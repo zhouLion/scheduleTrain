@@ -107,7 +107,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
+        commit('SET_NAME', '')
+        commit('SET_USERID', '')
+        commit('SET_AVATAR', '')
+        commit('SET_INTRODUCTION', '')
         removeToken()
         resetRouter()
         resolve()
