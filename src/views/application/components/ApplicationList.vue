@@ -144,6 +144,7 @@ import { getAllStatus, detail } from '../../../api/apply'
 import ApplicationDetail from './ApplicationDetail'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '../../../utils'
+moment.locale('zh-cn')
 
 export default {
   name: 'ApplicationList',
@@ -198,12 +199,8 @@ export default {
         const statusObj = statusOptions[item.status]
         item.statusDesc = statusObj ? statusObj.desc : '不明类型'
         item.statusColor = statusObj ? statusObj.color : 'white'
-        item.stampLeave = moment(item.stampLeave).format(
-          'MMMM Do YYYY, h:mm:ss a'
-        )
-        item.stampLeave = moment(item.stampReturn).format(
-          'MMMM Do YYYY, h:mm:ss a'
-        )
+        item.stampLeave = moment(item.stampLeave).format('LLLL')
+        item.stampReturn = moment(item.stampReturn).format('LLLL')
         item.create = format(item.create, 'zh_CN')
         // item.stampLeave = parseTime(item.stampLeave, 'YYYY年MM月dd日')
         // item.stampReturn = parseTime(item.stampReturn, 'YYYY年MM月dd日')
