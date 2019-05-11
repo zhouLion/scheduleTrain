@@ -1,19 +1,11 @@
 <template>
   <div class="welcome">
-    <el-row
-      class="row-bg"
-      justify="space-around"
-      type="flex"
-    >
+    <el-row class="row-bg" justify="space-around" type="flex">
       <el-col :span="6">
         <router-link to="application/new">
           <el-card :body-style="{ padding: '0px' }">
-            <img
-              class="image"
-              src="@/assets/pngs/report_presentation.png"
-            >
             <div style="padding: 14px;">
-              <span>直接创建申请</span>
+              <span>创建申请</span>
             </div>
           </el-card>
         </router-link>
@@ -21,12 +13,8 @@
       <el-col :span="6">
         <router-link to="login">
           <el-card :body-style="{ padding: '0px' }">
-            <img
-              class="image"
-              src="@/assets/pngs/checklist.png"
-            >
             <div style="padding: 14px;">
-              <span>登录管理申请</span>
+              <span>审核申请</span>
             </div>
           </el-card>
         </router-link>
