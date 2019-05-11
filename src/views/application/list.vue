@@ -165,7 +165,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          this.$message.error('操作失败')
+          this.$message.error(err)
         })
         .finally(() => {
           this.onLoading = false

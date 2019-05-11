@@ -57,7 +57,11 @@ export default {
 
     // 监听侧边栏的变化
     this.sidebarElm = document.getElementsByClassName('sidebar-container')[0]
-    this.sidebarElm && this.sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler)
+    this.sidebarElm &&
+      this.sidebarElm.addEventListener(
+        'transitionend',
+        this.sidebarResizeHandler
+      )
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -67,7 +71,11 @@ export default {
       window.removeEventListener('resize', this.__resizeHandler)
     }
 
-    this.sidebarElm && this.sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler)
+    this.sidebarElm &&
+      this.sidebarElm.removeEventListener(
+        'transitionend',
+        this.sidebarResizeHandler
+      )
 
     this.chart.dispose()
     this.chart = null
@@ -78,10 +86,11 @@ export default {
         this.__resizeHandler()
       }
     },
-    setOptions({ expectedData, actualData } = {}) {
+    //
+    setOptions({ onApplying, beenAudit, beenDeined, titles } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: titles,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -107,44 +116,64 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['新增申请', '被批准', '被驳回']
         },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
+        series: [
+          {
+            name: '新增申请',
+            itemStyle: {
+              normal: {
                 color: '#FF005A',
-                width: 2
+                lineStyle: {
+                  color: '#FF005A',
+                  width: 2
+                }
               }
-            }
+            },
+            smooth: true,
+            type: 'line',
+            data: onApplying,
+            animationDuration: 2800,
+            animationEasing: 'cubicInOut'
           },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
+          {
+            name: '被批准',
+            itemStyle: {
+              normal: {
+                color: '#FF005A',
+                lineStyle: {
+                  color: '#FF005A',
+                  width: 2
+                }
+              }
+            },
+            smooth: true,
+            type: 'line',
+            data: beenAudit,
+            animationDuration: 2800,
+            animationEasing: 'cubicInOut'
+          },
+          {
+            name: '被驳回',
+            smooth: true,
+            type: 'line',
+            itemStyle: {
+              normal: {
                 color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
+                lineStyle: {
+                  color: '#3888fa',
+                  width: 2
+                },
+                areaStyle: {
+                  color: '#f3f8ff'
+                }
               }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+            },
+            data: beenDeined,
+            animationDuration: 2800,
+            animationEasing: 'quadraticOut'
+          }
+        ]
       })
     },
     initChart() {

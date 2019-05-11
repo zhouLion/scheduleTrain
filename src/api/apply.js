@@ -49,16 +49,14 @@ export function submitApply(data) {
 
 /**
  *  删除申请
- * @param {Object} params
+ * @param {json} params
+ *      {string} params.id
+ *      {Auth}   params.Auth
  */
-export function deleteApply({
-  id, Auth
-}) {
+export function deleteApply(params) {
   return request.delete('/apply/Submit', {
-    params: {
-      id,
-      Auth
-    }
+    id: params.id,
+    Auth: params.Auth
   })
 }
 
