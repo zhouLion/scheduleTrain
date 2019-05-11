@@ -2,7 +2,7 @@
   <section class="todoapp">
     <!-- header -->
     <header class="header">
-      <input class="new-todo" autocomplete="off" placeholder="Todo List" @keyup.enter="addTodo">
+      <input class="new-todo" autocomplete="off" placeholder="休假申请流程" @keyup.enter="addTodo">
     </header>
     <!-- main section -->
     <section v-show="todos.length" class="main">
@@ -47,14 +47,14 @@ const filters = {
   completed: todos => todos.filter(todo => todo.done)
 }
 const defalutList = [
-  { text: 'star this repository', done: false },
-  { text: 'fork this repository', done: false },
-  { text: 'follow author', done: false },
-  { text: 'vue-element-admin', done: true },
-  { text: 'vue', done: true },
-  { text: 'element-ui', done: true },
-  { text: 'axios', done: true },
-  { text: 'webpack', done: true }
+  { text: '填写休假申请', done: false },
+  { text: '上报所在连/科室主管', done: false },
+  { text: '连/科室主管打印签字并上报营/部门主管', done: false },
+  { text: '营/部门主管打印签字并上报政治部门', done: false },
+  { text: '政治部门签字并交人力资源科', done: false },
+  { text: '上报首长', done: false },
+  { text: '申请通过，打印留档', done: false },
+  { text: '年度数据统计', done: false }
 ]
 export default {
   components: { Todo },
