@@ -7,40 +7,39 @@
     </el-row>
 
     <el-row :gutter="32">
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :lg="12" :sm="24" :xs="24">
         <div class="chart-wrapper">
           <raddar-chart />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :lg="12" :sm="24" :xs="24">
         <div class="chart-wrapper">
           <pie-chart />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :lg="32" :sm="32" :xs="1">
         <div class="chart-wrapper">
           <bar-chart />
         </div>
       </el-col>
     </el-row>
-
     <el-row :gutter="8">
       <el-col
-        :xs="{ span: 24 }"
-        :sm="{ span: 12 }"
-        :md="{ span: 12 }"
         :lg="{ span: 6 }"
+        :md="{ span: 12 }"
+        :sm="{ span: 12 }"
         :xl="{ span: 6 }"
+        :xs="{ span: 24 }"
         style="margin-bottom:30px;"
       >
         <todo-list />
       </el-col>
       <el-col
-        :xs="{ span: 24 }"
-        :sm="{ span: 12 }"
-        :md="{ span: 12 }"
         :lg="{ span: 6 }"
+        :md="{ span: 12 }"
+        :sm="{ span: 12 }"
         :xl="{ span: 6 }"
+        :xs="{ span: 24 }"
         style="margin-bottom:30px;"
       >
         <box-card />
@@ -75,7 +74,12 @@ export default {
     }
   },
   methods: {
-    handleSetLineChartData(onApplyingData, beenAuditData, beenDeniedData, titles) {
+    handleSetLineChartData(
+      onApplyingData,
+      beenAuditData,
+      beenDeniedData,
+      titles
+    ) {
       this.lineChartData = {
         onApplying: onApplyingData,
         beenAudit: beenAuditData,

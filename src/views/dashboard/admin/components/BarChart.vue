@@ -7,7 +7,7 @@ import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
 
-const animationDuration = 6000
+const animationDuration = 3000
 
 export default {
   props: {
@@ -54,7 +54,7 @@ export default {
         tooltip: {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
@@ -66,7 +66,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['机动一营', '机动二营', '保障营', '一营', '二营', '三营', '四营', '五营', '六营', '七营', '八营', '九营', '政工组', '军事组', '保障组'],
           axisTick: {
             alignWithLabel: true
           }
@@ -74,25 +74,25 @@ export default {
         yAxis: [{
           type: 'value',
           axisTick: {
-            show: false
+            show: true
           }
         }],
         series: [{
-          name: 'pageA',
+          name: '完成休假',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          data: [79, 52, 200, 334, 390, 330, 220, 79, 52, 200, 334, 390, 330, 220, 79, 52, 200, 334, 390, 330, 220],
           animationDuration
         }, {
-          name: 'pageB',
+          name: '未完成休假',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
           data: [80, 52, 200, 334, 390, 330, 220],
           animationDuration
         }, {
-          name: 'pageC',
+          name: '未休假',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
