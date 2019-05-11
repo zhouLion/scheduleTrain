@@ -4,51 +4,95 @@
     class="application-detail"
   >
     <div class="applyinfo-card">
-      <div class="applyinfo-no">No.</div>
-      <div class="d-flex">
+      <div class="applyinfo-no caption py-2">
+        创建于.
+        <span class="font-weight-thin">{{ basic.create }}</span>
+      </div>
+      <div class="row layout justify-start">
         <div class="applyinfo-avatar">
-          <img
-            alt="tubian"
-            src="as"
-          >
+          <i class="el-icon-user-solid" />
         </div>
         <div class="applyinfo-content">
-          <div class="applyinfo-content-title">赵丽颖</div>
-          <div class="applyinfo-content-subtitle">拉可视对讲福利卡数据的</div>
+          <div class="applyinfo-content-title">
+            {{ basic.base.realName }}
+            <el-tag
+              class="ml-2"
+              size="mini"
+              type="info"
+            >{{ basic.base.dutiesName }}</el-tag>
+          </div>
+          <div
+            :title="basic.base.companyName"
+            class="applyinfo-content-subtitle text-truncate"
+          >{{ basic.base.companyName }}</div>
         </div>
       </div>
-      <div class="applyinfo-footer" />
+      <div class="applyinfo-footer pa-2">
+        <div class="layout row justify-space-between">
+          <el-tag type="info">{{ basic.statusDesc }}</el-tag>
+        </div>
+      </div>
     </div>
 
     <div class="apply-detail-list">
-      <div class="h-66 dark" />
+      <div class="h-88 dark" />
       <div class="padding-top-80">
         <el-row class="py-2 px-3 white">
           <div class="applyinfo-list-title">休假类型</div>
-          <div class="applyinfo-list-subtitle">正休</div>
+          <div class="applyinfo-list-subtitle">{{ basic.type }}</div>
         </el-row>
         <div class="row layout justify-space-between applyinfo-duration">
           <span class>请假时长</span>
           <span class="caption">5天</span>
         </div>
-        <el-row class="py-2 px-3 mb-2 white">
+        <el-row class="py-2 mx-2 mb-2 white el-row">
           <div class="applyinfo-list-title">理由</div>
           <div class="applyinfo-list-subtitle">wuliyou</div>
         </el-row>
-        <el-row class="py-2 px-3 mb-2 white">
+        <el-row class="py-2 mx-2 mb-2 white el-row">
           <div class="applyinfo-list-title">休假目的地</div>
           <div class="applyinfo-list-subtitle">hunan</div>
         </el-row>
-        <el-row class="py-2 px-3 mb-2 white">
+        <el-row class="py-2 mx-2 mb-2 white el-row">
           <div class="applyinfo-list-title">申请离队时间</div>
-          <div class="applyinfo-list-subtitle">123123</div>
+          <div class="applyinfo-list-subtitle">{{ basic.stampLeave }}</div>
         </el-row>
-        <el-row class="py-2 px-3 mb-2 white">
-          <div class="applyinfo-list-title">预计退队时间</div>
-          <div class="applyinfo-list-subtitle">2019年6月6日 12点30分</div>
+        <el-row class="py-2 mx-2 mb-2 white el-row">
+          <div class="applyinfo-list-title">预计归队时间</div>
+          <div class="applyinfo-list-subtitle">{{ basic.stampReturn }}</div>
         </el-row>
         <el-row class="py-2 px-3 my-2">
-          <div class="applyinfo-list-title">审核进度</div>
+          <div class="applyinfo-list-title">审核流程</div>
+          <el-steps
+            :active="activedProcess"
+            class="pa-2"
+            direction="vertical"
+          >
+            <el-step
+              v-for="(step) in response"
+              :key="step.companyName"
+              finish-status="success"
+            >
+              <div
+                slot="description"
+                class="audit-process-card"
+              >
+                <div class="audit-process-status">
+                  <span>{{ step.status == 1 ? '通过' : '驳回或尚未处理' }}</span>
+                </div>
+                <div class="audit-process-companyName">
+                  <span>{{ step.companyName }}</span>
+                </div>
+                <div class="row layout justify-space-around">
+                  <span class="audit-process-person">{{ step.auditingUserRealName }}</span>
+                  <span class="audit-process-handleStamp">{{ step.handleStamp }}</span>
+                </div>
+                <div class="audit-process-remark">
+                  <span>{{ step.remark }}</span>
+                </div>
+              </div>
+            </el-step>
+          </el-steps>
           <div class="applyinfo-list-subtitle">展开</div>
         </el-row>
       </div>
@@ -90,6 +134,19 @@ export default {
   },
   data() {
     return {}
+  },
+  computed: {
+    response() {
+      return this.detail.response
+    },
+    activedProcess() {
+      const { nowAuditCompany } = this.basic
+      const { response } = this
+      const index = response.findIndex(
+        val => val.companyName === nowAuditCompany
+      )
+      return index + 1 < 1 ? -1 : index + 1
+    }
   }
 }
 </script>
@@ -100,8 +157,8 @@ export default {
   padding: 0;
   background: whitesmoke;
   height: calc(100vh - 48px);
-  .h-66 {
-    height: 66px;
+  .h-88 {
+    height: 88px;
   }
 
   .dark {
@@ -123,7 +180,6 @@ export default {
     box-shadow: 0 2px 12px -6px;
     padding: 0 8px;
     background: white;
-    height: 120px;
     z-index: 36;
   }
 
@@ -138,7 +194,6 @@ export default {
   }
 
   .applyinfo-footer {
-    min-height: 32px;
     border-top: 1px solid #eeeeee;
   }
 
@@ -151,6 +206,7 @@ export default {
   .applyinfo-content-subtitle {
     font-size: 12px;
     padding: 8px;
+    max-width: 280px;
   }
 
   &.el-card .el-card__body {
@@ -165,8 +221,9 @@ export default {
     position: absolute;
     width: 100%;
     height: calc(100vh - 54px);
+    background: #f5f5f5;
     overflow-y: auto;
-    padding-bottom: 48px;
+    padding-bottom: 56px;
 
     .applyinfo-duration {
       height: 60px;
@@ -199,6 +256,23 @@ export default {
     box-shadow: 1px 0 8px -5px black;
     z-index: 1;
     padding: 12px;
+  }
+
+  .audit-process- {
+    &card {
+      background: white;
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 4px;
+      box-shadow: 0px 0px 2px 0px;
+    }
+    &status {
+      font-size: 13px;
+      padding: 4px 0;
+    }
+    &companyName {
+      padding: 4px 0 4px;
+    }
   }
 }
 </style>

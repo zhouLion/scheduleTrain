@@ -22,7 +22,7 @@
       <el-table
         :key="tableKey"
         v-loading="onLoading"
-        :data="dataList"
+        :data="formatedList"
         border
         fit
         highlight-current-row
@@ -40,23 +40,34 @@
             />
           </template>
         </el-table-column>
+
+        <el-table-column
+          label="申请人"
+          min-width="80px"
+        >
+          <template slot-scope="{row}">
+            <span>{{ row.base.realName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="单位"
+          min-width="130px"
+        >
+          <template slot-scope="{row}">
+            <span>{{ row.base.companyName }}</span>
+          </template>
+        </el-table-column>
+
         <el-table-column
           align="center"
           label="创建时间"
           width="150px"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.create | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+            <span>{{ scope.row.create }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="申请人"
-          min-width="150px"
-        >
-          <template slot-scope="{row}">
-            <span>{{ row.base.realName }}</span>
-          </template>
-        </el-table-column>
+
         <el-table-column
           align="center"
           label="申请离队时间"
@@ -77,11 +88,14 @@
         </el-table-column>
         <el-table-column
           align="center"
-          label="条目状态"
+          label="状态"
           width="110px"
         >
-          <template slot-scope="scope">
-            <span style="color:red;">{{ scope.row.status }}</span>
+          <template slot-scope="{row}">
+            <el-tag
+              :color="row.statusColor"
+              class="white--text"
+            >{{ row.statusDesc }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -111,9 +125,9 @@
       width="408px"
     >
       <ApplicationDetail
-        :apply-detail="detailDrawer.data"
         :apply-id="detailDrawer.id"
         :basic="detailDrawer.basic"
+        :detail="detailDrawer.data"
       >
         <slot
           slot="action"
@@ -128,6 +142,7 @@
 </template>
 
 <script>
+import { format } from 'timeago.js'
 import { getAllStatus, detail } from '../../../api/apply'
 import ApplicationDetail from './ApplicationDetail'
 import waves from '@/directive/waves' // waves directive
@@ -175,10 +190,29 @@ export default {
       downloadLoading: false
     }
   },
+  computed: {
+    /**
+     * 状态字典翻译
+     */
+    formatedList() {
+      const { statusOptions } = this
+      return this.dataList.map(li => {
+        const { ...item } = li
+        const statusObj = statusOptions[item.status]
+        item.statusDesc = statusObj ? statusObj.desc : '不明类型'
+        item.statusColor = statusObj ? statusObj.color : 'white'
+        item.stampLeave = format(item.stampLeave, 'zh_CN')
+        item.stampReturn = format(item.stampReturn, 'zh_CN')
+        item.create = format(item.create, 'zh_CN')
+        return item
+      })
+    }
+  },
   async created() {
     await this.getAllStatus()
   },
   methods: {
+    // 获取所有的状态字典
     getAllStatus() {
       return getAllStatus().then(status => {
         if (status.list) {
