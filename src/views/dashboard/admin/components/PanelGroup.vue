@@ -7,7 +7,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            登录情况
+            本月战士休假情况
           </div>
           <count-to :start-val="0" :end-val="2755" :duration="2600" class="card-panel-num" />
         </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            访问情况
+            本月干部休假情况
           </div>
           <count-to :start-val="0" :end-val="252" :duration="3000" class="card-panel-num" />
         </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            休假申请
+            年度战士休假情况
           </div>
           <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
         </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            休假批准
+            年度干部休假情况
           </div>
           <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
         </div>
