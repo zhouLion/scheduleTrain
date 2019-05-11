@@ -24,6 +24,7 @@ const applicationRouter = {
       name: 'newApplication',
       meta: {
         title: 'application.new',
+        verify: 'on',
         icon: '测试申请'
       }
     },
@@ -33,6 +34,7 @@ const applicationRouter = {
       name: 'examineApplication',
       meta: {
         title: 'application.examine',
+        verify: 'on',
         icon: '提案审批'
       }
     },
@@ -42,6 +44,7 @@ const applicationRouter = {
       name: 'applicationList',
       meta: {
         title: 'application.query',
+        verify: 'on',
         icon: '无序排列'
       }
     }
@@ -118,7 +121,7 @@ export const constantRoutes = [
   {
     path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard/',
+    // redirect: '/dashboard',
     children: [
       {
         path: '',

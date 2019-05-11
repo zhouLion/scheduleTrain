@@ -29,24 +29,19 @@
         style="width: 100%;"
       >
         <el-table-column
-          align="center"
-          label="详情"
-          width="50px"
-        >
-          <template slot-scope="{row}">
-            <i
-              class="el-icon-info blue--text"
-              @click="handleDetail(row, row.id)"
-            />
-          </template>
-        </el-table-column>
-
-        <el-table-column
           label="申请人"
-          min-width="80px"
+          min-width="120px"
         >
           <template slot-scope="{row}">
-            <span>{{ row.base.realName }}</span>
+            <el-button
+              plain
+              size="mini"
+              type="info"
+              @click="handleDetail(row, row.id)"
+            >
+              <i class="el-icon-info blue--text" />
+              <span class="info--text">{{ row.base.realName }}</span>
+            </el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -54,7 +49,7 @@
           min-width="130px"
         >
           <template slot-scope="{row}">
-            <span>{{ row.base.companyName }}</span>
+            <span class="caption">{{ row.base.companyName }}</span>
           </template>
         </el-table-column>
 
@@ -71,7 +66,7 @@
         <el-table-column
           align="center"
           label="申请离队时间"
-          width="210px"
+          width="150px"
         >
           <template slot-scope="scope">
             <span>{{ scope.row.stampLeave }}</span>
@@ -80,7 +75,7 @@
         <el-table-column
           align="center"
           label="预计归队时间"
-          width="210px"
+          width="150px"
         >
           <template slot-scope="scope">
             <span>{{ scope.row.stampReturn }}</span>
@@ -95,6 +90,7 @@
             <el-tag
               :color="row.statusColor"
               class="white--text"
+              size="mini"
             >{{ row.statusDesc }}</el-tag>
           </template>
         </el-table-column>
@@ -143,10 +139,12 @@
 
 <script>
 import { format } from 'timeago.js'
+import moment from 'moment'
 import { getAllStatus, detail } from '../../../api/apply'
 import ApplicationDetail from './ApplicationDetail'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '../../../utils'
+moment.locale('zh-cn')
 
 export default {
   name: 'ApplicationList',
@@ -201,9 +199,12 @@ export default {
         const statusObj = statusOptions[item.status]
         item.statusDesc = statusObj ? statusObj.desc : '不明类型'
         item.statusColor = statusObj ? statusObj.color : 'white'
-        item.stampLeave = format(item.stampLeave, 'zh_CN')
-        item.stampReturn = format(item.stampReturn, 'zh_CN')
+        item.stampLeave = moment(item.stampLeave).format('LLLL')
+        item.stampReturn = moment(item.stampReturn).format('LLLL')
         item.create = format(item.create, 'zh_CN')
+        // item.stampLeave = parseTime(item.stampLeave, 'YYYY年MM月dd日')
+        // item.stampReturn = parseTime(item.stampReturn, 'YYYY年MM月dd日')
+        // item.create = parseTime(item.create, 'YYYY年MM月dd日')
         return item
       })
     }

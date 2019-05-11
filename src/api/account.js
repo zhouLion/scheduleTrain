@@ -63,6 +63,14 @@ export function register(params) {
 }
 
 /**
+ * 获取用户信息
+ * @description 在account的api中用来验证用户是否登录，并且实时更新用户的基本信息
+ */
+export function getUserInfo() {
+  return request.get('/users/base')
+}
+
+/**
  * 获取权限
  * @param {{
  * id: String,

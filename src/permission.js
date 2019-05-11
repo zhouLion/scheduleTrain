@@ -14,6 +14,10 @@ router.beforeEach(async(to, from, next) => {
   NProgress.start()
   // set page title
   document.title = getPageTitle(to.meta.title)
+  const { verify } = to.meta
+  if (verify && verify === 'on') {
+    store.dispatch('user/getInfo')
+  }
   const routersLoaded = store.state.permission.routersLoaded
   if (routersLoaded === true) {
     next()

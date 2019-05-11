@@ -1,7 +1,7 @@
 import {
   login,
   logout,
-  getInfo
+  getUserInfo
 } from '../../api/account'
 import {
   getToken,
@@ -15,6 +15,7 @@ import router, {
 const state = {
   token: getToken(),
   name: '',
+  userid: '',
   avatar: '',
   introduction: '',
   roles: []
@@ -26,6 +27,9 @@ const mutations = {
   },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
+  },
+  SET_USERID: (state, userid) => {
+    state.userid = userid
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -71,31 +75,23 @@ const actions = {
     state
   }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const {
-          data
-        } = response
-
+      getUserInfo().then(data => {
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('身份验证失败，可能需要重新登陆')
         }
-
         const {
-          roles,
-          name,
-          avatar,
-          introduction
+          avatar, /*  gender, */ id/* , privateAccount */, realName
         } = data
-
+        // roles = ['admin']
         // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        // if (!roles || roles.length <= 0) {
+        //   reject('getInfo: roles must be a non-null array!')
+        // }
+        // commit('SET_ROLES', roles)
+        commit('SET_NAME', realName)
+        commit('SET_USERID', id)
+        commit('SET_AVATAR', process.env.VUE_APP_BASE_API + avatar)
+        commit('SET_INTRODUCTION', '无简介')
         resolve(data)
       }).catch(error => {
         reject(error)
