@@ -2,12 +2,12 @@
   <div class="application-list ma-4">
     <el-row :gutter="20">
       <el-col
-        :md="6"
+        :lg="4"
+        :md="4"
         :sm="24"
-        :span="4"
       >
         <el-card
-          class="elevation-1"
+          class="elevation-0"
           shadow="hover"
         >
           <el-tabs v-model="form.tab">
@@ -15,7 +15,7 @@
               label="按部门"
               name="按部门"
             >
-              <el-card>
+              <div>
                 <el-input
                   v-model="form.company"
                   label="部门"
@@ -24,13 +24,13 @@
                   type="primary"
                   @click="searchData"
                 >查询</el-button>
-              </el-card>
+              </div>
             </el-tab-pane>
             <el-tab-pane
               label="按人员"
               name="按人员"
             >
-              <el-card>
+              <div>
                 <el-input
                   v-model="form.user"
                   label="人员"
@@ -39,15 +39,15 @@
                   type="primary"
                   @click="searchData"
                 >查询</el-button>
-              </el-card>
+              </div>
             </el-tab-pane>
           </el-tabs>
         </el-card>
       </el-col>
       <el-col
-        :md="18"
+        :lg="20"
+        :md="20"
         :sm="24"
-        :span="20"
       >
         <ApplicationList
           :data-list="dataList"
@@ -110,7 +110,8 @@ export default {
         user: '1000000'
       },
       dataList: [],
-      onLoading: false
+      onLoading: false,
+      myManages: []
     }
   },
   created() {
@@ -118,13 +119,20 @@ export default {
   },
   methods: {
     getOnMyManage() {
-      getOnMyManage().then(data => {
-        if (data.list) {
-          this.myManages = this.list
-        }
-      })
+      getOnMyManage()
+        .then(data => {
+          if (data.list) {
+            this.myManages = this.list
+          }
+        })
+        .catch(err => {
+          console.warn(err)
+        })
     },
     hendleExecute(method, row, id) {
+      if (this.onLoading === true) {
+        return false
+      }
       const methodsDic = {
         保存: save,
         撤回: withdrew,
@@ -132,9 +140,18 @@ export default {
         删除: deleteApply
       }
       const fn = methodsDic[method]
-      fn(id).then(data => {
-        debugger
-      })
+      this.onLoading = true
+      fn(id)
+        .then(data => {
+          this.$message.success(method + '成功，请求状态已改变')
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message.error('操作失败')
+        })
+        .finally(() => {
+          this.onLoading = false
+        })
     },
     handleCreate() {
       this.$router.push('/application/new')
@@ -155,6 +172,7 @@ export default {
         params = user
       }
       this.onLoading = true
+      this.dataList = []
       fn(params)
         .then(data => {
           const list = data.list

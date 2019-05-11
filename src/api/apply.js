@@ -1,9 +1,5 @@
 import request from '../utils/request'
 
-export function getApplyToUser(userid) {
-  return request.get('apply')
-}
-
 /**
  *查询指定用户的申请
  *
