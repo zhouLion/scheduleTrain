@@ -103,10 +103,12 @@
         >
           <template slot-scope="{row}">
             <slot
+              v-if="myUserid"
               :applyid="row.id"
               :row="row"
               name="action"
             />
+            <span v-else>请先登录</span>
           </template>
         </el-table-column>
       </el-table>
@@ -126,12 +128,14 @@
         :detail="detailDrawer.data"
       >
         <slot
+          v-if="myUserid"
           slot="action"
           slot-scope="{applyid, row}"
           :applyid="applyid"
           :row="row"
           name="action"
         />
+        <span v-else>请先登录</span>
       </ApplicationDetail>
     </el-dialog>
   </div>
@@ -175,6 +179,7 @@ export default {
       },
       list: [],
       listLoading: true,
+      // @TODO 查询条件
       listQuery: {
         // page: 1,
         // limit: 20,
@@ -207,6 +212,9 @@ export default {
         // item.create = parseTime(item.create, 'YYYY年MM月dd日')
         return item
       })
+    },
+    myUserid() {
+      return this.$store.state.user.userid
     }
   },
   async created() {
