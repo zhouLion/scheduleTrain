@@ -24,7 +24,7 @@ const applicationRouter = {
       name: 'newApplication',
       meta: {
         title: 'application.new',
-        verify: 'on',
+        // verify: 'on',
         icon: '测试申请'
       }
     },
