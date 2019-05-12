@@ -59,48 +59,63 @@ const exportXSL = (params) => request({
 
 /**
  * 导出休假登记模版
- * @param {Object} params
- * {
-    "Templete":"休假人员统计表.xlsx",
+ * @param {{
+    "Templete":"干部休假登记卡.xlsx",
     "Model":{
-      "company":"ADJC1AH121"
+      "user":"ADJC1AH121"
     }
-  }
+  }} params
  */
-export function exportRegisterTemplate(params) {
-  return exportXSL(params)
+export function exportUserApplies({
+  Templete = '干部休假登记卡.xlsx',
+  user
+}) {
+  return exportXSL({
+    Templete,
+    Model: {
+      user
+    }
+  })
 }
 
 /**
  * 导出休假请求列表
- * @param {Object} params
- * @description {
+ * @param {{
     "Templete":"休假人员统计表.xlsx",
     "Model":{
-      "company":"ADJC1AH121"
+      "apply":"ADJC1AH121"
     }
-  }
+  }} params
  */
-export function exportApplyList({
-  Templete = '休假人员统计表.xlsx',
-  Model
+export function exportApply({
+  Templete = '干部请假单.xlsx',
+  apply
 }) {
   return exportXSL({
     Templete,
-    Model
+    Model: {
+      apply
+    }
   })
 }
 
 /**
  * 导出汇总状态
- * @param {Object} params
- * {
+ * @param {{
     "Templete":"休假人员统计表.xlsx",
     "Model":{
       "company":"ADJC1AH121"
     }
-  }
+  }} params
  */
-export function exportTotalAuditList(params) {
-  return exportXSL(params)
+export function exportCompanyApplies({
+  Templete = '休假人员统计表.xlsx',
+  company
+}) {
+  return exportXSL({
+    Templete,
+    Model: {
+      company
+    }
+  })
 }

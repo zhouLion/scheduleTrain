@@ -104,16 +104,30 @@
               type="primary"
               @click="handleCreate"
             >添加</el-button>
+
             <el-button
+              v-if="queryForm.isSearchUser"
               icon="el-icon-download"
               type="primary"
-              @click="exportApplyList"
-            >导出excel</el-button>
+              @click="exportUserApplies({user: queryForm.userId})"
+            >导出用户申请</el-button>
+
+            <el-button
+              v-else
+              icon="el-icon-download"
+              type="primary"
+              @click="exportCompanyApplies({company: queryForm.companyCode})"
+            >导出单位申请</el-button>
           </template>
           <template
             slot="action"
             slot-scope="{ row, applyid }"
           >
+            <el-button
+              :disabled="row.status !== 0"
+              size="mini"
+              @click="exportApply({apply: applyid})"
+            >导出</el-button>
             <el-button
               :disabled="row.status !== 0"
               size="mini"
@@ -131,11 +145,11 @@
               type="success"
               @click="hendleExecute('发布', row, applyid)"
             >发布</el-button>
-            <el-button
+            <!-- <el-button
+              @click="hendleExecute('删除', row, applyid)"
               size="mini"
               type="danger"
-              @click="hendleExecute('删除', row, applyid)"
-            >删除</el-button>
+            >删除</el-button>-->
           </template>
         </ApplicationList>
       </el-col>
@@ -146,16 +160,30 @@
 <script>
 import ApplicationList from './components/ApplicationList'
 import { fromUser, fromCompany } from '../../api/apply'
-import { exportApplyList } from '../../api/static'
+import {
+  exportUserApplies,
+  exportApply,
+  exportCompanyApplies
+} from '../../api/static'
 import { getOnMyManage } from '../../api/usercompany'
 import { deleteApply, publish, save, withdrew } from '../../api/apply'
 import { getMembers } from '../../api/company'
+
+// 将导出的方法以mixins的方式注入到vm实例
+const mixins = {
+  methods: {
+    exportUserApplies,
+    exportApply,
+    exportCompanyApplies
+  }
+}
 
 export default {
   name: 'ApplyList',
   components: {
     ApplicationList
   },
+  mixins: [mixins],
   data() {
     return {
       queryForm: {
@@ -191,17 +219,6 @@ export default {
         .catch(err => {
           console.warn(err)
         })
-    },
-
-    /**
-     *
-     */
-    exportApplyList() {
-      exportApplyList({
-        Model: {
-          company: this.queryForm.companyCode
-        }
-      })
     },
 
     companyChanged(val) {

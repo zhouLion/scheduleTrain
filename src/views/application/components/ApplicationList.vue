@@ -10,13 +10,13 @@
         >刷新</el-button>
         <div>
           <slot name="headeraction" />
-          <el-button
+          <!-- <el-button
             v-waves
             :loading="downloadLoading"
             icon="el-icon-download"
             type="primary"
             @click="handleDownload"
-          >导出</el-button>
+          >导出</el-button>-->
         </div>
       </div>
       <el-table
