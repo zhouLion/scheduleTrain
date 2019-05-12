@@ -232,7 +232,7 @@ export default {
   name: 'NewApply',
   data() {
     return {
-      active: 1,
+      active: 0,
       OnloadingUserInfoes: false,
       onLoading: false,
       form: {
