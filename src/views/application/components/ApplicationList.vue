@@ -21,6 +21,7 @@
       </div>
       <el-table
         :key="tableKey"
+        ref="singleTable"
         v-loading="onLoading"
         :data="formatedList"
         border
@@ -116,12 +117,43 @@
     </el-card>
 
     <el-dialog
-      :visible.sync="detailDrawer.show"
+      :show-close="false"
+      :visible="detailDrawer.show"
       custom-class="p-fixed f-right apply-detail"
-      title="详情"
       top="0"
       width="408px"
     >
+      <div
+        slot="title"
+        class="apply-detail-header"
+      >
+        <div class="layout row justify-space-between align-center">
+          详情
+          <div>
+            <el-button-group>
+              <el-button
+                icon="el-icon-caret-left"
+                size="mini"
+                type="primary"
+                @click="changeApply('prev')"
+              />
+              <el-button
+                icon="el-icon-caret-right"
+                size="mini"
+                type="primary"
+                @click="changeApply('next')"
+              />
+            </el-button-group>
+            <el-button
+              circle
+              icon="el-icon-circle-close"
+              size="mini"
+              type="danger"
+              @click="detailDrawer.show = false"
+            />
+          </div>
+        </div>
+      </div>
       <ApplicationDetail
         :apply-id="detailDrawer.id"
         :basic="detailDrawer.basic"
@@ -230,6 +262,25 @@ export default {
       })
     },
 
+    changeApply(oper) {
+      const { id } = this.detailDrawer
+      const matchedItemIndex = this.formatedList.findIndex(item => item.id === id)
+      const listLen = this.formatedList.length
+      let nextIndex = 0
+      // 上一个
+      if (oper === 'prev') {
+        nextIndex =
+          matchedItemIndex - 1 < 0 ? listLen - 1 : matchedItemIndex - 1
+      } else if (oper === 'next') {
+        nextIndex =
+          matchedItemIndex + 1 > listLen - 1 ? 0 : matchedItemIndex + 1
+      }
+      const newRow = this.formatedList[nextIndex]
+      const newId = newRow.id
+      this.$refs.singleTable.setCurrentRow(newRow)
+      this.handleDetail(newRow, newId)
+    },
+
     /**
      * 查询详情
      */
@@ -300,6 +351,11 @@ export default {
 .el-dialog.apply-detail {
   margin-right: 0;
   z-index: 10000;
+  .el-dialog__header,
+  .apply-detail-header {
+    background: #304156;
+    color: whitesmoke;
+  }
 }
 .el-dialog.apply-detail .el-dialog__body {
   padding: 0;

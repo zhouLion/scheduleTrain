@@ -165,7 +165,9 @@ export default {
   position: relative;
   padding: 0;
   background: whitesmoke;
+  border: none;
   height: calc(100vh - 48px);
+  border-radius: 0;
   .h-88 {
     height: 88px;
   }
@@ -190,6 +192,10 @@ export default {
     padding: 0 8px;
     background: white;
     z-index: 36;
+    opacity: 0.95;
+    &:hover {
+      box-shadow: 0 1px 6px -4px;
+    }
   }
 
   .applyinfo-avatar {

@@ -38,3 +38,17 @@ export function Managers(id) {
     id
   })
 }
+
+/**
+ * 获取单位人员列表
+ * @param {*} param0
+ */
+export function getMembers({
+  id, page, pageSize
+}) {
+  return request.get('/company/members', {
+    params: {
+      id, page, pageSize
+    }
+  })
+}
