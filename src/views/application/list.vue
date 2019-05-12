@@ -227,8 +227,13 @@ export default {
       this.onLoading = true
       fn(params)
         .then(data => {
+          if (method === '删除') {
+            const curItemIndex = this.dataList.findIndex(d => d.id === id)
+            this.dataList.splice(curItemIndex, 1)
+            this.$message.success(method + '成功')
+            return false
+          }
           const { status } = data
-          debugger
           const curItem = this.dataList.find(d => d.id === id)
           if (curItem) {
             curItem.status = status
