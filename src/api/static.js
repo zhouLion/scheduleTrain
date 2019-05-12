@@ -48,13 +48,10 @@ export function location(code) {
 }
 
 const exportPath = '/static/xlsExport'
-const exportXSL = (params) => request({
+const exportXSL = (data) => request({
   url: exportPath,
   method: 'get',
-  params,
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  }
+  data: data
 })
 
 /**
