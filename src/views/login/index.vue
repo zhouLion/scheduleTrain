@@ -152,7 +152,7 @@ export default {
     }
     getUserBase()
       .then(data => {
-        if (data) this.$router.push('/application/examine')
+        if (data) this.$router.push(this.redirect)
       })
       .catch(() => {
         Message({

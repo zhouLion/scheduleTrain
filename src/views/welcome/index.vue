@@ -11,10 +11,19 @@
         </router-link>
       </el-col>
       <el-col :span="6">
-        <router-link to="login">
+        <router-link to="login?redirect=application/examine">
           <el-card :body-style="{ padding: '0px' }">
             <div style="padding: 14px;">
               <span>审核申请</span>
+            </div>
+          </el-card>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="login?redirect=application/list">
+          <el-card :body-style="{ padding: '0px' }">
+            <div style="padding: 14px;">
+              <span>查询申请</span>
             </div>
           </el-card>
         </router-link>
