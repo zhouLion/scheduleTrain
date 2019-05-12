@@ -10,7 +10,7 @@
 <script>
 /**
  * docs:
- * https://panjiachen.github.io/vue-element-admin-site/feature/component/rich-editor.html#tinymce
+ * https://serfend.github.io/vue-element-admin-site/feature/component/rich-editor.html#tinymce
  */
 import editorImage from './components/EditorImage'
 import plugins from './plugins'
@@ -105,7 +105,7 @@ export default {
       const _this = this
       window.tinymce.init({
         language: this.language,
-        // language cnd URL, detail see https://github.com/PanJiaChen/tinymce-lang
+        // language cnd URL, detail see https://github.com/serfend/tinymce-lang
         language_url: 'https://cdn.jsdelivr.net/npm/tinymce-lang/langs/zh_CN.js',
         selector: `#${this.tinymceId}`,
         height: this.height,

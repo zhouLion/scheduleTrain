@@ -53,7 +53,7 @@
         <div v-if="requestInfo">
           <el-row class="py-2 px-3 white">
             <div class="applyinfo-list-title">休假类型</div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.type }}</div>
+            <div class="applyinfo-list-subtitle">{{ requestInfo.vocationType }}</div>
           </el-row>
           <div class="row layout justify-space-between applyinfo-duration">
             <span class>休假时长</span>

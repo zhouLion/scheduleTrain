@@ -5,7 +5,7 @@
     </div>
     <div style="position:relative;">
       <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="vue-element-admin" />
+      <mallki class-name="mallki-text" text="各单位休假完成程度" />
       <div style="padding-top:35px;" class="progress-item">
         <span>政工组</span>
         <el-progress :percentage="100" status="success" />

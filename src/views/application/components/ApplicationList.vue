@@ -116,7 +116,7 @@
               :row="row"
               name="action"
             />
-            <span v-else>请先登录</span>
+            <span v-else>请先<a href="login">登录</a></span>
           </template>
         </el-table-column>
       </el-table>
@@ -177,7 +177,7 @@
           :row="row"
           name="action"
         />
-        <span v-else>请先登录</span>
+        <span v-else>请先<a href="login">登录</a></span>
       </ApplicationDetail>
     </el-dialog>
   </div>

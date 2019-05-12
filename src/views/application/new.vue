@@ -54,6 +54,7 @@
               <el-col :lg="3">
                 <el-cascader
                   v-model="form.HomeAddressArr"
+                  :placeholder="form.HomeAddressName"
                   :options="locationOptions"
                   :show-all-levels="false"
                   @active-item-change="handleHomeAddressItemChange"
@@ -246,9 +247,10 @@ export default {
         company: '',
         companyName: '',
         duties: '',
+        HomeAddressName: '',
         HomeAddress: '',
         HomeAddressArr: [],
-        HomeDetailAddress: '',
+        HomeDetailAddress: 0,
         Phone: '',
         Settle: ''
       },
@@ -376,7 +378,9 @@ export default {
               this.form.duties = duties.name
               this.form.HomeDetailAddress = social.addressDetail
               this.form.HomeAddress = social.address.code
+              this.form.HomeAddressName = social.address.name
               this.form.Phone = social.phone
+              this.form.Settle = social.Settle
             } catch (error) {
               console.warn(error)
             }
@@ -394,6 +398,10 @@ export default {
     },
     // 提交基础信息
     submitBaseInfo() {
+      const { HomeAddressArr } = this.form
+      if (HomeAddressArr && HomeAddressArr.length > 0) {
+        this.form.HomeAddress = HomeAddressArr[HomeAddressArr.length - 1]
+      }
       const {
         id,
         realName,
