@@ -1,26 +1,30 @@
 <template>
   <el-card class="box-card-component" style="margin-left:8px;">
     <div slot="header" class="box-card-header">
-      <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">
+      <img src="/images/verify/u=2905893513,2695425341&fm=26&gp=0.jpg">
     </div>
     <div style="position:relative;">
       <pan-thumb :image="avatar" class="panThumb" />
       <mallki class-name="mallki-text" text="vue-element-admin" />
       <div style="padding-top:35px;" class="progress-item">
-        <span>Vue</span>
-        <el-progress :percentage="70" />
-      </div>
-      <div class="progress-item">
-        <span>JavaScript</span>
-        <el-progress :percentage="18" />
-      </div>
-      <div class="progress-item">
-        <span>Css</span>
-        <el-progress :percentage="12" />
-      </div>
-      <div class="progress-item">
-        <span>ESLint</span>
+        <span>政工组</span>
         <el-progress :percentage="100" status="success" />
+      </div>
+      <div class="progress-item">
+        <span>机动通信一营</span>
+        <el-progress :percentage="78" />
+      </div>
+      <div class="progress-item">
+        <span>一营</span>
+        <el-progress :percentage="65" />
+      </div>
+      <div class="progress-item">
+        <span>六营</span>
+        <el-progress :percentage="12" status="exception" />
+      </div>
+      <div class="progress-item">
+        <span>四营</span>
+        <el-progress :percentage="42" />
       </div>
     </div>
   </el-card>

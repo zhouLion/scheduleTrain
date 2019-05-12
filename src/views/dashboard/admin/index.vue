@@ -6,43 +6,24 @@
       <line-chart :chart-data="lineChartData" />
     </el-row>
 
-    <el-row :gutter="32">
-      <el-col :lg="12" :sm="24" :xs="24">
-        <div class="chart-wrapper">
-          <raddar-chart />
-        </div>
-      </el-col>
-      <el-col :lg="12" :sm="24" :xs="24">
-        <div class="chart-wrapper">
-          <pie-chart />
-        </div>
-      </el-col>
-      <el-col :lg="32" :sm="32" :xs="1">
+    <el-row :gutter="20">
+      <el-col :lg="32" :md="32">
         <div class="chart-wrapper">
           <bar-chart />
         </div>
       </el-col>
     </el-row>
-    <el-row :gutter="8">
-      <el-col
-        :lg="{ span: 6 }"
-        :md="{ span: 12 }"
-        :sm="{ span: 12 }"
-        :xl="{ span: 6 }"
-        :xs="{ span: 24 }"
-        style="margin-bottom:30px;"
-      >
+    <el-row :gutter="20">
+      <el-col :lg="{ span: 8 }" :md="{ span: 24 }" style="margin-bottom:30px;">
         <todo-list />
       </el-col>
-      <el-col
-        :lg="{ span: 6 }"
-        :md="{ span: 12 }"
-        :sm="{ span: 12 }"
-        :xl="{ span: 6 }"
-        :xs="{ span: 24 }"
-        style="margin-bottom:30px;"
-      >
+      <el-col :lg="{ span: 8 }" :md="{ span: 24 }" style="margin-bottom:30px;">
         <box-card />
+      </el-col>
+      <el-col :lg="8" :sm="24" :xs="24">
+        <div class="chart-wrapper">
+          <pie-chart />
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -51,7 +32,6 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TodoList from './components/TodoList'
@@ -62,7 +42,6 @@ export default {
   components: {
     PanelGroup,
     LineChart,
-    RaddarChart,
     PieChart,
     BarChart,
     TodoList,
@@ -70,7 +49,12 @@ export default {
   },
   data() {
     return {
-      lineChartData: null
+      lineChartData: {
+        onApplyingData: [0, 1],
+        beenAuditData: [0, 1],
+        beenDeniedData: [0, 1],
+        titles: ['暂无数据']
+      }
     }
   },
   methods: {

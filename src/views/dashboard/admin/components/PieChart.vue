@@ -56,22 +56,22 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: ['机动通信一营', '五营', '九营', '政工组', '七营']
         },
         calculable: true,
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '每月休假申请提交情况',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
             data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
+              { value: 12, name: '机动通信一营' },
+              { value: 9, name: '五营' },
+              { value: 10, name: '九营' },
+              { value: 3, name: '政工组' },
+              { value: 4, name: '七营' }
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
