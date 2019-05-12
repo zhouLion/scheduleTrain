@@ -123,32 +123,49 @@
             slot="action"
             slot-scope="{ row, applyid }"
           >
-            <el-button
-              size="mini"
-              @click="exportApply({apply: applyid})"
-            >导出</el-button>
-            <el-button
+            <el-button @click="exportApply({apply: applyid})">导出</el-button>
+            <el-dropdown
+              split-button
+              szie="small"
+              trigger="click"
+              @command="hendleExecute(action, row, applyid)"
+            >
+              操作
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-for="item in [
+                    '保存',
+                    '撤回',
+                    '发布',
+                    '删除',
+                  ]"
+                  :key="item"
+                  :command="item"
+                >{{ item }}</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <!-- <el-button
               :disabled="row.status !== 0"
-              size="mini"
               @click="hendleExecute('保存', row, applyid)"
+              size="mini"
             >保存</el-button>
             <el-button
               :disabled="row.status <= 1"
+              @click="hendleExecute('撤回', row, applyid)"
               size="mini"
               type="warning"
-              @click="hendleExecute('撤回', row, applyid)"
             >撤回</el-button>
             <el-button
               :disabled="row.status !== -1"
+              @click="hendleExecute('发布', row, applyid)"
               size="mini"
               type="success"
-              @click="hendleExecute('发布', row, applyid)"
             >发布</el-button>
             <el-button
+              @click="hendleExecute('删除', row, applyid)"
               size="mini"
               type="danger"
-              @click="hendleExecute('删除', row, applyid)"
-            >删除</el-button>
+            >删除</el-button>-->
           </template>
         </ApplicationList>
       </el-col>
