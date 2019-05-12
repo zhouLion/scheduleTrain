@@ -125,7 +125,7 @@
 
     <el-dialog
       :show-close="false"
-      :visible="detailDrawer.show"
+      :visible.sync="detailDrawer.show"
       custom-class="p-fixed f-right apply-detail"
       top="0"
       width="408px"
@@ -140,13 +140,13 @@
             <el-button-group>
               <el-button
                 icon="el-icon-caret-left"
-                size="mini"
+                size="small"
                 type="primary"
                 @click="changeApply('prev')"
               />
               <el-button
                 icon="el-icon-caret-right"
-                size="mini"
+                size="small"
                 type="primary"
                 @click="changeApply('next')"
               />

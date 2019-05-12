@@ -30,6 +30,19 @@
       <div class="applyinfo-footer pa-2">
         <div class="layout row justify-space-between">
           <el-tag type="info">{{ basic.statusDesc }}</el-tag>
+          <el-tooltip
+            content="点击下载用户的休假情况登记卡"
+            effect="dark"
+            placement="top"
+          >
+            <!-- content to trigger tooltip here -->
+            <el-button
+              icon="el-icon-download"
+              size="mini"
+              type="primary"
+              @click="downloadUserApplies(basic.userBase.id)"
+            >导出</el-button>
+          </el-tooltip>
         </div>
       </div>
     </div>
@@ -66,14 +79,14 @@
               <i class="subheading mr-1 el-icon-timer blue--text" />
               申请离队时间
             </div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.stampLeave }}</div>
+            <div class="applyinfo-list-subtitle">{{ requestInfo.stampLeave|formatTime }}</div>
           </el-row>
           <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
             <div class="applyinfo-list-title blue--text">
               <i class="subheading mr-1 el-icon-timer orange--text" />
               预计归队时间
             </div>
-            <div class="applyinfo-list-subtitle">{{ requestInfo.stampReturn }}</div>
+            <div class="applyinfo-list-subtitle">{{ requestInfo.stampReturn|formatTime }}</div>
           </el-row>
         </div>
 
@@ -157,12 +170,16 @@
 
 <script>
 import moment from 'moment'
+import { exportUserApplies } from '../../../api/static'
 moment.locales('zh_CN')
 export default {
   name: 'ApplicationDetail',
   filters: {
     timeAgo(val) {
       return moment(val).fromNow()
+    },
+    formatTime(val) {
+      return moment(val).format('LLL')
     }
   },
   props: {
@@ -200,6 +217,13 @@ export default {
         val => val.companyName === nowAuditCompany
       )
       return index + 1 < 1 ? -1 : index
+    }
+  },
+  methods: {
+    downloadUserApplies(id) {
+      exportUserApplies({
+        user: id
+      })
     }
   }
 }

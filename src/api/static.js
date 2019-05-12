@@ -68,9 +68,7 @@ const exportXSL = (data) => {
  * 导出休假登记模版
  * @param {{
     "Templete":"干部休假登记卡.xlsx",
-    "Model":{
       "user":"ADJC1AH121"
-    }
   }} params
  */
 export function exportUserApplies({
