@@ -10,40 +10,82 @@
           class="elevation-0"
           shadow="hover"
         >
-          <el-tabs v-model="form.tab">
-            <el-tab-pane
-              label="按管辖单位"
-              name="按管辖单位"
-            >
-              <div>
-                <el-input
-                  v-model="form.company"
-                  label="部门"
-                />
+          <el-form
+            ref="queryForm"
+            :model="queryForm"
+          >
+            <el-row>
+              <el-col
+                :md="24"
+                :sm="12"
+                class="mb-3"
+              >
+                <div class="py-2 body-2 layout align-center row justify-space-between">
+                  单位
+                  <el-button
+                    circle
+                    icon="el-icon-refresh"
+                    size="mini"
+                    type="primary"
+                    @click="getOnMyManage"
+                  />
+                </div>
+                <el-select
+                  v-model="queryForm.companyCode"
+                  class="full-width"
+                  placeholder="选择管辖单位"
+                  @change="companyChanged"
+                >
+                  <el-option
+                    label="--全部--"
+                    value
+                  />
+                  <el-option
+                    v-for="item in myManages"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.code"
+                  />
+                </el-select>
+
+                <!-- <el-input v-model="queryForm.companyCode"></el-input> -->
+              </el-col>
+              <el-col
+                :md="24"
+                :sm="12"
+                class="mb-3"
+              >
+                <div class="py-2 body-2 layout align-center row justify-space-between">
+                  指定人员
+                  <el-switch v-model="queryForm.isSearchUser" />
+                </div>
+                <el-select
+                  v-show="queryForm.isSearchUser"
+                  v-model="queryForm.userId"
+                  class="full-width"
+                  placeholder
+                >
+                  <el-option
+                    v-for="item in membersOption"
+                    :key="item.id"
+                    :label="item.realName"
+                    :value="item.id"
+                  />
+                </el-select>
+              </el-col>
+
+              <el-col
+                :span="24"
+                class="py-2"
+              >
                 <el-button
+                  class="full-width"
                   type="primary"
                   @click="searchData"
                 >查询</el-button>
-                <!-- card body -->
-              </div>
-            </el-tab-pane>
-            <el-tab-pane
-              label="按人员"
-              name="按人员"
-            >
-              <div>
-                <el-input
-                  v-model="form.user"
-                  label="人员"
-                />
-                <el-button
-                  type="primary"
-                  @click="searchData"
-                >查询</el-button>
-                <!-- card body -->
-              </div>
-            </el-tab-pane>
-          </el-tabs>
+              </el-col>
+            </el-row>
+          </el-form>
         </el-card>
       </el-col>
       <el-col
@@ -60,6 +102,7 @@
         <ApplicationList
           :data-list="dataList"
           :on-loading="onLoading"
+          @refresh="searchData"
         >
           <template
             slot="action"
@@ -90,6 +133,7 @@
 import ApplicationList from './components/ApplicationList'
 import { toCompany, toUser } from '../../api/apply'
 import { getOnMyManage } from '../../api/usercompany'
+import { getMembers } from '../../api/company'
 
 export default {
   name: 'ApplyExamine',
@@ -98,14 +142,16 @@ export default {
   },
   data() {
     return {
-      form: {
-        tab: '按人员',
-        company: 'ADJC1AH122',
-        user: '1000000'
+      queryForm: {
+        companyCode: '',
+        userId: '',
+        isSearchUser: false
       },
       myManages: [],
       dataList: [],
-      onLoading: false
+      onLoading: false,
+      membersOption: [],
+      cacheMembers: []
     }
   },
   created() {
@@ -121,22 +167,43 @@ export default {
           console.warn(err)
         })
     },
+    companyChanged(val) {
+      this.queryForm.userId = ''
+      const cache = this.cacheMembers.find(d => d.companyCode === val)
+      if (cache) {
+        this.membersOption = cache.list
+      } else {
+        getMembers({
+          id: val
+        }).then(data => {
+          if (data.list) {
+            this.membersOption = data.list
+            this.cacheMembers.push({
+              companyCode: val,
+              list: data.list
+            })
+          }
+        })
+      }
+    },
+
     // 查询数据
     searchData() {
       if (this.onLoading === true) {
         return this.$message.warning('查询中，请等候')
       }
-      const { tab, user, company } = this.form
+      const { isSearchUser, userId, companyCode } = this.queryForm
       let fn = toCompany
-      let params = {
-        code: company,
-        id: user
+      const params = {
+        code: companyCode
       }
-      if (tab === '按人员') {
+      // 如果查询指定用户，则异步方法换城toUser
+      if (isSearchUser) {
         fn = toUser
-        params = user
+        params.id = userId
       }
       this.onLoading = true
+      this.dataList = []
       fn(params)
         .then(data => {
           const list = data.list
@@ -151,4 +218,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.application-examine {
+  .full-width {
+    width: 100%;
+  }
+}
 </style>

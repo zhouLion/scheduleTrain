@@ -8,7 +8,7 @@
         创建于.
         <span class="font-weight-thin">{{ basic.create }}</span>
       </div>
-      <div class="row layout justify-start">
+      <div class="row layout justify-start px-2">
         <div class="applyinfo-avatar">
           <i class="el-icon-user-solid" />
         </div>
@@ -50,19 +50,29 @@
             </span>
           </div>
           <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
-            <div class="applyinfo-list-title">理由</div>
+            <div class="applyinfo-list-title blue--text">
+              <i class="subheading mr-1 el-icon-question" /> 理由
+            </div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.reason }}</div>
           </el-row>
           <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
-            <div class="applyinfo-list-title">休假目的地</div>
+            <div class="applyinfo-list-title blue--text">
+              <i class="subheading mr-1 el-icon-s-home" /> 休假目的地
+            </div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.vocationPlace.name }}</div>
           </el-row>
           <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
-            <div class="applyinfo-list-title">申请离队时间</div>
+            <div class="applyinfo-list-title blue--text">
+              <i class="subheading mr-1 el-icon-timer blue--text" />
+              申请离队时间
+            </div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.stampLeave }}</div>
           </el-row>
           <el-row class="py-2 mx-2 mb-2 px-2 white el-row">
-            <div class="applyinfo-list-title">预计归队时间</div>
+            <div class="applyinfo-list-title blue--text">
+              <i class="subheading mr-1 el-icon-timer orange--text" />
+              预计归队时间
+            </div>
             <div class="applyinfo-list-subtitle">{{ requestInfo.stampReturn }}</div>
           </el-row>
         </div>
@@ -165,7 +175,9 @@ export default {
   position: relative;
   padding: 0;
   background: whitesmoke;
+  border: none;
   height: calc(100vh - 48px);
+  border-radius: 0;
   .h-88 {
     height: 88px;
   }
@@ -185,15 +197,27 @@ export default {
     right: 0;
     top: 0;
     margin: 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px -6px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px -2px #2e3f53;
     padding: 0 8px;
     background: white;
     z-index: 36;
+    opacity: 0.95;
+    &:hover {
+      box-shadow: 0 1px 6px -4px;
+    }
   }
 
   .applyinfo-avatar {
-    max-width: 56px;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    font-size: 32px;
+    margin-top: 10px;
+    border-radius: 50%;
+    background: #3949ab;
+    color: white;
   }
 
   .applyinfo-avatar image {
@@ -253,6 +277,7 @@ export default {
       font-weight: 500;
       color: black;
       padding: 8px;
+      padding-left: 32px;
     }
   }
 
