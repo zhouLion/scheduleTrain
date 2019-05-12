@@ -29,9 +29,8 @@ export default {
   },
   data() {
     return {
-      title: '差旅审核申请系统',
-      logo:
-        'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: '休假登记和审核系统',
+      logo: '/favicon-32x32.png'
     }
   }
 }
