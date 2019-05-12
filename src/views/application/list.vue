@@ -107,7 +107,7 @@
             <el-button
               icon="el-icon-download"
               type="primary"
-              @click="download"
+              @click="exportApplyList"
             >导出excel</el-button>
           </template>
           <template
@@ -193,7 +193,10 @@ export default {
         })
     },
 
-    download() {
+    /**
+     *
+     */
+    exportApplyList() {
       exportApplyList({
         Model: {
           company: this.queryForm.companyCode
