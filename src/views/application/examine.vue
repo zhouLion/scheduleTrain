@@ -159,6 +159,13 @@ export default {
   },
   methods: {
     getOnMyManage() {
+      this.membersOption = []
+      this.cacheMembers = []
+      this.queryForm = {
+        companyCode: '',
+        userId: '',
+        isSearchUser: false
+      }
       getOnMyManage()
         .then(data => {
           this.myManages = data.list || []
@@ -174,7 +181,7 @@ export default {
         this.membersOption = cache.list
       } else {
         getMembers({
-          id: val
+          code: val
         }).then(data => {
           if (data.list) {
             this.membersOption = data.list

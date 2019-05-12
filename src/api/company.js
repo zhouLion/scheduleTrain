@@ -44,11 +44,11 @@ export function Managers(id) {
  * @param {*} param0
  */
 export function getMembers({
-  id, page, pageSize
+  code, page, pageSize
 }) {
   return request.get('/company/members', {
     params: {
-      id, page, pageSize
+      code, page, pageSize
     }
   })
 }
