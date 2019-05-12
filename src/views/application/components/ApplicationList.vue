@@ -107,7 +107,7 @@
           class-name="small-padding fixed-width"
           fixed="right"
           label="操作"
-          width="330"
+          width="350"
         >
           <template slot-scope="{row}">
             <slot

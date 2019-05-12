@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import qs from 'qs'
+import { setTimeout } from 'timers'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
@@ -35,6 +36,25 @@ service.interceptors.response.use(
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
   response => {
+    console.log(response)
+    if (response.config.responseType === 'stream') {
+      const data = response.data
+      if (!data) {
+        return Promise.reject('下载失败')
+      }
+      const url = window.URL.createObjectURL(new Blob([data]))
+      const link = document.createElement('a')
+      const configData = JSON.parse(response.config.data)
+      const filename = configData.Templete
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', filename)
+      document.body.appendChild(link)
+      link.click()
+      setTimeout(() => {
+        document.body.remove(link)
+      }, 10)
+    }
     const res = response.data
     if (res.status !== 0) {
       const type = res.status === 12120 ? 'warn' : 'error'

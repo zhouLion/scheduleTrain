@@ -124,7 +124,6 @@
             slot-scope="{ row, applyid }"
           >
             <el-button
-              :disabled="row.status !== 0"
               size="mini"
               @click="exportApply({apply: applyid})"
             >导出</el-button>
@@ -145,11 +144,11 @@
               type="success"
               @click="hendleExecute('发布', row, applyid)"
             >发布</el-button>
-            <!-- <el-button
-              @click="hendleExecute('删除', row, applyid)"
+            <el-button
               size="mini"
               type="danger"
-            >删除</el-button>-->
+              @click="hendleExecute('删除', row, applyid)"
+            >删除</el-button>
           </template>
         </ApplicationList>
       </el-col>
@@ -174,7 +173,20 @@ const mixins = {
   methods: {
     exportUserApplies,
     exportApply,
-    exportCompanyApplies
+    exportCompanyApplies,
+    download(data) {
+      if (!data) {
+        return
+      }
+      const url = window.URL.createObjectURL(new Blob([data]))
+      const link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', 'excel.xlsx')
+
+      document.body.appendChild(link)
+      link.click()
+    }
   }
 }
 
