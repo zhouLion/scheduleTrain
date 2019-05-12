@@ -1,7 +1,7 @@
 <template>
   <div class="components-container">
     <aside>
-      <a href="https://github.com/PanJiaChen/vue-countTo" target="_blank">countTo-component</a>
+      <a href="https://github.com/serfend/vue-countTo" target="_blank">countTo-component</a>
     </aside>
     <count-to
       ref="example"

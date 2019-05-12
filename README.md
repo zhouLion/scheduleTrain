@@ -9,19 +9,19 @@
   <a href="https://github.com/ElemeFE/element">
     <img src="https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg" alt="element-ui">
   </a>
-  <a href="https://travis-ci.org/PanJiaChen/vue-element-admin" rel="nofollow">
-    <img src="https://travis-ci.org/PanJiaChen/vue-element-admin.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.org/serfend/vue-element-admin" rel="nofollow">
+    <img src="https://travis-ci.org/serfend/vue-element-admin.svg?branch=master" alt="Build Status">
   </a>
-  <a href="https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE">
+  <a href="https://github.com/serfend/vue-element-admin/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
   </a>
-  <a href="https://github.com/PanJiaChen/vue-element-admin/releases">
-    <img src="https://img.shields.io/github/release/PanJiaChen/vue-element-admin.svg" alt="GitHub release">
+  <a href="https://github.com/serfend/vue-element-admin/releases">
+    <img src="https://img.shields.io/github/release/serfend/vue-element-admin.svg" alt="GitHub release">
   </a>
   <a href="https://gitter.im/vue-element-admin/discuss">
     <img src="https://badges.gitter.im/Join%20Chat.svg" alt="gitter">
   </a>
-  <a href="https://panjiachen.github.io/vue-element-admin-site/donate">
+  <a href="https://serfend.github.io/vue-element-admin-site/donate">
     <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
   </a>
 </p>
@@ -30,27 +30,27 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Introduction
 
-[vue-element-admin](https://panjiachen.github.io/vue-element-admin) is a production-ready front-end solution for admin interfaces. It based on [vue](https://github.com/vuejs/vue) and use the UI Toolkit [element-ui](https://github.com/ElemeFE/element).
+[vue-element-admin](https://serfend.github.io/vue-element-admin) is a production-ready front-end solution for admin interfaces. It based on [vue](https://github.com/vuejs/vue) and use the UI Toolkit [element-ui](https://github.com/ElemeFE/element).
 
 It is a magical vue admin based on the newest development stack of vue, built-in i18n solution, typical templates for enterprise applications, lots of awesome features. It helps you build a large complex Single-Page Applications. I believe whatever your needs are, this project will help you.
 
-- [Preview](https://panjiachen.github.io/vue-element-admin)
+- [Preview](https://serfend.github.io/vue-element-admin)
 
-- [Documentation](https://panjiachen.github.io/vue-element-admin-site/)
+- [Documentation](https://serfend.github.io/vue-element-admin-site/)
 
 - [Gitter](https://gitter.im/vue-element-admin/discuss)
 
-- [Donate](https://panjiachen.github.io/vue-element-admin-site/donate/)
+- [Donate](https://serfend.github.io/vue-element-admin-site/donate/)
 
-- [Wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
+- [Wiki](https://github.com/serfend/vue-element-admin/wiki)
 
-- [Gitee](https://panjiachen.gitee.io/vue-element-admin/) 国内用户可访问该地址在线预览
+- [Gitee](https://serfend.gitee.io/vue-element-admin/) 国内用户可访问该地址在线预览
 
-- Base template recommends using: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
-- Desktop: [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
+- Base template recommends using: [vue-admin-template](https://github.com/serfend/vue-admin-template)
+- Desktop: [electron-vue-admin](https://github.com/serfend/electron-vue-admin)
 - Typescript: [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
 
-**The current version is `v4.0+` build on `vue-cli`. If you find a problem, please put [issue](https://github.com/PanJiaChen/vue-element-admin/issues/new). If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-element-admin/tree/tag/3.11.0), it does not rely on `vue-cli'**
+**The current version is `v4.0+` build on `vue-cli`. If you find a problem, please put [issue](https://github.com/serfend/vue-element-admin/issues/new). If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/serfend/vue-element-admin/tree/tag/3.11.0), it does not rely on `vue-cli'**
 
 **This project does not support low version browsers (e.g. IE). Please add polyfill by yourself.**
 
@@ -65,7 +65,7 @@ Understanding and learning this knowledge in advance will greatly help the use o
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor]](https://www.patreon.com/panjiachen)
+Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor]](https://www.patreon.com/serfend)
 
 <a href="https://flatlogic.com/admin-dashboards?from=vue-element-admin"><img width="150px" src="https://wpimg.wallstcn.com/9c0b719b-5551-4c1e-b776-63994632d94a.png" /></a><p>Admin Dashboard Templates made with Vue, React and Angular.</p>
 
@@ -139,7 +139,7 @@ Become a sponsor and get your logo on our README on GitHub with a link to your s
 
 ```bash
 # clone the project
-git clone https://github.com/PanJiaChen/vue-element-admin.git
+git clone https://github.com/serfend/vue-element-admin.git
 
 # enter the project directory
 cd vue-element-admin
@@ -179,15 +179,15 @@ npm run lint
 npm run lint -- --fix
 ```
 
-Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
+Refer to [Documentation](https://serfend.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
 
 ## Changelog
 
-Detailed changes for each release are documented in the [release notes](https://github.com/PanJiaChen/vue-element-admin/releases).
+Detailed changes for each release are documented in the [release notes](https://github.com/serfend/vue-element-admin/releases).
 
 ## Online Demo
 
-[Preview](https://panjiachen.github.io/vue-element-admin)
+[Preview](https://serfend.github.io/vue-element-admin)
 
 ## Donate
 
@@ -209,6 +209,6 @@ Modern browsers and Internet Explorer 10+.
 
 ## License
 
-[MIT](https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE)
+[MIT](https://github.com/serfend/vue-element-admin/blob/master/LICENSE)
 
-Copyright (c) 2017-present PanJiaChen
+Copyright (c) 2017-present serfend

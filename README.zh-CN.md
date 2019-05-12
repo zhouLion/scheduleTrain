@@ -9,19 +9,19 @@
   <a href="https://github.com/ElemeFE/element">
     <img src="https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg" alt="element-ui">
   </a>
-  <a href="https://travis-ci.org/PanJiaChen/vue-element-admin" rel="nofollow">
-    <img src="https://travis-ci.org/PanJiaChen/vue-element-admin.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.org/serfend/vue-element-admin" rel="nofollow">
+    <img src="https://travis-ci.org/serfend/vue-element-admin.svg?branch=master" alt="Build Status">
   </a>
-  <a href="https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE">
+  <a href="https://github.com/serfend/vue-element-admin/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
   </a>
-  <a href="https://github.com/PanJiaChen/vue-element-admin/releases">
-    <img src="https://img.shields.io/github/release/PanJiaChen/vue-element-admin.svg" alt="GitHub release">
+  <a href="https://github.com/serfend/vue-element-admin/releases">
+    <img src="https://img.shields.io/github/release/serfend/vue-element-admin.svg" alt="GitHub release">
   </a>
   <a href="https://gitter.im/vue-element-admin/discuss">
     <img src="https://badges.gitter.im/Join%20Chat.svg" alt="gitter">
   </a>
-  <a href="https://panjiachen.gitee.io/vue-element-admin-site/zh/donate">
+  <a href="https://serfend.gitee.io/vue-element-admin-site/zh/donate">
     <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
   </a>
 </p>
@@ -30,31 +30,31 @@
 
 ## 简介
 
-[vue-element-admin](https://panjiachen.github.io/vue-element-admin) 是一个后台前端解决方案，它基于 [vue](https://github.com/vuejs/vue) 和 [element-ui](https://github.com/ElemeFE/element)实现。它使用了最新的前端技术栈，内置了 i18n 国际化解决方案，动态路由，权限验证，提炼了典型的业务模型，提供了丰富的功能组件，它可以帮助你快速搭建企业级中后台产品原型。相信不管你的需求是什么，本项目都能帮助到你。
+[vue-element-admin](https://serfend.github.io/vue-element-admin) 是一个后台前端解决方案，它基于 [vue](https://github.com/vuejs/vue) 和 [element-ui](https://github.com/ElemeFE/element)实现。它使用了最新的前端技术栈，内置了 i18n 国际化解决方案，动态路由，权限验证，提炼了典型的业务模型，提供了丰富的功能组件，它可以帮助你快速搭建企业级中后台产品原型。相信不管你的需求是什么，本项目都能帮助到你。
 
-- [在线预览](https://panjiachen.github.io/vue-element-admin)
+- [在线预览](https://serfend.github.io/vue-element-admin)
 
-- [使用文档](https://panjiachen.github.io/vue-element-admin-site/zh/)
+- [使用文档](https://serfend.github.io/vue-element-admin-site/zh/)
 
 - [Gitter 讨论组](https://gitter.im/vue-element-admin/discuss)
 
-- [Donate](https://panjiachen.gitee.io/vue-element-admin-site/zh/donate)
+- [Donate](https://serfend.gitee.io/vue-element-admin-site/zh/donate)
 
-- [Wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
+- [Wiki](https://github.com/serfend/vue-element-admin/wiki)
 
-- [Gitee](https://panjiachen.gitee.io/vue-element-admin/) 在线预览（国内用户可访问该地址）
+- [Gitee](https://serfend.gitee.io/vue-element-admin/) 在线预览（国内用户可访问该地址）
 
-- [国内访问文档](https://panjiachen.gitee.io/vue-element-admin-site/zh/) 文档（方便没翻墙的用户查看）
+- [国内访问文档](https://serfend.gitee.io/vue-element-admin-site/zh/) 文档（方便没翻墙的用户查看）
 
-- 基础模板建议使用: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
-- 桌面端: [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
+- 基础模板建议使用: [vue-admin-template](https://github.com/serfend/vue-admin-template)
+- 桌面端: [electron-vue-admin](https://github.com/serfend/electron-vue-admin)
 - Typescript 版: [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (鸣谢: [@Armour](https://github.com/Armour))
 
-**目前版本为 `v4.0+` 基于 `vue-cli` 进行构建，若发现问题，欢迎提[issue](https://github.com/PanJiaChen/vue-element-admin/issues/new)。若你想使用旧版本，可以切换分支到[tag/3.11.0](https://github.com/PanJiaChen/vue-element-admin/tree/tag/3.11.0)，它不依赖 `vue-cli`**
+**目前版本为 `v4.0+` 基于 `vue-cli` 进行构建，若发现问题，欢迎提[issue](https://github.com/serfend/vue-element-admin/issues/new)。若你想使用旧版本，可以切换分支到[tag/3.11.0](https://github.com/serfend/vue-element-admin/tree/tag/3.11.0)，它不依赖 `vue-cli`**
 
-**该项目不支持低版本浏览器(如 ie)，有需求请自行添加 polyfill [详情](https://github.com/PanJiaChen/vue-element-admin/wiki#babel-polyfill)**
+**该项目不支持低版本浏览器(如 ie)，有需求请自行添加 polyfill [详情](https://github.com/serfend/vue-element-admin/wiki#babel-polyfill)**
 
-群主 **[圈子](https://jianshiapp.com/circles/1209)** 群主会经常分享一些技术相关的东西，或者加入 [qq 群](https://github.com/PanJiaChen/vue-element-admin/issues/602) 或者关注 [微博](https://weibo.com/u/3423485724?is_all=1)
+群主 **[圈子](https://jianshiapp.com/circles/1209)** 群主会经常分享一些技术相关的东西，或者加入 [qq 群](https://github.com/serfend/vue-element-admin/issues/602) 或者关注 [微博](https://weibo.com/u/3423485724?is_all=1)
 
 ## 前序准备
 
@@ -79,7 +79,7 @@
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor]](https://www.patreon.com/panjiachen)
+Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor]](https://www.patreon.com/serfend)
 
 <a href="https://flatlogic.com/admin-dashboards?from=vue-element-admin"><img width="150px" src="https://wpimg.wallstcn.com/9c0b719b-5551-4c1e-b776-63994632d94a.png" /></a><p>Admin Dashboard Templates made with Vue, React and Angular.</p>
 
@@ -153,7 +153,7 @@ Become a sponsor and get your logo on our README on GitHub with a link to your s
 
 ```bash
 # 克隆项目
-git clone https://github.com/PanJiaChen/vue-element-admin.git
+git clone https://github.com/serfend/vue-element-admin.git
 
 # 进入项目目录
 cd vue-element-admin
@@ -196,22 +196,22 @@ npm run lint
 npm run lint -- --fix
 ```
 
-更多信息请参考 [使用文档](https://panjiachen.github.io/vue-element-admin-site/zh/)
+更多信息请参考 [使用文档](https://serfend.github.io/vue-element-admin-site/zh/)
 
 ## Changelog
 
-Detailed changes for each release are documented in the [release notes](https://github.com/PanJiaChen/vue-element-admin/releases).
+Detailed changes for each release are documented in the [release notes](https://github.com/serfend/vue-element-admin/releases).
 
 ## Online Demo
 
-[在线 Demo](https://panjiachen.github.io/vue-element-admin)
+[在线 Demo](https://serfend.github.io/vue-element-admin)
 
 ## Donate
 
 如果你觉得这个项目帮助到了你，你可以帮作者买一杯果汁表示鼓励 :tropical_drink:
-![donate](https://panjiachen.github.io/donate/donation.png)
+![donate](https://serfend.github.io/donate/donation.png)
 
-[更多捐赠方式](https://panjiachen.gitee.io/vue-element-admin-site/zh/donate)
+[更多捐赠方式](https://serfend.gitee.io/vue-element-admin-site/zh/donate)
 
 [Paypal Me](https://www.paypal.me/panfree23)
 
@@ -227,6 +227,6 @@ Modern browsers and Internet Explorer 10+.
 
 ## License
 
-[MIT](https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE)
+[MIT](https://github.com/serfend/vue-element-admin/blob/master/LICENSE)
 
-Copyright (c) 2017-present PanJiaChen
+Copyright (c) 2017-present serfend
