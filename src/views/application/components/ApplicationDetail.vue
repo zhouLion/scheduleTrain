@@ -45,7 +45,7 @@
           <div class="row layout justify-space-between applyinfo-duration">
             <span class>休假时长</span>
             <span class="caption">
-              <span class="title">{{ requestInfo.onTripLength }}</span>
+              <span class="title">{{ requestInfo.onTripLength + requestInfo.vocationLength }}</span>
               天
             </span>
           </div>
@@ -94,17 +94,45 @@
                 class="audit-process-card"
               >
                 <div class="audit-process-status">
-                  <span>{{ step.status == 1 ? '通过' : '驳回或尚未处理' }}</span>
+                  <span v-if="step.status === 0">
+                    <i class="el-icon-loading title grey-text" />
+                    待完成的流程
+                  </span>
+                  <span v-if="step.status === 1">
+                    <i class="el-icon-s-flag title red--text" />
+                    当前流程
+                  </span>
+                  <span v-if="step.status === 2">审核状态3</span>
+                  <span v-if="step.status === 3">审核状态3</span>
+                  <span v-if="step.status === 4">
+                    <i class="el-icon-success title green--text" />
+                    通过审核
+                  </span>
                 </div>
-                <div class="audit-process-companyName">
+                <div
+                  class="audit-process-companyName grey--text row layout justify-start align-center"
+                  title="审核单位"
+                >
+                  <i class="el-icon-office-building black--text title mr-1" />
                   <span>{{ step.companyName }}</span>
                 </div>
-                <div class="row layout justify-space-around">
+                <div
+                  v-if="step.auditingUserRealName"
+                  class="row layout justify-space-between black--text"
+                >
                   <span class="audit-process-person">{{ step.auditingUserRealName }}</span>
-                  <span class="audit-process-handleStamp">{{ step.handleStamp }}</span>
+                  <span class="audit-process-handleStamp">{{ step.handleStamp|timeAgo }}</span>
                 </div>
-                <div class="audit-process-remark">
-                  <span>{{ step.remark }}</span>
+                <div
+                  v-if="step.remark"
+                  class="audit-process-remark"
+                >
+                  <el-input
+                    v-model="step.remark"
+                    placeholder="审批备注"
+                    readonly
+                    type="textarea"
+                  />
                 </div>
               </div>
             </el-step>
@@ -128,8 +156,15 @@
 </template>
 
 <script>
+import moment from 'moment'
+moment.locales('zh_CN')
 export default {
   name: 'ApplicationDetail',
+  filters: {
+    timeAgo(val) {
+      return moment(val).fromNow()
+    }
+  },
   props: {
     basic: {
       type: Object,
@@ -164,7 +199,7 @@ export default {
       const index = response.findIndex(
         val => val.companyName === nowAuditCompany
       )
-      return index + 1 < 1 ? -1 : index + 1
+      return index + 1 < 1 ? -1 : index
     }
   }
 }

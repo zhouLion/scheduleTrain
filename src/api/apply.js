@@ -156,10 +156,8 @@ export function toCompany(companyCode) {
  * @returns
  */
 export function audit(data) {
-  return request('/apply/audit', {
-    params: {
-      data
-    }
+  return request.post('/apply/audit', {
+    data
   })
 }
 
