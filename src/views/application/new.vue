@@ -52,7 +52,12 @@
             </el-form-item>
             <el-form-item label="家庭地址">
               <el-col :lg="3">
-                <el-input v-model="form.HomeAddress" />
+                <el-cascader
+                  v-model="form.HomeAddressArr"
+                  :options="locationOptions"
+                  :show-all-levels="false"
+                  @active-item-change="handleHomeAddressItemChange"
+                />
               </el-col>
               <el-col :lg="9">
                 <el-input v-model="form.HomeDetailAddress" placeholder="详细地址" />
@@ -242,6 +247,7 @@ export default {
         companyName: '',
         duties: '',
         HomeAddress: '',
+        HomeAddressArr: [],
         HomeDetailAddress: '',
         Phone: '',
         Settle: ''
@@ -290,6 +296,35 @@ export default {
       }
       return 0
     },
+    handleHomeAddressItemChange(val) {
+      if (val) {
+        const deep = val.length - 1
+        const id = val[deep]
+        this.form.HomeAddressArr = val
+        locationChildren(id).then(data => {
+          const children = data.list.map(d => ({
+            label: d.name,
+            value: d.code,
+            children: []
+          }))
+          var item = this.locationOptions[0]
+          var nextIndex = 0
+          for (var i = 0; i < deep; i++) {
+            nextIndex = this.getLocationChildrenIndexByValue(item, val[i + 1])
+            item = item.children[nextIndex]
+          }
+          item.children = children
+          if (item.children.length === 0) {
+            item.children[0] = {
+              label: '无下一层级',
+              disabled: true
+            }
+          }
+        })
+      } else {
+        this.$message.error('无效的地址')
+      }
+    },
     handleItemChange(val) {
       if (val) {
         const deep = val.length - 1
@@ -316,7 +351,7 @@ export default {
           }
         })
       } else {
-        this.$message.error('错误')
+        this.$message.error('无效的地址')
       }
     },
     fetchUserInfoes() {
