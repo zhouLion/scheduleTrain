@@ -69,15 +69,21 @@ export function exportRegisterTemplate(params) {
 /**
  * 导出休假请求列表
  * @param {Object} params
- * {
+ * @description {
     "Templete":"休假人员统计表.xlsx",
     "Model":{
       "company":"ADJC1AH121"
     }
   }
  */
-export function exportApplyList(params) {
-  return exportXSL(params)
+export function exportApplyList({
+  Templete = '休假人员统计表.xlsx',
+  Model
+}) {
+  return exportXSL({
+    Templete,
+    Model
+  })
 }
 
 /**

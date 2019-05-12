@@ -104,21 +104,29 @@
               type="primary"
               @click="handleCreate"
             >添加</el-button>
+            <el-button
+              icon="el-icon-download"
+              type="primary"
+              @click="download"
+            >导出excel</el-button>
           </template>
           <template
             slot="action"
             slot-scope="{ row, applyid }"
           >
             <el-button
+              :disabled="row.status !== 0"
               size="mini"
               @click="hendleExecute('保存', row, applyid)"
             >保存</el-button>
             <el-button
+              :disabled="row.status <= 1"
               size="mini"
               type="warning"
               @click="hendleExecute('撤回', row, applyid)"
             >撤回</el-button>
             <el-button
+              :disabled="row.status !== -1"
               size="mini"
               type="success"
               @click="hendleExecute('发布', row, applyid)"
@@ -138,6 +146,7 @@
 <script>
 import ApplicationList from './components/ApplicationList'
 import { fromUser, fromCompany } from '../../api/apply'
+import { exportApplyList } from '../../api/static'
 import { getOnMyManage } from '../../api/usercompany'
 import { deleteApply, publish, save, withdrew } from '../../api/apply'
 import { getMembers } from '../../api/company'
@@ -182,6 +191,14 @@ export default {
         .catch(err => {
           console.warn(err)
         })
+    },
+
+    download() {
+      exportApplyList({
+        Model: {
+          company: this.queryForm.companyCode
+        }
+      })
     },
 
     companyChanged(val) {

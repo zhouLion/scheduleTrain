@@ -347,6 +347,7 @@ export default {
      * 请求刷新
      */
     emitRefresh() {
+      this.getAllStatus()
       this.$emit('refresh')
     }
   }

@@ -111,11 +111,13 @@
             <el-button
               size="mini"
               type="success"
+              @click="auditApply(row, 1)"
             >通过</el-button>
             <el-button
               v-if="row.status!='publish'"
               size="mini"
               type="warning"
+              @click="auditApply(row, 2)"
             >驳回</el-button>
             <el-button
               v-if="row.status!='deleted'"
@@ -124,6 +126,62 @@
             >删除</el-button>
           </template>
         </ApplicationList>
+
+        <el-dialog
+          :visible="auditForm.show"
+          title="提交审核"
+          width="30%"
+        >
+          <el-form
+            ref="auditForm"
+            :model="auditForm"
+            label-width="80px"
+          >
+            <el-form-item label="审核结果">
+              <el-switch
+                v-model="auditForm.action"
+                :active-value="1"
+                :inactive-value="2"
+                active-color="#13ce66"
+                active-text="通过"
+                class="pt-2"
+                inactive-color="#ff4949"
+                inactive-text="驳回"
+                style="display: block"
+              />
+            </el-form-item>
+            <el-form-item label="备注">
+              <el-input
+                v-model="auditForm.remark"
+                placeholder="请输入备注"
+                type="textarea"
+              />
+            </el-form-item>
+            <el-form-item label="安全码">
+              <el-input
+                v-model="auditForm.Code"
+                placeholder="请输入安全码"
+              />
+            </el-form-item>
+            <el-form-item
+              hidden
+              label="审核人"
+            >
+              <el-input
+                v-model="auditForm.AuthByUserID"
+                placeholder="请输入审核人的id"
+              />
+            </el-form-item>
+          </el-form>
+
+          <span slot="footer">
+            <el-button @click="auditForm.show = false">取 消</el-button>
+            <el-button
+              type="primary"
+              @click="SubmitAuditForm"
+            >确 定</el-button>
+          </span>
+        </el-dialog>
       </el-col>
     </el-row>
   </div>
@@ -131,7 +189,7 @@
 
 <script>
 import ApplicationList from './components/ApplicationList'
-import { toCompany, toUser } from '../../api/apply'
+import { toCompany, toUser, audit } from '../../api/apply'
 import { getOnMyManage } from '../../api/usercompany'
 import { getMembers } from '../../api/company'
 
@@ -151,13 +209,67 @@ export default {
       dataList: [],
       onLoading: false,
       membersOption: [],
-      cacheMembers: []
+      cacheMembers: [],
+      auditForm: {
+        applyId: '',
+        action: 1,
+        remark: '',
+        show: false,
+        Code: '',
+        AuthByUserID: ''
+      }
+    }
+  },
+  computed: {
+    myUserid() {
+      return this.$store.state.user.userid
     }
   },
   created() {
     this.getOnMyManage()
   },
   methods: {
+    clearAuditForm() {
+      this.auditForm = {
+        applyId: '',
+        action: 1,
+        remark: '',
+        show: false,
+        Code: '',
+        AuthByUserID: this.myUserid
+      }
+    },
+    SubmitAuditForm() {
+      const { applyId, action, remark, Code, AuthByUserID } = this.auditForm
+      const list = [
+        {
+          id: applyId,
+          action,
+          remark
+        }
+      ]
+      const Auth = {
+        Code,
+        AuthByUserID
+      }
+      audit({
+        list,
+        Auth
+      })
+        .then(d => {
+          debugger
+        })
+        .catch(console.log)
+        .finally(() => {
+          this.clearAuditForm()
+        })
+    },
+    auditApply(row, action) {
+      this.clearAuditForm()
+      this.auditForm.show = true
+      this.auditForm.applyId = row.id
+      this.auditForm.action = action
+    },
     getOnMyManage() {
       this.membersOption = []
       this.cacheMembers = []
