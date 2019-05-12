@@ -66,6 +66,10 @@
                   placeholder
                 >
                   <el-option
+                    :value="$store.state.user.userid"
+                    label="查我自己"
+                  />
+                  <el-option
                     v-for="item in membersOption"
                     :key="item.id"
                     :label="item.realName"
