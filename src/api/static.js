@@ -1,4 +1,6 @@
 import request from '../utils/request'
+
+const apiURL = process.env.VUE_APP_BASE_API
 /**
  * 刷新验证码
  *
@@ -47,13 +49,20 @@ export function location(code) {
   })
 }
 
-const exportPath = '/static/xlsExport'
-const exportXSL = (data) => request({
-  url: exportPath,
-  method: 'PUT',
-  data,
-  responseType: 'stream'
-})
+const exportPath = apiURL + '/static/xlsExport'
+
+/**
+ * 下载
+ * @param {*} data
+ */
+const exportXSL = (data) => {
+  let str = '?'
+  const params = Object.keys(data).map(key => {
+    return key + '=' + data[key]
+  })
+  str += params.join('&')
+  window.open(exportPath + str, '_black')
+}
 
 /**
  * 导出休假登记模版
@@ -70,9 +79,7 @@ export function exportUserApplies({
 }) {
   return exportXSL({
     Templete,
-    Model: {
-      user
-    }
+    user
   })
 }
 
@@ -91,9 +98,7 @@ export function exportApply({
 }) {
   return exportXSL({
     Templete,
-    Model: {
-      apply
-    }
+    apply
   })
 }
 
@@ -112,8 +117,6 @@ export function exportCompanyApplies({
 }) {
   return exportXSL({
     Templete,
-    Model: {
-      company
-    }
+    company
   })
 }
