@@ -128,7 +128,7 @@
               split-button
               szie="small"
               trigger="click"
-              @command="hendleExecute(action, row, applyid)"
+              @command="(action) => hendleExecute(action, row, applyid)"
             >
               操作
               <el-dropdown-menu slot="dropdown">
