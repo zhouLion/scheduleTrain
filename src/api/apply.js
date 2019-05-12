@@ -34,6 +34,26 @@ export function getStampReturn(params) {
 }
 
 /**
+ *导出excel接口
+ *
+ * @export
+ * @param {*} params
+ *        string params.Templete 使用的模板名称
+ *        json params.Model 数据模型
+ *            string Model.user 用户id
+ *            string Model.company 单位代码
+ *            string Model.apply 申请的id
+ * @returns
+ */
+export function excelReport(params) {
+  return request({
+    url: '/static/xlsExport',
+    method: 'get',
+    params: params
+  })
+}
+
+/**
  * 提交基本信息
  * @param {*} data 基本信息参数
  */
