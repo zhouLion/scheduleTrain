@@ -17,6 +17,23 @@ export function fromUser(userid) {
 }
 
 /**
+ *获取归队时间
+ *
+ * @export
+ * @param {*} params
+ *      date  params.start
+ *      int  params.length
+ * @returns
+ */
+export function getStampReturn(params) {
+  return request({
+    url: '/static/vocationDate',
+    method: 'get',
+    params: params
+  })
+}
+
+/**
  * 提交基本信息
  * @param {*} data 基本信息参数
  */
