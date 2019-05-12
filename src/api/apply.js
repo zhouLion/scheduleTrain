@@ -54,9 +54,11 @@ export function submitApply(data) {
  *      {Auth}   params.Auth
  */
 export function deleteApply(params) {
-  return request.delete('/apply/Submit', {
-    id: params.id,
-    Auth: params.Auth
+  console.log(params)
+  return request({
+    url: '/apply/Submit',
+    method: 'delete',
+    data: params
   })
 }
 
