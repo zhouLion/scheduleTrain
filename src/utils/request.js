@@ -36,7 +36,6 @@ service.interceptors.response.use(
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
   response => {
-    console.log(response)
     if (response.config.responseType === 'stream') {
       const data = response.data
       if (!data) {
@@ -52,7 +51,7 @@ service.interceptors.response.use(
       document.body.appendChild(link)
       link.click()
       setTimeout(() => {
-        document.body.remove(link)
+        document.body.removeChild(link)
       }, 10)
     }
     const res = response.data
