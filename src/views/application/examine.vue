@@ -1,11 +1,25 @@
 <template>
   <div class="application-examine ma-4">
     <el-row :gutter="20">
-      <el-col :lg="4" :md="4" :sm="24">
-        <el-card class="elevation-0" shadow="hover">
-          <el-form ref="queryForm" :model="queryForm">
+      <el-col
+        :lg="4"
+        :md="4"
+        :sm="24"
+      >
+        <el-card
+          class="elevation-0"
+          shadow="hover"
+        >
+          <el-form
+            ref="queryForm"
+            :model="queryForm"
+          >
             <el-row>
-              <el-col :md="24" :sm="12" class="mb-3">
+              <el-col
+                :md="24"
+                :sm="12"
+                class="mb-3"
+              >
                 <div class="py-2 body-2 layout align-center row justify-space-between">
                   单位
                   <el-button
@@ -22,7 +36,10 @@
                   placeholder="选择管辖单位"
                   @change="companyChanged"
                 >
-                  <el-option label="--全部--" value />
+                  <!--                   <el-option
+                    label="--全部--"
+                    value
+                  />-->
                   <el-option
                     v-for="item in myManages"
                     :key="item.code"
@@ -33,7 +50,11 @@
 
                 <!-- <el-input v-model="queryForm.companyCode"></el-input> -->
               </el-col>
-              <el-col :md="24" :sm="12" class="mb-3">
+              <el-col
+                :md="24"
+                :sm="12"
+                class="mb-3"
+              >
                 <div class="py-2 body-2 layout align-center row justify-space-between">
                   指定人员
                   <el-switch v-model="queryForm.isSearchUser" />
@@ -44,7 +65,10 @@
                   class="full-width"
                   placeholder
                 >
-                  <el-option :value="$store.state.user.userid" label="查我自己" />
+                  <el-option
+                    :value="$store.state.user.userid"
+                    label="查我自己"
+                  />
                   <el-option
                     v-for="item in membersOption"
                     :key="item.id"
@@ -54,23 +78,48 @@
                 </el-select>
               </el-col>
 
-              <el-col :span="24" class="py-2">
-                <el-button class="full-width" type="primary" @click="searchData">查询</el-button>
+              <el-col
+                :span="24"
+                class="py-2"
+              >
+                <el-button
+                  class="full-width"
+                  type="primary"
+                  @click="searchData"
+                >查询</el-button>
               </el-col>
             </el-row>
           </el-form>
         </el-card>
       </el-col>
-      <el-col :lg="20" :md="20" :sm="24">
+      <el-col
+        :lg="20"
+        :md="20"
+        :sm="24"
+      >
         <!-- <div
           @click
           :class=""
           type="primary"
         >12</div>-->
 
-        <ApplicationList :data-list="dataList" :on-loading="onLoading" @refresh="searchData">
+        <ApplicationList
+          :data-list="dataList"
+          :on-loading="onLoading"
+          @refresh="searchData"
+        >
           <template slot="headeraction">
-            <el-button icon="el-icon-edit" type="primary" @click="handleCreate">添加</el-button>
+            <el-button
+              icon="el-icon-edit"
+              type="primary"
+              @click="showMultiDialog"
+            >批量审核</el-button>
+
+            <el-button
+              icon="el-icon-edit"
+              type="primary"
+              @click="handleCreate"
+            >添加</el-button>
 
             <el-button
               v-if="queryForm.isSearchUser"
@@ -86,20 +135,39 @@
               @click="exportCompanyApplies({company: queryForm.companyCode})"
             >导出单位申请</el-button>
           </template>
-          <template slot="action" slot-scope="{row}">
-            <el-button size="mini" type="success" @click="auditApply(row, 1)">通过</el-button>
+          <template
+            slot="action"
+            slot-scope="{row}"
+          >
+            <el-button
+              size="mini"
+              type="success"
+              @click="auditApply(row, 1)"
+            >通过</el-button>
             <el-button
               v-if="row.status!='publish'"
               size="mini"
               type="warning"
               @click="auditApply(row, 2)"
             >驳回</el-button>
-            <el-button v-if="row.status!='deleted'" size="mini" type="danger">删除</el-button>
+            <el-button
+              v-if="row.status!='deleted'"
+              size="mini"
+              type="danger"
+            >删除</el-button>
           </template>
         </ApplicationList>
 
-        <el-dialog :visible="auditForm.show" title="提交审核" width="30%">
-          <el-form ref="auditForm" :model="auditForm" label-width="80px">
+        <el-dialog
+          :visible="auditForm.show"
+          title="提交审核"
+          width="30%"
+        >
+          <el-form
+            ref="auditForm"
+            :model="auditForm"
+            label-width="80px"
+          >
             <el-form-item label="审核结果">
               <el-switch
                 v-model="auditForm.action"
@@ -114,19 +182,51 @@
               />
             </el-form-item>
             <el-form-item label="备注">
-              <el-input v-model="auditForm.remark" placeholder="请输入备注" type="textarea" />
+              <el-input
+                v-model="auditForm.remark"
+                placeholder="请输入备注"
+                type="textarea"
+              />
             </el-form-item>
             <el-form-item label="安全码">
-              <el-input v-model="auditForm.Code" placeholder="请输入安全码" />
+              <el-input
+                v-model="auditForm.Code"
+                placeholder="请输入安全码"
+              />
             </el-form-item>
-            <el-form-item hidden label="审核人">
-              <el-input v-model="auditForm.AuthByUserID" placeholder="请输入审核人的id" />
+            <el-form-item
+              hidden
+              label="审核人"
+            >
+              <el-input
+                v-model="auditForm.AuthByUserID"
+                placeholder="请输入审核人的id"
+              />
             </el-form-item>
           </el-form>
 
           <span slot="footer">
             <el-button @click="auditForm.show = false">取 消</el-button>
-            <el-button type="primary" @click="SubmitAuditForm">确 定</el-button>
+            <el-button
+              type="primary"
+              @click="SubmitAuditForm"
+            >确 定</el-button>
+          </span>
+        </el-dialog>
+
+        <el-dialog
+          :visible.sync="multiAuditForm.show"
+          custom-class="p-fixed f-right mr-0"
+          title="批量审核"
+          top="0"
+          width="408px"
+        >
+          <span slot="footer">
+            <el-button @click="multiAuditForm.show = false">取 消</el-button>
+            <el-button
+              type="primary"
+              @click="SubmitMultiAuditForm"
+            >确 定</el-button>
           </span>
         </el-dialog>
       </el-col>
@@ -190,6 +290,10 @@ export default {
         show: false,
         Code: '',
         AuthByUserID: ''
+      },
+      // 批量审批表单
+      multiAuditForm: {
+        show: false
       }
     }
   },
@@ -202,6 +306,9 @@ export default {
     this.getOnMyManage()
   },
   methods: {
+    showMultiDialog() {
+      this.multiAuditForm.show = true
+    },
     clearAuditForm() {
       this.auditForm = {
         applyId: '',
@@ -242,6 +349,9 @@ export default {
       this.auditForm.show = true
       this.auditForm.applyId = row.id
       this.auditForm.action = action
+    },
+    handleCreate() {
+      this.$router.push('/application/new')
     },
     getOnMyManage() {
       this.membersOption = []
@@ -313,6 +423,15 @@ export default {
 .application-examine {
   .full-width {
     width: 100%;
+  }
+  .f-right {
+    right: 0 !important;
+  }
+  .p-fixed {
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    background: white;
   }
 }
 </style>
