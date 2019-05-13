@@ -170,8 +170,8 @@
             <el-form-item label="休假目的地">
               <el-cascader
                 v-model="formApply.vocationPlaceArr"
-                :placeholder="formApply.vocationPlaceName"
                 :options="locationOptions"
+                :placeholder="formApply.vocationPlaceName"
                 :show-all-levels="false"
                 @active-item-change="handleItemChange"
               />
@@ -299,7 +299,8 @@ export default {
           value: -1
         }
       ],
-      isAfterSubmit: false
+      isAfterSubmit: false,
+      caculaingDate: {}
     }
   },
   computed: {
@@ -554,27 +555,46 @@ export default {
       }
       this.onLoading = false
       this.isAfterSubmit = false
+      this.caculaingDate = {}
     },
 
     /**
      * 用户计算预期归队日期
      */
     handleChange() {
-      getStampReturn({
-        start: this.formApply.StampLeave,
-        length: this.formApply.VocationLength + this.formApply.OnTripLength
-      })
-        .then(data => {
-          this.formApply.StampReturn = data.endDate
-          this.$notify({
-            title: '预计归队时间',
-            message: data.endDate,
-            type: 'success'
-          })
-        })
-        .catch(err => {
-          return this.$message.error(err)
-        })
+      (() => {
+        this.caculaingDate = {
+          start: this.formApply.StampLeave,
+          length: this.formApply.VocationLength + this.formApply.OnTripLength
+        }
+        var lastStart =
+          this.formApply.StampLeave +
+          this.formApply.VocationLength +
+          this.formApply.OnTripLength
+        setTimeout(() => {
+          if (
+            lastStart !==
+            this.formApply.StampLeave +
+              this.formApply.VocationLength +
+              this.formApply.OnTripLength
+          ) {
+            return true
+          }
+
+          getStampReturn(this.caculaingDate)
+            .then(data => {
+              this.formApply.StampReturn = data.endDate
+              this.$notify({
+                title: '预计归队时间',
+                message: data.endDate,
+                type: 'success'
+              })
+            })
+            .catch(err => {
+              return this.$message.error(err)
+            })
+        }, 1000)
+      })()
     }
   }
 }
