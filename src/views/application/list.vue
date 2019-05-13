@@ -1,9 +1,9 @@
 <template>
   <div class="application-list ma-4">
-    <el-row :gutter="20">
+    <el-row>
       <el-col
-        :lg="4"
-        :md="4"
+        :lg="8"
+        :md="16"
         :sm="24"
       >
         <el-card
@@ -92,9 +92,11 @@
           </el-form>
         </el-card>
       </el-col>
+    </el-row>
+    <el-row :gutter="20">
       <el-col
-        :lg="20"
-        :md="20"
+        :lg="24"
+        :md="24"
         :sm="24"
       >
         <ApplicationList

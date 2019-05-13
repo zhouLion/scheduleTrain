@@ -1,7 +1,7 @@
 <template>
   <div class="application-examine ma-4">
-    <el-row :gutter="20">
-      <el-col :lg="4" :md="4" :sm="24">
+    <el-row>
+      <el-col :lg="8" :md="16" :sm="24">
         <el-card class="elevation-0" shadow="hover">
           <el-form ref="queryForm" :model="queryForm">
             <el-row>
@@ -61,13 +61,9 @@
           </el-form>
         </el-card>
       </el-col>
-      <el-col :lg="20" :md="20" :sm="24">
-        <!-- <div
-          @click
-          :class=""
-          type="primary"
-        >12</div>-->
-
+    </el-row>
+    <el-row>
+      <el-col :lg="24" :md="24" :sm="24">
         <ApplicationList :data-list="dataList" :on-loading="onLoading" @refresh="searchData">
           <template slot="headeraction">
             <el-button
@@ -92,7 +88,12 @@
               type="warning"
               @click="auditApply(row, 2)"
             >驳回</el-button>
-            <el-button v-if="row.status!='deleted'" size="mini" type="danger">删除</el-button>
+            <el-button
+              v-if="row.status!='deleted'"
+              size="mini"
+              type="danger"
+              @click="DeleteApply(row)"
+            >删除</el-button>
           </template>
         </ApplicationList>
 
@@ -134,7 +135,7 @@
 
 <script>
 import ApplicationList from './components/ApplicationList'
-import { toCompany, toUser, audit } from '../../api/apply'
+import { toCompany, toUser, audit, deleteApply } from '../../api/apply'
 import { getOnMyManage } from '../../api/usercompany'
 import { getMembers } from '../../api/company'
 import {
@@ -209,6 +210,24 @@ export default {
         Code: '',
         AuthByUserID: this.myUserid
       }
+    },
+    DeleteApply(item) {
+      const authUser = prompt('输入授权账号', this.myUserid)
+      if (!authUser) return
+      deleteApply({
+        id: item.id,
+        Auth: {
+          AuthByUserID: authUser,
+          Code: prompt('输入授权码')
+        }
+      })
+        .then(() => {
+          this.$message.success('删除成功')
+          this.searchData()
+        })
+        .catch(err => {
+          this.$message.error(err)
+        })
     },
     SubmitAuditForm() {
       const { applyId, action, remark, Code, AuthByUserID } = this.auditForm
