@@ -8,7 +8,9 @@ import request from '../utils/request'
  * @returns
  */
 export function fromUser(userid) {
-  const { id } = userid
+  const {
+    id
+  } = userid
   return request.get('/apply/fromUser', {
     params: {
       id
@@ -142,7 +144,9 @@ export function toUser(data) {
  * @param {*} companyCode
  */
 export function fromCompany(companyCode) {
-  const { code } = companyCode
+  const {
+    code
+  } = companyCode
   return request.get('/apply/fromCompany', {
     params: {
       code
@@ -166,7 +170,9 @@ export function getAllStatus() {
  * @returns
  */
 export function toCompany(companyCode) {
-  const { code } = companyCode
+  const {
+    code
+  } = companyCode
   return request({
     url: '/apply/toCompany',
     method: 'get',
@@ -189,11 +195,13 @@ export function toCompany(companyCode) {
  *        },
  *        ...
  *      }
+ * @param {Auth} Auth
  * @returns
  */
-export function audit(data) {
+export function audit(data, auth) {
   return request.post('/apply/audit', {
-    data
+    data,
+    auth
   })
 }
 

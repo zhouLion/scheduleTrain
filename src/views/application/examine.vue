@@ -70,8 +70,6 @@
 
         <ApplicationList :data-list="dataList" :on-loading="onLoading" @refresh="searchData">
           <template slot="headeraction">
-            <el-button icon="el-icon-edit" type="primary" @click="handleCreate">添加</el-button>
-
             <el-button
               v-if="queryForm.isSearchUser"
               icon="el-icon-download"
@@ -225,14 +223,21 @@ export default {
         Code,
         AuthByUserID
       }
-      audit({
-        list,
+      audit(
+        {
+          list
+        },
         Auth
-      })
-        .then(d => {
-          debugger
+      )
+        .then(resultlist => {
+          resultlist.forEach(result => {
+            if (result.status === 0) this.$notify.success('已审批' + result.id)
+            else this.$notify.error(result.message + ':' + result.id)
+          })
         })
-        .catch(console.log)
+        .catch(err => {
+          this.$message.error(err.message)
+        })
         .finally(() => {
           this.clearAuditForm()
         })
