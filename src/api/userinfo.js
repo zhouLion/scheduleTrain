@@ -79,3 +79,18 @@ export function getUserCompany(id) {
     }
   })
 }
+
+/**
+ *通过身份证号查询身份号
+ *
+ * @export
+ * @param {*} cid
+ * @returns
+ */
+export function getUserIdByCid(cid) {
+  return request.get('/account/GetUserIdByCid', {
+    params: {
+      cid
+    }
+  })
+}

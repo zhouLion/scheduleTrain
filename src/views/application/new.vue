@@ -244,6 +244,7 @@
 
 <script>
 import { getUserInfo } from '../../api/usercompany'
+import { getUserIdByCid } from '../../api/userinfo'
 import {
   postBaseInfo,
   postRequestInfo,
@@ -387,34 +388,53 @@ export default {
       }
       if (id.length === 7 || id.length === 18) {
         this.OnloadingUserInfoes = true
-        getUserInfo(this.form.id)
-          .then(data => {
-            this.OnloadingUserInfoes = false
-            const { base, company, duties, social } = data
-            try {
-              this.form.realName = base.realName
-              this.form.company = company.company.code
-              this.form.companyName = company.company.name
-              this.form.duties = duties.name
-              this.form.HomeDetailAddress = social.addressDetail
-              this.form.HomeAddress = social.address.code
-              this.form.HomeAddressName = social.address.name
-              this.form.Phone = social.phone
-              this.form.Settle = social.settle + ''
-            } catch (error) {
-              console.warn(error)
-            }
-            return this.$message.success('获取成功，已自动填充到表单')
-          })
-          .catch(() => {
-            this.OnloadingUserInfoes = false
-            return this.$message.warning('查询时错误')
-          })
+        if (id.length === 18) {
+          getUserIdByCid(id)
+            .then(data => {
+              this.OnloadingUserInfoes = false
+              this.form.id = data.id
+              this.$message.success({
+                message: '身份证识别成功:' + data.id
+              })
+              this.fetchUserInfoesDerect()
+            })
+            .catch(err => {
+              this.OnloadingUserInfoes = false
+              return this.$message.error({
+                message: err.message
+              })
+            })
+        }
       } else {
         this.$message.warning({
           message: '非正确身份号码,正确格式为7位身份号或者18位法定身份证号码'
         })
       }
+    },
+    fetchUserInfoesDerect() {
+      getUserInfo(this.form.id)
+        .then(data => {
+          this.OnloadingUserInfoes = false
+          const { base, company, duties, social } = data
+          try {
+            this.form.realName = base.realName
+            this.form.company = company.company.code
+            this.form.companyName = company.company.name
+            this.form.duties = duties.name
+            this.form.HomeDetailAddress = social.addressDetail
+            this.form.HomeAddress = social.address.code
+            this.form.HomeAddressName = social.address.name
+            this.form.Phone = social.phone
+            this.form.Settle = social.settle + ''
+          } catch (error) {
+            console.warn(error)
+          }
+          return this.$message.success('获取成功，已自动填充到表单')
+        })
+        .catch(err => {
+          this.OnloadingUserInfoes = false
+          return this.$message.warning(err.message)
+        })
     },
     // 提交基础信息
     submitBaseInfo() {
