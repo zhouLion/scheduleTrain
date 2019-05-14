@@ -11,13 +11,13 @@
           <el-card>
 
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="Activity" name="activity">
+              <el-tab-pane :label="$t('profile.activity')" name="activity">
                 <activity />
               </el-tab-pane>
-              <el-tab-pane label="Timeline" name="timeline">
+              <el-tab-pane :label="$t('profile.timeline')" name="timeline">
                 <timeline />
               </el-tab-pane>
-              <el-tab-pane label="Account" name="account">
+              <el-tab-pane :label="$t('profile.account')" name="account">
                 <account :user="user" />
               </el-tab-pane>
             </el-tabs>
