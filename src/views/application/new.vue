@@ -404,6 +404,8 @@ export default {
                 message: err.message
               })
             })
+        } else {
+          this.fetchUserInfoesDerect()
         }
       } else {
         this.$message.warning({
