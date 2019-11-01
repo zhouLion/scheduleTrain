@@ -85,57 +85,15 @@
                 disabled
               />
             </el-form-item>
-            <el-form-item label="家庭地址">
-              <el-col :lg="3">
-                <el-cascader
-                  v-model="form.HomeAddressArr"
-                  :options="locationOptions"
-                  :placeholder="form.HomeAddressName"
-                  :show-all-levels="false"
-                  @active-item-change="handleHomeAddressItemChange"
-                />
-              </el-col>
-              <el-col :lg="9">
-                <el-input
-                  v-model="form.HomeDetailAddress"
-                  placeholder="详细地址"
-                />
-              </el-col>
-            </el-form-item>
-            <el-form-item label="随军情况">
-              <el-select
-                v-model="form.Settle"
-                placeholder="不符合随军"
-              >
-                <el-option
-                  label="不符合随军"
-                  value="0"
-                />
-                <el-option
-                  label="符合随军未随军同地"
-                  value="1"
-                />
-                <el-option
-                  label="符合随军未随军异地"
-                  value="2"
-                />
-                <el-option
-                  label="已随军"
-                  value="3"
-                />
-                <el-option
-                  label="双军人同地"
-                  value="4"
-                />
-                <el-option
-                  label="双军人异地"
-                  value="5"
-                />
-              </el-select>
-            </el-form-item>
+
+            <SettleFormItem v-model="form.Settle.self" label="本人所在地" />
+            <SettleFormItem v-model="form.Settle.lover" label="配偶所在地" />
+            <SettleFormItem v-model="form.Settle.parent" label="父母所在地" />
+
             <el-form-item label="联系方式">
               <el-input v-model="form.Phone" />
             </el-form-item>
+
             <hr class="divider">
             <el-form-item label="回执编号">
               <el-input
@@ -416,6 +374,7 @@
 </template>
 
 <script>
+import SettleFormItem from '../../components/SettleFormItem'
 import { getUserInfo } from '../../api/usercompany'
 import { getUserIdByCid } from '../../api/userinfo'
 import {
@@ -427,6 +386,9 @@ import {
 import { locationChildren } from '../../api/static'
 export default {
   name: 'NewApply',
+  components: {
+    SettleFormItem
+  },
   data() {
     return {
       active: 0,
@@ -438,12 +400,16 @@ export default {
         company: '',
         companyName: '',
         duties: '',
-        HomeAddressName: '',
-        HomeAddress: '',
-        HomeAddressArr: [],
-        HomeDetailAddress: '',
-        Phone: '',
-        Settle: '0'
+        // HomeAddressName: '',
+        // HomeAddress: '',
+        // HomeAddressArr: [],
+        // HomeDetailAddress: '',
+        Settle: {
+          self: {},
+          lover: {},
+          parent: {}
+        },
+        Phone: ''
       },
       formApply: {
         // id: '',
@@ -491,35 +457,6 @@ export default {
         if (item.children[i].value === value) return i
       }
       return 0
-    },
-    handleHomeAddressItemChange(val) {
-      if (val) {
-        const deep = val.length - 1
-        const id = val[deep]
-        this.form.HomeAddressArr = val
-        locationChildren(id).then(data => {
-          const children = data.list.map(d => ({
-            label: d.name,
-            value: d.code,
-            children: []
-          }))
-          var item = this.locationOptions[0]
-          var nextIndex = 0
-          for (var i = 0; i < deep; i++) {
-            nextIndex = this.getLocationChildrenIndexByValue(item, val[i + 1])
-            item = item.children[nextIndex]
-          }
-          item.children = children
-          if (item.children.length === 0) {
-            item.children[0] = {
-              label: '无下一层级',
-              disabled: true
-            }
-          }
-        })
-      } else {
-        this.$message.error('无效的地址')
-      }
     },
     handleItemChange(val) {
       if (val) {
@@ -586,6 +523,7 @@ export default {
         })
       }
     },
+
     fetchUserInfoesDerect() {
       getUserInfo(this.form.id)
         .then(data => {
@@ -596,11 +534,8 @@ export default {
             this.form.company = company.company.code
             this.form.companyName = company.company.name
             this.form.duties = duties.name
-            this.form.HomeDetailAddress = social.addressDetail
-            this.form.HomeAddress = social.address.code
-            this.form.HomeAddressName = social.address.name
             this.form.Phone = social.phone
-            this.form.Settle = social.settle + ''
+            this.form.Settle = social.settle
           } catch (error) {
             console.warn(error)
           }
@@ -613,32 +548,18 @@ export default {
     },
     // 提交基础信息
     submitBaseInfo() {
-      const { HomeAddressArr } = this.form
-      if (HomeAddressArr && HomeAddressArr.length > 0) {
-        this.form.HomeAddress = HomeAddressArr[HomeAddressArr.length - 1]
-      }
-      const {
-        id,
-        realName,
-        company,
-        duties,
-        HomeAddress,
-        HomeDetailAddress,
-        Phone,
-        Settle
-      } = this.form
-      if (!this.formApply.vocationPlace || this.formApply.vocationPlace === 0) {
-        this.formApply.vocationPlace = this.form.HomeAddress
-        this.formApply.vocationPlaceName = this.form.HomeAddressName
-      }
+      debugger
+      const { id, realName, company, duties, Phone, Settle } = this.form
+      // if (!this.formApply.vocationPlace || this.formApply.vocationPlace === 0) {
+      //   this.formApply.vocationPlace = this.form.HomeAddress
+      //   this.formApply.vocationPlaceName = this.form.HomeAddressName
+      // }
       this.onLoading = true
       postBaseInfo({
         id,
         realName,
         company,
         duties,
-        HomeAddress,
-        HomeDetailAddress,
         Phone,
         Settle
       })
@@ -731,7 +652,11 @@ export default {
         HomeAddress: 0,
         HomeDetailAddress: '',
         Phone: 0,
-        Settle: 0
+        Settle: {
+          self: null,
+          lover: null,
+          parent: null
+        }
       }
       this.formApply = {
         StampLeave: '',

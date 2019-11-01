@@ -6,7 +6,7 @@ import { setTimeout } from 'timers'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASEURL, // api 的 base_url
   withCredentials: true, // 跨域请求时发送 cookies
-  timeout: 5000 // request timeout
+  timeout: 10 * 1000 // request timeout
 })
 
 // request interceptor
