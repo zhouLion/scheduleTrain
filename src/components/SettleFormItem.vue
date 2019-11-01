@@ -30,7 +30,10 @@ const VALUE_CONSTRUCT = {
 export default {
   name: 'SettleFormItem',
   props: {
-    label: String,
+    label: {
+      type: String,
+      default: ''
+    },
     value: {
       type: Object,
       default() {
@@ -79,7 +82,7 @@ export default {
       if (val) {
         const deep = val.length - 1
         const id = val[deep]
-        this.form.HomeAddressArr = id
+        this.form.HomeAddressArr = val
         locationChildren(id).then(data => {
           const children = data.list.map(d => ({
             label: d.name,

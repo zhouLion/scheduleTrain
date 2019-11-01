@@ -132,6 +132,7 @@
             </el-form-item>
           </el-form>
         </div>
+
         <div
           v-show="showAll == true || active == 1"
           class="row layout"
@@ -165,7 +166,8 @@
                 />
               </el-select>
             </el-form-item>
-            <div class="row layout justify-start">
+
+            <el-row>
               <el-col
                 :lg="6"
                 :md="24"
@@ -192,28 +194,41 @@
                   />
                 </el-form-item>
               </el-col>
-            </div>
+            </el-row>
 
-            <div class="layout row justify-start">
+            <el-row>
               <el-col
                 :lg="6"
-                :md="12"
+                :md="24"
               >
                 <el-form-item label="休假天数">
                   <el-input-number
                     v-model="formApply.VocationLength"
-                    :max="365"
+                    :max="usersVocation.leftLength"
                     :min="1"
                     controls-position="right"
                     size="small"
                     @change="handleChange"
                   />
+                  <el-tooltip effect="dark">
+                    <div slot="content">
+                      <ul>
+                        <li>全年假期长度：<span>{{ usersVocation.yearlyLength }}</span>天</li>
+                        <li>当前已休次数：<span>{{ usersVocation.nowTimes }}</span>天</li>
+                        <li>剩余假期长度：<span>{{ usersVocation.leftLength }}</span>天</li>
+                        <li>全年最多可休路途次数：<span>{{ usersVocation.onTripTimes }}</span>天</li>
+                        <li>当前已休路途次数：<span>{{ usersVocation.maxTripTimes }}</span>天</li>
+                      </ul>
+                    </div>
+                    <i class="el-icon-s-order" style="color: #ff9800; font-size: 20px;" />
+                  </el-tooltip>
                 </el-form-item>
+
               </el-col>
 
               <el-col
                 :lg="6"
-                :md="12"
+                :md="24"
               >
                 <el-form-item label="路途天数">
                   <el-input-number
@@ -226,7 +241,7 @@
                   />
                 </el-form-item>
               </el-col>
-            </div>
+            </el-row>
 
             <el-form-item label="休假目的地">
               <el-cascader
@@ -298,6 +313,7 @@
             </el-form-item>
           </el-form>
         </div>
+
         <div
           v-show="showAll == true || active == 2"
           class="row layout"
@@ -376,7 +392,7 @@
 <script>
 import SettleFormItem from '../../components/SettleFormItem'
 import { getUserInfo } from '../../api/usercompany'
-import { getUserIdByCid } from '../../api/userinfo'
+import { getUserIdByCid, getUsersVocationLimit } from '../../api/userinfo'
 import {
   postBaseInfo,
   postRequestInfo,
@@ -400,10 +416,6 @@ export default {
         company: '',
         companyName: '',
         duties: '',
-        // HomeAddressName: '',
-        // HomeAddress: '',
-        // HomeAddressArr: [],
-        // HomeDetailAddress: '',
         Settle: {
           self: {},
           lover: {},
@@ -412,7 +424,6 @@ export default {
         Phone: ''
       },
       formApply: {
-        // id: '',
         StampLeave: '',
         VocationLength: 0,
         OnTripLength: 0,
@@ -427,6 +438,13 @@ export default {
       formFinal: {
         baseInfoId: '',
         RequestId: ''
+      },
+      usersVocation: {
+        yearlyLength: 0,
+        nowTimes: 0,
+        leftLength: 0,
+        onTripTimes: 0,
+        maxTripTimes: 0
       },
       locationOptions: [
         {
@@ -546,15 +564,25 @@ export default {
           return this.$message.warning(err.message)
         })
     },
+
+    getUsersVocationLimit(userid) {
+      getUsersVocationLimit(userid).then(data => {
+        this.usersVocation = {
+          yearlyLength: 0,
+          nowTimes: 0,
+          leftLength: 0,
+          onTripTimes: 0,
+          maxTripTimes: 0,
+          ...data
+        }
+      })
+    },
+
     // 提交基础信息
     submitBaseInfo() {
-      debugger
       const { id, realName, company, duties, Phone, Settle } = this.form
-      // if (!this.formApply.vocationPlace || this.formApply.vocationPlace === 0) {
-      //   this.formApply.vocationPlace = this.form.HomeAddress
-      //   this.formApply.vocationPlaceName = this.form.HomeAddressName
-      // }
       this.onLoading = true
+      this.getUsersVocationLimit(id)
       postBaseInfo({
         id,
         realName,
@@ -649,8 +677,6 @@ export default {
         company: '',
         companyName: '',
         duties: '',
-        HomeAddress: 0,
-        HomeDetailAddress: '',
         Phone: 0,
         Settle: {
           self: null,
@@ -682,7 +708,7 @@ export default {
      * 用户计算预期归队日期
      */
     handleChange() {
-      (() => {
+      return (() => {
         this.caculaingDate = {
           start: this.formApply.StampLeave,
           length: this.formApply.VocationLength + this.formApply.OnTripLength

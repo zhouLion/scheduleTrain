@@ -94,3 +94,15 @@ export function getUserIdByCid(cid) {
     }
   })
 }
+
+/**
+ * 获取用户休假限制时长和次数
+ * @param {*} id
+ */
+export function getUsersVocationLimit(id) {
+  return request.get('/users/vocation', {
+    params: {
+      id
+    }
+  })
+}
