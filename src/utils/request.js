@@ -4,7 +4,7 @@ import qs from 'qs'
 import { setTimeout } from 'timers'
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
+  baseURL: process.env.VUE_APP_BASEURL, // api 的 base_url
   withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })

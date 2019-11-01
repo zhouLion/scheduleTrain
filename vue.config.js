@@ -26,6 +26,16 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
+    proxy: {
+      '/api': {
+        target: process.env.VUE_APP_BASE_API,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
     overlay: {
       warnings: false,
       errors: true
