@@ -106,6 +106,7 @@
         <ApplicationList
           :data-list="dataList"
           :on-loading="onLoading"
+          multi
           @refresh="searchData"
         >
           <template slot="headeraction">
@@ -308,6 +309,9 @@ export default {
   methods: {
     showMultiDialog() {
       this.multiAuditForm.show = true
+    },
+    SubmitMultiAuditForm() {
+      return false
     },
     clearAuditForm() {
       this.auditForm = {

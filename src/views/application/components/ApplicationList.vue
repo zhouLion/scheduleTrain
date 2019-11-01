@@ -30,6 +30,11 @@
         style="width: 100%;"
       >
         <el-table-column
+          v-if="multi"
+          type="selection"
+          width="42px"
+        />
+        <el-table-column
           label="申请人"
           min-width="100px"
         >
@@ -214,11 +219,11 @@ export default {
     onLoading: {
       type: Boolean,
       default: false
+    },
+    multi: {
+      type: Boolean,
+      default: false
     }
-    // multi: {
-    //   type: Boolean,
-    //   default: false
-    // }
   },
   data() {
     return {

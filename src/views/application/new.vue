@@ -1,12 +1,23 @@
 <template>
   <div class="application-new">
-    <el-card :body-style="{padding: 0}" shadow="hover">
-      <div :style="{'backgroundColor': theme}" class="layout pa-3 row justify-space-between">
+    <el-card
+      :body-style="{padding: 0}"
+      shadow="hover"
+    >
+      <div
+        :style="{'backgroundColor': theme}"
+        class="layout pa-3 row justify-space-between"
+      >
         <span>新建申请</span>
       </div>
       <el-card class="elevation-0">
         <div class="px-2 pb-2 pt-0">
-          <el-steps :active="active" finish-status="success" simple style="margin-top: 20px">
+          <el-steps
+            :active="active"
+            finish-status="success"
+            simple
+            style="margin-top: 20px"
+          >
             <el-step title="填写基础信息" />
             <el-step title="填写休假请求" />
             <el-step title="准备提交" />
@@ -14,8 +25,16 @@
         </div>
       </el-card>
       <el-card class="elevation-0 p-relitive">
-        <div v-show="showAll == true || active == 0" class="row layout">
-          <el-form ref="form" :model="form" class="full-width" label-width="180px">
+        <div
+          v-show="showAll == true || active == 0"
+          class="row layout"
+        >
+          <el-form
+            ref="form"
+            :model="form"
+            class="full-width"
+            label-width="180px"
+          >
             <div class="subheading pa-3">一、填写基础信息</div>
             <el-form-item label="身份号">
               <el-input
@@ -39,16 +58,32 @@
               </el-input>
             </el-form-item>
             <el-form-item label="真实姓名">
-              <el-input v-model="form.realName" disabled />
+              <el-input
+                v-model="form.realName"
+                disabled
+              />
             </el-form-item>
             <el-form-item label="所在部门">
-              <el-input v-model="form.companyName" disabled />
+              <el-input
+                v-model="form.companyName"
+                disabled
+              />
             </el-form-item>
-            <el-form-item hidden label="所在部门">
-              <el-input v-model="form.company" disabled hidden />
+            <el-form-item
+              hidden
+              label="所在部门"
+            >
+              <el-input
+                v-model="form.company"
+                disabled
+                hidden
+              />
             </el-form-item>
             <el-form-item label="担任职务">
-              <el-input v-model="form.duties" disabled />
+              <el-input
+                v-model="form.duties"
+                disabled
+              />
             </el-form-item>
             <el-form-item label="家庭地址">
               <el-col :lg="3">
@@ -61,17 +96,41 @@
                 />
               </el-col>
               <el-col :lg="9">
-                <el-input v-model="form.HomeDetailAddress" placeholder="详细地址" />
+                <el-input
+                  v-model="form.HomeDetailAddress"
+                  placeholder="详细地址"
+                />
               </el-col>
             </el-form-item>
             <el-form-item label="随军情况">
-              <el-select v-model="form.Settle" placeholder="不符合随军">
-                <el-option label="不符合随军" value="0" />
-                <el-option label="符合随军未随军同地" value="1" />
-                <el-option label="符合随军未随军异地" value="2" />
-                <el-option label="已随军" value="3" />
-                <el-option label="双军人同地" value="4" />
-                <el-option label="双军人异地" value="5" />
+              <el-select
+                v-model="form.Settle"
+                placeholder="不符合随军"
+              >
+                <el-option
+                  label="不符合随军"
+                  value="0"
+                />
+                <el-option
+                  label="符合随军未随军同地"
+                  value="1"
+                />
+                <el-option
+                  label="符合随军未随军异地"
+                  value="2"
+                />
+                <el-option
+                  label="已随军"
+                  value="3"
+                />
+                <el-option
+                  label="双军人同地"
+                  value="4"
+                />
+                <el-option
+                  label="双军人异地"
+                  value="5"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="联系方式">
@@ -79,9 +138,16 @@
             </el-form-item>
             <hr class="divider">
             <el-form-item label="回执编号">
-              <el-input v-model="formFinal.baseInfoId" :style="{ width: '400px' }" disabled>
+              <el-input
+                v-model="formFinal.baseInfoId"
+                :style="{ width: '400px' }"
+                disabled
+              >
                 <div slot="prepend">
-                  <el-button type="primary" @click="submitBaseInfo">生成</el-button>
+                  <el-button
+                    type="primary"
+                    @click="submitBaseInfo"
+                  >生成</el-button>
                 </div>
                 <el-button
                   v-if="formFinal.baseInfoId"
@@ -91,7 +157,12 @@
                   icon="el-icon-success"
                   type="success"
                 />
-                <el-button v-else slot="append" :loading="onLoading" icon="el-icon-question" />
+                <el-button
+                  v-else
+                  slot="append"
+                  :loading="onLoading"
+                  icon="el-icon-question"
+                />
               </el-input>
             </el-form-item>
             <el-form-item v-show="showAll == false">
@@ -99,25 +170,48 @@
                 @click="submitBaseInfo"
                 type="primary"
               >提交基础信息</el-button>-->
-              <el-button :disabled="!formFinal.baseInfoId" @click="active = 1">下一步</el-button>
+              <el-button @click="active = 1">下一步</el-button>
             </el-form-item>
           </el-form>
         </div>
-        <div v-show="showAll == true || active == 1" class="row layout">
-          <el-form ref="formApply" :model="formApply" class="full-width" label-width="180px">
+        <div
+          v-show="showAll == true || active == 1"
+          class="row layout"
+        >
+          <el-form
+            ref="formApply"
+            :model="formApply"
+            class="full-width"
+            label-width="180px"
+          >
             <div class="subheading pa-3">二、填写休假请求</div>
             <el-form-item label="申请理由">
               <el-input v-model="formApply.reason" />
             </el-form-item>
             <el-form-item label="休假类型">
-              <el-select v-model="formApply.VocationType" placeholder="必填">
-                <el-option label="正休" value="正休" />
-                <el-option label="事假" value="事假" />
-                <el-option label="病休" value="病休" />
+              <el-select
+                v-model="formApply.VocationType"
+                placeholder="必填"
+              >
+                <el-option
+                  label="正休"
+                  value="正休"
+                />
+                <el-option
+                  label="事假"
+                  value="事假"
+                />
+                <el-option
+                  label="病休"
+                  value="病休"
+                />
               </el-select>
             </el-form-item>
             <div class="row layout justify-start">
-              <el-col :lg="6" :md="24">
+              <el-col
+                :lg="6"
+                :md="24"
+              >
                 <el-form-item label="离队时间">
                   <el-date-picker
                     v-model="formApply.StampLeave"
@@ -127,7 +221,10 @@
                   />
                 </el-form-item>
               </el-col>
-              <el-col :lg="6" :md="24">
+              <el-col
+                :lg="6"
+                :md="24"
+              >
                 <el-form-item label="预计归队时间">
                   <el-date-picker
                     v-model="formApply.StampReturn"
@@ -140,7 +237,10 @@
             </div>
 
             <div class="layout row justify-start">
-              <el-col :lg="6" :md="12">
+              <el-col
+                :lg="6"
+                :md="12"
+              >
                 <el-form-item label="休假天数">
                   <el-input-number
                     v-model="formApply.VocationLength"
@@ -153,7 +253,10 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :lg="6" :md="12">
+              <el-col
+                :lg="6"
+                :md="12"
+              >
                 <el-form-item label="路途天数">
                   <el-input-number
                     v-model="formApply.OnTripLength"
@@ -177,17 +280,39 @@
               />
             </el-form-item>
             <el-form-item label="所乘交通工具">
-              <el-select v-model="formApply.ByTransportation" placeholder="火车">
-                <el-option label="火车" value="0" />
-                <el-option label="飞机" value="1" />
-                <el-option label="汽车" value="2" />
-                <el-option label="其他" value="-1" />
+              <el-select
+                v-model="formApply.ByTransportation"
+                placeholder="火车"
+              >
+                <el-option
+                  label="火车"
+                  value="0"
+                />
+                <el-option
+                  label="飞机"
+                  value="1"
+                />
+                <el-option
+                  label="汽车"
+                  value="2"
+                />
+                <el-option
+                  label="其他"
+                  value="-1"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="回执编号">
-              <el-input v-model="formFinal.RequestId" :style="{ width: '400px' }" disabled>
+              <el-input
+                v-model="formFinal.RequestId"
+                :style="{ width: '400px' }"
+                disabled
+              >
                 <div slot="prepend">
-                  <el-button type="primary" @click="submitRequestInfo">生成</el-button>
+                  <el-button
+                    type="primary"
+                    @click="submitRequestInfo"
+                  >生成</el-button>
                 </div>
                 <el-button
                   v-if="formFinal.RequestId"
@@ -197,42 +322,90 @@
                   icon="el-icon-success"
                   type="success"
                 />
-                <el-button v-else slot="append" :loading="onLoading" icon="el-icon-question" />
+                <el-button
+                  v-else
+                  slot="append"
+                  :loading="onLoading"
+                  icon="el-icon-question"
+                />
               </el-input>
             </el-form-item>
 
             <el-form-item v-show="showAll == false">
               <el-button @click="active = 0">上一步</el-button>
-              <el-button :disabled="!formFinal.RequestId" @click="active = 2">下一步</el-button>
+              <el-button
+                :disabled="!formFinal.RequestId"
+                @click="active = 2"
+              >下一步</el-button>
             </el-form-item>
           </el-form>
         </div>
-        <div v-show="showAll == true || active == 2" class="row layout">
-          <el-form ref="formFinal" :model="formFinal" class="full-width" label-width="180px">
+        <div
+          v-show="showAll == true || active == 2"
+          class="row layout"
+        >
+          <el-form
+            ref="formFinal"
+            :model="formFinal"
+            class="full-width"
+            label-width="180px"
+          >
             <div class="subheading pa-3">最后一步、准备提交</div>
             <el-form-item label="基础信息回执编号">
-              <el-input :value="formFinal.baseInfoId" disabled />
+              <el-input
+                :value="formFinal.baseInfoId"
+                disabled
+              />
             </el-form-item>
             <el-form-item label="休假请求回执">
-              <el-input :value="formFinal.RequestId" disabled />
+              <el-input
+                :value="formFinal.RequestId"
+                disabled
+              />
             </el-form-item>
             <el-form-item v-if="formFinal.RequestId && formFinal.baseInfoId">
-              <el-alert show-icon title="信息填写完备，可以准备提交" type="info" />
+              <el-alert
+                show-icon
+                title="信息填写完备，可以准备提交"
+                type="info"
+              />
             </el-form-item>
             <el-form-item v-show="showAll == false">
-              <el-button type="primary" @click="active = 3">准备提交</el-button>
+              <el-button
+                type="primary"
+                @click="active = 3"
+              >准备提交</el-button>
               <el-button @click="active = 1">上一步</el-button>
             </el-form-item>
           </el-form>
         </div>
-        <div v-show="showAll == true || active == 3" class="row layout" />
-        <div v-if="showAll" class="mask" />
-        <div v-if="showAll" :style="{'backgroundColor': theme}" class="footer-nav">
-          <div v-if="isAfterSubmit" class="row layout justify-center fill-height">
+        <div
+          v-show="showAll == true || active == 3"
+          class="row layout"
+        />
+        <div
+          v-if="showAll"
+          class="mask"
+        />
+        <div
+          v-if="showAll"
+          :style="{'backgroundColor': theme}"
+          class="footer-nav"
+        >
+          <div
+            v-if="isAfterSubmit"
+            class="row layout justify-center fill-height"
+          >
             <el-button @click="createNew">新建申请</el-button>
           </div>
-          <div v-else class="row layout justify-center fill-height">
-            <el-button v-loading="onLoading" @click="submitApply">提交</el-button>
+          <div
+            v-else
+            class="row layout justify-center fill-height"
+          >
+            <el-button
+              v-loading="onLoading"
+              @click="submitApply"
+            >提交</el-button>
             <el-button @click="active = 0">重新填写</el-button>
           </div>
         </div>
@@ -404,6 +577,8 @@ export default {
                 message: err.message
               })
             })
+        } else if (id.length === 7) {
+          this.fetchUserInfoesDerect()
         }
       } else {
         this.$message.warning({
