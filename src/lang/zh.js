@@ -64,6 +64,7 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
+    profile: '个人信息',
     application: {
       title: '休假申请',
       query: '查询申请',
@@ -81,7 +82,13 @@ export default {
     github: '项目地址',
     theme: '换肤',
     size: '布局大小',
-    profile: '个人信息'
+    profile: '个人信息',
+    welcome: '欢迎页'
+  },
+  profile: {
+    activity: '动态',
+    timeline: '轨迹',
+    account: '账号'
   },
   login: {
     validate: {

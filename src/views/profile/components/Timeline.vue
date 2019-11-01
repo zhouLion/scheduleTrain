@@ -17,24 +17,24 @@ export default {
     return {
       timeline: [
         {
-          timestamp: '2019/4/20',
-          title: 'Update Github template',
+          timestamp: '2019/5/14',
+          title: '初版完成',
           content: 'serfend committed 2019/4/20 20:46'
         },
         {
-          timestamp: '2019/4/21',
-          title: 'Update Github template',
-          content: 'serfend committed 2019/4/21 20:46'
+          timestamp: '2019/5/7',
+          title: '基本完成初版',
+          content: '无内容'
         },
         {
-          timestamp: '2019/4/22',
-          title: 'Build Template',
-          content: 'serfend committed 2019/4/22 20:46'
+          timestamp: '2019/4/28',
+          title: '整合需求开始开发',
+          content: '无内容'
         },
         {
           timestamp: '2019/4/23',
-          title: 'Release New Version',
-          content: 'serfend committed 2019/4/23 20:46'
+          title: '提出干部休假系统需求，开始制作',
+          content: '无内容'
         }
       ]
     }

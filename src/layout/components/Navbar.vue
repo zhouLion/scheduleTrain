@@ -62,7 +62,7 @@
             <el-dropdown-item>{{ $t("navbar.dashboard") }}</el-dropdown-item>
           </router-link>
           <router-link to="/">
-            <el-dropdown-item>{{ $t("welcome") }}</el-dropdown-item>
+            <el-dropdown-item>{{ $t("navbar.welcome") }}</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
             <span

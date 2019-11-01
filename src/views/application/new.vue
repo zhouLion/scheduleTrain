@@ -464,7 +464,7 @@ export default {
       },
       locationOptions: [
         {
-          label: '选择休假地',
+          label: '选择地域',
           value: 0,
           children: []
         },

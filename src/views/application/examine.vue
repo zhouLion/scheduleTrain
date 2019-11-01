@@ -237,7 +237,7 @@
 
 <script>
 import ApplicationList from './components/ApplicationList'
-import { toCompany, toUser, audit } from '../../api/apply'
+import { toCompany, toUser, audit, deleteApply } from '../../api/apply'
 import { getOnMyManage } from '../../api/usercompany'
 import { getMembers } from '../../api/company'
 import {
@@ -323,6 +323,24 @@ export default {
         AuthByUserID: this.myUserid
       }
     },
+    DeleteApply(item) {
+      const authUser = prompt('输入授权账号', this.myUserid)
+      if (!authUser) return
+      deleteApply({
+        id: item.id,
+        Auth: {
+          AuthByUserID: authUser,
+          Code: prompt('输入授权码')
+        }
+      })
+        .then(() => {
+          this.$message.success('删除成功')
+          this.searchData()
+        })
+        .catch(err => {
+          this.$message.error(err)
+        })
+    },
     SubmitAuditForm() {
       const { applyId, action, remark, Code, AuthByUserID } = this.auditForm
       const list = [
@@ -336,14 +354,21 @@ export default {
         Code,
         AuthByUserID
       }
-      audit({
-        list,
+      audit(
+        {
+          list
+        },
         Auth
-      })
-        .then(d => {
-          debugger
+      )
+        .then(resultlist => {
+          resultlist.forEach(result => {
+            if (result.status === 0) this.$notify.success('已审批' + result.id)
+            else this.$notify.error(result.message + ':' + result.id)
+          })
         })
-        .catch(console.log)
+        .catch(err => {
+          this.$message.error(err.message)
+        })
         .finally(() => {
           this.clearAuditForm()
         })
