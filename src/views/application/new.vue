@@ -600,7 +600,7 @@ export default {
 
     // 提交基础信息
     submitBaseInfo() {
-      const { id, realName, company, duties, Phone, Settle } = this.form
+      const { id, realName, company, duties, Phone } = this.form
       this.onLoading = true
       this.getUsersVocationLimit(id)
       postBaseInfo({
@@ -609,7 +609,7 @@ export default {
         company,
         duties,
         Phone,
-        Settle
+        Settle: null
       })
         .then(data => {
           this.onLoading = false
