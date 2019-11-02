@@ -90,6 +90,10 @@
             <SettleFormItem v-model="form.Settle.lover" label="配偶所在地" />
             <SettleFormItem v-model="form.Settle.parent" label="父母所在地" />
 
+            <el-form-item label="初始全年天数">
+              <el-input v-model="form.Settle.prevYearlyLength" disabled />
+            </el-form-item>
+
             <el-form-item label="联系方式">
               <el-input v-model="form.Phone" />
             </el-form-item>
@@ -124,11 +128,7 @@
               </el-input>
             </el-form-item>
             <el-form-item v-show="showAll == false">
-              <!-- <el-button
-                @click="submitBaseInfo"
-                type="primary"
-              >提交基础信息</el-button>-->
-              <el-button @click="active = 1">下一步</el-button>
+              <el-button :disabled="!isAllowGoStepTow" @click="goStepTwo">下一步</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -218,6 +218,7 @@
                         <li>剩余假期长度：<span>{{ usersVocation.leftLength }}</span>天</li>
                         <li>全年最多可休路途次数：<span>{{ usersVocation.onTripTimes }}</span>天</li>
                         <li>当前已休路途次数：<span>{{ usersVocation.maxTripTimes }}</span>天</li>
+                        <li>休假描述: <span>{{ usersVocation.description || `已婚且与妻子同地，探父母假20天。\n年初全年总假30天，因9月发生变化，按比例加权:(12-变化的月) * 变化后天数 + 变化的月 * 年初总假期=（3 * 20 + 9 * 30）/12=27。` }} </span></li>
                       </ul>
                     </div>
                     <i class="el-icon-s-order" style="color: #ff9800; font-size: 20px;" />
@@ -419,7 +420,8 @@ export default {
         Settle: {
           self: {},
           lover: {},
-          parent: {}
+          parent: {},
+          prevYearlyLength: 0
         },
         Phone: ''
       },
@@ -467,9 +469,19 @@ export default {
     },
     theme() {
       return this.$store.state.settings.theme
+    },
+    isAllowGoStepTow() {
+      return this.formFinal.baseInfoId && this.form.id
     }
   },
   methods: {
+    goStepTwo() {
+      if (this.isAllowGoStepTow) {
+        this.active = 1
+      } else {
+        this.$message.error('请生成回执编号')
+      }
+    },
     getLocationChildrenIndexByValue(item, value) {
       for (var i = 0; i < item.children.length; i++) {
         if (item.children[i].value === value) return i
@@ -553,7 +565,13 @@ export default {
             this.form.companyName = company.company.name
             this.form.duties = duties.name
             this.form.Phone = social.phone
-            this.form.Settle = social.settle
+            const { self, lover, parent, prevYearlyLength } = social.settle
+            this.form.Settle = {
+              self,
+              lover,
+              parent,
+              prevYearlyLength
+            }
           } catch (error) {
             console.warn(error)
           }
@@ -679,9 +697,10 @@ export default {
         duties: '',
         Phone: 0,
         Settle: {
-          self: null,
-          lover: null,
-          parent: null
+          self: {},
+          lover: {},
+          parent: {},
+          prevYearlyLength: 0
         }
       }
       this.formApply = {
