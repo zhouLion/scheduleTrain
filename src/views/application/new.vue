@@ -215,9 +215,9 @@
                           <li><b class="bolder">全年假期长度：</b><span class="text-orange">{{ usersVocation.yearlyLength }}</span>天</li>
                           <li><b class="bolder">当前已休次数：</b><span class="text-orange">{{ usersVocation.nowTimes }}</span>天</li>
                           <li><b class="bolder">剩余假期长度：</b><span class="text-orange">{{ usersVocation.leftLength }}</span>天</li>
-                          <li><b class="bolder">全年最多可休路途次数：</b><span class="text-orange">{{ usersVocation.onTripTimes }}</span>天</li>
-                          <li><b class="bolder">当前已休路途次数: </b><span class="text-orange">{{ usersVocation.maxTripTimes }}</span>天</li>
-                          <li><b class="bolder">休假描述：</b> <span>{{ usersVocation.description || `已婚且与妻子同地，探父母假20天。\n年初全年总假30天，因9月发生变化，按比例加权:(12-变化的月) * 变化后天数 + 变化的月 * 年初总假期=（3 * 20 + 9 * 30）/12=27。` }} </span></li>
+                          <li><b class="bolder">全年最多可休路途次数：</b><span class="text-orange">{{ usersVocation.maxTripTimes }}</span>天</li>
+                          <li><b class="bolder">当前已休路途次数: </b><span class="text-orange">{{ usersVocation.onTripTimes }}</span>天</li>
+                          <li><b class="bolder">休假描述: </b> <span>{{ usersVocation.description || `已婚且与妻子同地，探父母假20天。\n年初全年总假30天，因9月发生变化，按比例加权:(12-变化的月) * 变化后天数 + 变化的月 * 年初总假期=（3 * 20 + 9 * 30）/12=27。` }} </span></li>
                         </ul>
                       </div>
                       <i class="el-icon-s-order" style="color: #ff9800; font-size: 20px;" />
