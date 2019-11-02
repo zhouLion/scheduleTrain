@@ -1,15 +1,12 @@
 <template>
   <div class="application-list ma-4">
-    <el-row>
+    <el-row :gutter="8">
       <el-col
-        :lg="8"
-        :md="16"
+        :lg="5"
+        :md="6"
         :sm="24"
       >
-        <el-card
-          class="elevation-0"
-          shadow="hover"
-        >
+        <el-card>
           <el-form
             ref="queryForm"
             :model="queryForm"
@@ -17,7 +14,7 @@
             <el-row>
               <el-col
                 :md="24"
-                :sm="12"
+                :sm="10"
                 class="mb-3"
               >
                 <div class="py-2 body-2 layout align-center row justify-space-between">
@@ -52,7 +49,7 @@
               </el-col>
               <el-col
                 :md="24"
-                :sm="12"
+                :sm="10"
                 class="mb-3"
               >
                 <div class="py-2 body-2 layout align-center row justify-space-between">
@@ -79,7 +76,8 @@
               </el-col>
 
               <el-col
-                :span="24"
+                :md="24"
+                :sm="4"
                 class="py-2"
               >
                 <el-button
@@ -92,11 +90,9 @@
           </el-form>
         </el-card>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
       <el-col
-        :lg="24"
-        :md="24"
+        :lg="19"
+        :md="18"
         :sm="24"
       >
         <ApplicationList

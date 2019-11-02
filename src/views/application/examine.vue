@@ -2,8 +2,8 @@
   <div class="application-examine ma-4">
     <el-row :gutter="20">
       <el-col
-        :lg="4"
-        :md="4"
+        :lg="5"
+        :md="6"
         :sm="24"
       >
         <el-card
@@ -93,16 +93,10 @@
         </el-card>
       </el-col>
       <el-col
-        :lg="20"
-        :md="20"
+        :lg="19"
+        :md="18"
         :sm="24"
       >
-        <!-- <div
-          @click
-          :class=""
-          type="primary"
-        >12</div>-->
-
         <ApplicationList
           :data-list="dataList"
           :on-loading="onLoading"

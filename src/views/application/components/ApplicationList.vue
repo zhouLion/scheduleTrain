@@ -1,136 +1,132 @@
 <template>
-  <div class="application-list">
-    <el-card>
-      <div class="layout row justify-space-between px-2 pb-3">
-        <el-button
+  <el-card class="application-list">
+    <div class="layout row justify-space-between px-2 pb-3">
+      <el-button
+        v-waves
+        icon="el-icon-search"
+        type="primary"
+        @click="emitRefresh"
+      >刷新</el-button>
+      <div>
+        <slot name="headeraction" />
+        <!-- <el-button
           v-waves
-          icon="el-icon-search"
+          :loading="downloadLoading"
+          icon="el-icon-download"
           type="primary"
-          @click="emitRefresh"
-        >刷新</el-button>
-        <div>
-          <slot name="headeraction" />
-          <!-- <el-button
-            v-waves
-            :loading="downloadLoading"
-            icon="el-icon-download"
-            type="primary"
-            @click="handleDownload"
-          >导出</el-button>-->
-        </div>
+          @click="handleDownload"
+        >导出</el-button>-->
       </div>
-      <el-table
-        :key="tableKey"
-        ref="singleTable"
-        v-loading="onLoading"
-        :data="formatedList"
-        highlight-current-row
+    </div>
+    <el-table
+      :key="tableKey"
+      ref="singleTable"
+      v-loading="onLoading"
+      :data="formatedList"
+      highlight-current-row
+    >
+      <el-table-column
+        v-if="multi"
+        type="selection"
+        width="42px"
+      />
+      <el-table-column
+        label="申请人"
+        min-width="100px"
+      >
+        <template slot-scope="{row}">
+          <el-tooltip
+            content="点击查看详情"
+            effect="dark"
+          >
+            <!-- content to trigger tooltip here -->
+            <el-button
+              plain
+              size="mini"
+              type="info"
+              @click="handleDetail(row, row.id)"
+            >
+              <i class="el-icon-info blue--text" />
+              <span class="info--text">{{ row.base.realName }}</span>
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="单位"
+      >
+        <template slot-scope="{row}">
+          <span class="caption">{{ row.base.companyName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="当前审批"
+      >
+        <template slot-scope="{row}">
+          <span class="caption">{{ row.nowAuditCompany }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="创建"
+      >
+        <template slot-scope="scope">
+          <span>{{ scope.row.create }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        header-align="center"
+        label="申请时间"
       >
         <el-table-column
-          v-if="multi"
-          type="selection"
-          width="42px"
-        />
-        <el-table-column
-          label="申请人"
-          min-width="100px"
-        >
-          <template slot-scope="{row}">
-            <el-tooltip
-              content="点击查看详情"
-              effect="dark"
-            >
-              <!-- content to trigger tooltip here -->
-              <el-button
-                plain
-                size="mini"
-                type="info"
-                @click="handleDetail(row, row.id)"
-              >
-                <i class="el-icon-info blue--text" />
-                <span class="info--text">{{ row.base.realName }}</span>
-              </el-button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column
           align="center"
-          label="单位"
-        >
-          <template slot-scope="{row}">
-            <span class="caption">{{ row.base.companyName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="当前审批"
-        >
-          <template slot-scope="{row}">
-            <span class="caption">{{ row.nowAuditCompany }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="创建"
+          label="申请离队时间"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.create }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          header-align="center"
-          label="申请时间"
-        >
-          <el-table-column
-            align="center"
-            label="申请离队时间"
-          >
-            <template slot-scope="scope">
-              <span>{{ scope.row.stampLeave }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="预计归队时间"
-          >
-            <template slot-scope="scope">
-              <span>{{ scope.row.stampReturn }}</span>
-            </template>
-          </el-table-column>
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="状态"
-        >
-          <template slot-scope="{row}">
-            <el-tag
-              :color="row.statusColor"
-              class="white--text"
-            >{{ row.statusDesc }}</el-tag>
+            <span>{{ scope.row.stampLeave }}</span>
           </template>
         </el-table-column>
         <el-table-column
           align="center"
-          label="操作"
-          min-width="120"
+          label="预计归队时间"
         >
-          <template slot-scope="{row}">
-            <slot
-              v-if="myUserid"
-              :applyid="row.id"
-              :row="row"
-              name="action"
-            />
-            <span v-else>
-              请先
-              <a href="login">登录</a>
-            </span>
+          <template slot-scope="scope">
+            <span>{{ scope.row.stampReturn }}</span>
           </template>
         </el-table-column>
-      </el-table>
-      <!-- card body -->
-    </el-card>
-
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="状态"
+      >
+        <template slot-scope="{row}">
+          <el-tag
+            :color="row.statusColor"
+            class="white--text"
+          >{{ row.statusDesc }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="操作"
+        min-width="120"
+      >
+        <template slot-scope="{row}">
+          <slot
+            v-if="myUserid"
+            :applyid="row.id"
+            :row="row"
+            name="action"
+          />
+          <span v-else>
+            请先
+            <a href="login">登录</a>
+          </span>
+        </template>
+      </el-table-column>
+    </el-table>
     <el-dialog
       :show-close="false"
       :visible.sync="detailDrawer.show"
@@ -191,7 +187,8 @@
         </span>
       </ApplicationDetail>
     </el-dialog>
-  </div>
+    <!-- card body -->
+  </el-card>
 </template>
 
 <script>
