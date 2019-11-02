@@ -202,27 +202,27 @@
                 :md="24"
               >
                 <el-form-item label="休假天数">
-                  <el-input-number
+                  <el-input
                     v-model="formApply.VocationLength"
                     :max="usersVocation.leftLength"
                     :min="1"
-                    controls-position="right"
-                    size="small"
+                    type="number"
                     @change="handleChange"
-                  />
-                  <el-tooltip effect="dark">
-                    <div slot="content">
-                      <ul>
-                        <li>全年假期长度：<span>{{ usersVocation.yearlyLength }}</span>天</li>
-                        <li>当前已休次数：<span>{{ usersVocation.nowTimes }}</span>天</li>
-                        <li>剩余假期长度：<span>{{ usersVocation.leftLength }}</span>天</li>
-                        <li>全年最多可休路途次数：<span>{{ usersVocation.onTripTimes }}</span>天</li>
-                        <li>当前已休路途次数：<span>{{ usersVocation.maxTripTimes }}</span>天</li>
-                        <li>休假描述: <span>{{ usersVocation.description || `已婚且与妻子同地，探父母假20天。\n年初全年总假30天，因9月发生变化，按比例加权:(12-变化的月) * 变化后天数 + 变化的月 * 年初总假期=（3 * 20 + 9 * 30）/12=27。` }} </span></li>
-                      </ul>
-                    </div>
-                    <i class="el-icon-s-order" style="color: #ff9800; font-size: 20px;" />
-                  </el-tooltip>
+                  >
+                    <el-tooltip slot="append" effect="dark">
+                      <div slot="content" class="tooltip-vocation">
+                        <ul>
+                          <li><b class="bolder">全年假期长度：</b><span class="text-orange">{{ usersVocation.yearlyLength }}</span>天</li>
+                          <li><b class="bolder">当前已休次数：</b><span class="text-orange">{{ usersVocation.nowTimes }}</span>天</li>
+                          <li><b class="bolder">剩余假期长度：</b><span class="text-orange">{{ usersVocation.leftLength }}</span>天</li>
+                          <li><b class="bolder">全年最多可休路途次数：</b><span class="text-orange">{{ usersVocation.onTripTimes }}</span>天</li>
+                          <li><b class="bolder">当前已休路途次数: </b><span class="text-orange">{{ usersVocation.maxTripTimes }}</span>天</li>
+                          <li><b class="bolder">休假描述：</b> <span>{{ usersVocation.description || `已婚且与妻子同地，探父母假20天。\n年初全年总假30天，因9月发生变化，按比例加权:(12-变化的月) * 变化后天数 + 变化的月 * 年初总假期=（3 * 20 + 9 * 30）/12=27。` }} </span></li>
+                        </ul>
+                      </div>
+                      <i class="el-icon-s-order" style="color: #ff9800; font-size: 20px;" />
+                    </el-tooltip>
+                  </el-input>
                 </el-form-item>
 
               </el-col>
@@ -232,12 +232,11 @@
                 :md="24"
               >
                 <el-form-item label="路途天数">
-                  <el-input-number
+                  <el-input
                     v-model="formApply.OnTripLength"
                     :max="7"
                     :min="1"
-                    controls-position="right"
-                    size="small"
+                    type="number"
                     @change="handleChange"
                   />
                 </el-form-item>
@@ -474,6 +473,9 @@ export default {
       return this.formFinal.baseInfoId && this.form.id
     }
   },
+  created() {
+    this.createNew()
+  },
   methods: {
     goStepTwo() {
       if (this.isAllowGoStepTow) {
@@ -684,6 +686,20 @@ export default {
         })
     },
 
+    buildSettle() {
+      return {
+        date: '',
+        valid: '',
+        address: {
+          parentId: '',
+          rank: '',
+          name: '',
+          shortname: ''
+        },
+        addressDetail: ''
+      }
+    },
+
     /**
      * 创建新的申请
      */
@@ -697,9 +713,9 @@ export default {
         duties: '',
         Phone: 0,
         Settle: {
-          self: {},
-          lover: {},
-          parent: {},
+          self: this.buildSettle(),
+          lover: this.buildSettle(),
+          parent: this.buildSettle(),
           prevYearlyLength: 0
         }
       }
@@ -764,6 +780,23 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.tooltip-vocation {
+  width: 260px;
+
+  ul,
+  li {
+    list-style: none;
+    padding: 8px;
+    letter-spacing: 1px;
+
+    .text-orange {
+      color: orange;
+    }
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .application-new {

@@ -1,19 +1,27 @@
 <template>
   <el-form-item :label="label">
-    <el-row>
+    <el-row :gutter="8">
       <el-col :lg="4">
         <el-input
-          v-model="form.addressDetail"
+          v-model="form.address.name"
           :disabled="disabled"
           placeholder="详细地址"
-        />
+        >
+          <div slot="prepend">
+            详细地址
+          </div>
+        </el-input>
       </el-col>
       <el-col :lg="6">
         <el-input
           v-model="form.date"
           :disabled="disabled"
           placeholder="居住开始时间"
-        />
+        >
+          <div slot="prepend">
+            居住开始时间
+          </div>
+        </el-input>
       </el-col>
       <!-- <el-col :lg="6">
         <el-input
@@ -35,7 +43,12 @@
 const VALUE_CONSTRUCT = {
   date: '',
   valid: '',
-  address: '',
+  address: {
+    parentId: '',
+    rank: '',
+    name: '',
+    shortname: ''
+  },
   addressDetail: ''
 }
 
@@ -57,27 +70,19 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      form: {
-        date: this.value.date,
-        valid: this.value.valid,
-        address: this.value.address,
-        addressDetail: this.value.addressDetail
-      }
-    }
-  },
-  watch: {
+  computed: {
     form: {
-      handler(form) {
+      set(val) {
         const clonedValue = Object.assign(
           { ...VALUE_CONSTRUCT },
           this.value,
-          form
+          val
         )
         this.$emit('input', clonedValue)
       },
-      deep: true
+      get() {
+        return this.value
+      }
     }
   }
 }
