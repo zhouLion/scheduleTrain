@@ -1,7 +1,7 @@
 <template>
   <el-form-item :label="label">
     <el-row :gutter="8">
-      <el-col :lg="4">
+      <el-col :lg="8">
         <el-input
           v-model="form.address.name"
           :disabled="disabled"
@@ -12,7 +12,7 @@
           </div>
         </el-input>
       </el-col>
-      <el-col :lg="6">
+      <el-col :lg="8">
         <el-input
           v-model="form.date"
           :disabled="disabled"

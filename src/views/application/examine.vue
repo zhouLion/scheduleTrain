@@ -72,7 +72,7 @@
                   <el-option
                     v-for="item in membersOption"
                     :key="item.id"
-                    :label="item.realName"
+                    :label="`${item.realName}（${item.id}）`"
                     :value="item.id"
                   />
                 </el-select>
